@@ -3,12 +3,9 @@ import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
 const api = {
-  send: (message: unknown) => {
+  send: (message: string) => {
     return new Promise((resolve) => {
-      ipcRenderer.once('asynchronous-reply', (_, args) => {
-        resolve(args)
-      })
-      ipcRenderer.send('asynchronous-message', message)
+      resolve(ipcRenderer.invoke('asynchronous-message', message))
     })
   }
 }

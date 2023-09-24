@@ -1,4 +1,22 @@
 {
-  "files": [],
+  "compilerOptions": {
+    // Base Options
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+
+    // strictness
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
+
+    "lib": ["ES2022", "DOM"]
+  },
+  "include": ["src/**/*"],
   "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.web.json" }]
 }
