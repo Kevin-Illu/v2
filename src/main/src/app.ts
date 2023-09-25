@@ -1,18 +1,26 @@
 import { join } from 'path'
 import { app, shell, BrowserWindow } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import icon from '../../resources/icon.png'
+import icon from '../../../resources/icon.png'
+import Database from './database/db'
 
 class Application {
   private app: Electron.App
+  private db: Database
 
-  constructor() {
+  constructor(db: Database) {
     this.app = app
+    this.db = db
     this.app.on('activate', this.handleActivate)
-    this.app.on('window-all-closed', this.handleWindowAllClosed)
+
+    // on close window
+    this.app.on('window-all-closed', () => {
+      this.db.connectionManager.close()
+      this.app.quit()
+    })
   }
 
-  public start(): void {
+  public async start(): Promise<void> {
     this.app.whenReady().then(this.handleReady)
   }
 
@@ -47,7 +55,7 @@ class Application {
     }
   }
 
-  private handleActivate = () => {
+  private handleActivate = (): void => {
     const mainWindow = BrowserWindow.getFocusedWindow()
     if (mainWindow === null) {
       this.createMainWindow()
@@ -75,11 +83,8 @@ class Application {
   // Quit when all windows are closed, except on macOS. There, it's common
   // for applications and their menu bar to stay active until the user quits
   // explicitly with Cmd + Q.
-  private handleWindowAllClosed(): void {
-    if (process.platform === 'darwin') {
-      this.app.quit()
-    }
-  }
+
+  // TODO: "implement this method when the the application is executed in macOS"
 }
 
 export default Application
