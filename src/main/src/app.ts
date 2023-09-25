@@ -20,7 +20,7 @@ class Application {
     })
   }
 
-  public async start(): Promise<void> {
+  public start(): void {
     this.app.whenReady().then(this.handleReady)
   }
 
