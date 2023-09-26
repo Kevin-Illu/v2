@@ -21,7 +21,7 @@ class TodoService extends Service implements DerivedService {
   }
 
   public getStates = (): Promise<State[]> => {
-    return this.db.queryRunner.fetch<State>('SELECT * FROM state')
+    return this.db.queryRunner.fetch<State[]>('SELECT * FROM state')
   }
 }
 
