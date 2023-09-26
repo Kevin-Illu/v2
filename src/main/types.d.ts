@@ -16,7 +16,8 @@ interface IService {
 // ya que esta se utiliza para comunicarse
 // con el render process
 interface DerivedService extends IService {
-  actions: Actions
+  _actions: Actions
+  _dispatcher: (action: Action) => Promise<void>
 }
 
 // actions and dispatchers for comunication

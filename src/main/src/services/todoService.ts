@@ -4,20 +4,20 @@ import { Action } from '$types/comunication'
 import { Actions, Database, DerivedService } from '../../types'
 
 class TodoService extends Service implements DerivedService {
-  public actions: Actions
+  public _actions: Actions
 
   constructor(db: Database) {
     super(db)
-    this.actions = {
+    this._actions = {
       states: {
         dispatch: this.getStates
       }
     }
-    this.handleAction('services:todo', this.dispatcher)
+    this.handleAction('services:todo', this._dispatcher)
   }
 
-  private dispatcher = async (action: Action): Promise<void> => {
-    return this.actions[action.name].dispatch()
+  _dispatcher = (action: Action): Promise<void> => {
+    return this._actions[action.name].dispatch()
   }
 
   public getStates = (): Promise<State[]> => {
