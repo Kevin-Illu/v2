@@ -16,7 +16,7 @@ class TodoService extends Service implements DerivedService {
     this.handleAction('services:todo', this.dispatcher)
   }
 
-  private dispatcher = async (action: Action): Promise<string> => {
+  private dispatcher = async (action: Action): Promise<void> => {
     return this.actions[action.name].dispatch()
   }
 
