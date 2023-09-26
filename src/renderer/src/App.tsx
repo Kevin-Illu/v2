@@ -1,11 +1,12 @@
 import { useState } from 'react'
+import { State } from '../../../types/globals'
 
 function App(): JSX.Element {
   const [message, setMessage] = useState('states')
-  const [response, setResponse] = useState([])
+  const [response, setResponse] = useState<State[]>([])
 
   function send(sql): void {
-    window.api.todos.get(sql).then((result) => setResponse([...response, result]))
+    window.api.todos.get<State[]>(sql).then((result) => setResponse([...response, result]))
   }
 
   return (

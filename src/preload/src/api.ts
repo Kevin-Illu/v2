@@ -1,9 +1,8 @@
-import { State } from '$types/globals'
 import { ipcRenderer } from 'electron'
 
 const api = {
   todos: {
-    get: (query): Promise<State[]> =>
+    get: <T>(query: string): Promise<T> =>
       ipcRenderer.invoke('services:todo', {
         name: query
       })
