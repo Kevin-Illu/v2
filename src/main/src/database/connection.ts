@@ -1,7 +1,7 @@
 import sqlite3 from 'sqlite3'
-import { TDatabase } from '$types/db'
+import { sqliteDatabase } from '../../types'
 class ConnectionManager {
-  public db: TDatabase
+  public db: sqliteDatabase
 
   constructor(databasePath: string) {
     this.db = new sqlite3.Database(databasePath)

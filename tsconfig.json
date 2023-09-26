@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     // Base Options
+    "baseUrl": "./src",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
@@ -17,6 +18,7 @@
 
     "lib": ["ES2022", "DOM"],
   },
-  "include": ["./resources/**/*"],
+  "include": [],
+  "exclude": ["resources"],
   "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.web.json" }]
 }

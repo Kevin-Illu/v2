@@ -1,11 +1,11 @@
 import { useState } from 'react'
 
 function App(): JSX.Element {
-  const [message, setMessage] = useState('SELECT * FROM repositories')
+  const [message, setMessage] = useState('states')
   const [response, setResponse] = useState([])
 
-  function send(sql) {
-    window.api.send(sql).then((result) => setResponse([...response, result]))
+  function send(sql): void {
+    window.api.todos.get(sql).then((result) => setResponse([...response, result]))
   }
 
   return (

@@ -3,19 +3,28 @@ import { app, shell, BrowserWindow } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../../resources/icon.png'
 import Database from './database/db'
+import Service from './services/service'
 
 class Application {
   private app: Electron.App
+
   private db: Database
 
-  constructor(db: Database) {
+  public services: {
+    [key: string]: Service
+  }
+
+  constructor(db: Database, services: { [key: string]: Service }) {
     this.app = app
     this.db = db
     this.app.on('activate', this.handleActivate)
 
+    // services should be initialized before initialization
+    this.services = services
+
     // on close window
     this.app.on('window-all-closed', () => {
-      this.db.connectionManager.close()
+      this.db.disconnect()
       this.app.quit()
     })
   }

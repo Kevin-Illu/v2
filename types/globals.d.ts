@@ -1,10 +1,10 @@
-interface State {
+export interface State {
   id: number
   name: string
   description: string
 }
 
-interface Task {
+export interface Task {
   id: number
   name: string
   description: string
