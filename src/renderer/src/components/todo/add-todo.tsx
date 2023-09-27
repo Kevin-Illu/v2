@@ -1,5 +1,5 @@
 import { Box, Card, TextField, IconButton } from '@radix-ui/themes'
-import { PaperPlaneIcon } from '@radix-ui/react-icons'
+import { PlusIcon } from '@radix-ui/react-icons'
 
 // TODO: add the functionality to create new todos
 // and save it into the database
@@ -11,7 +11,7 @@ export const AddTodo = () => {
           <TextField.Input variant="soft" size="3" placeholder="write something special" />
           <TextField.Slot pr="3">
             <IconButton size="2" variant="ghost">
-              <PaperPlaneIcon height="16" width="16" />
+              <PlusIcon height="16" width="16" />
             </IconButton>
           </TextField.Slot>
         </TextField.Root>

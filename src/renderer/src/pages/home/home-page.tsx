@@ -1,4 +1,4 @@
-import { Box, Card, Container, Flex, ScrollArea } from '@radix-ui/themes'
+import { Box, Container, Flex, ScrollArea } from '@radix-ui/themes'
 import { GitHubLogoIcon, FramerLogoIcon, VercelLogoIcon } from '@radix-ui/react-icons'
 import { NavBar, AddTodo } from '@renderer/components'
 
@@ -10,18 +10,7 @@ const HomePage = () => {
 
       <ScrollArea className="h-full w-full relative">
         <Container>
-          <Box className="h-full px-4 w-full">
-            <Card className="py-4 px-2"></Card>
-            <Card className="py-4 px-2"></Card>
-            <Card className="py-4 px-2"></Card>
-            <Card className="py-4 px-2"></Card>
-            <Card className="py-4 px-2"></Card>
-            <Card className="py-4 px-2"></Card>
-            <Card className="py-4 px-2"></Card>
-            <Card className="py-4 px-2"></Card>
-            <Card className="py-4 px-2"></Card>
-            <Card className="py-4 px-2"></Card>
-          </Box>
+          <Box className="h-full px-4 w-full"></Box>
           <AddTodo />
         </Container>
       </ScrollArea>
