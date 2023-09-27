@@ -2,7 +2,7 @@ import { ipcMain } from 'electron'
 import { Database, IService } from '../../types'
 
 abstract class Service implements IService {
-  // instacion de la clase Database
+  // instancia de la clase Database
   public db: Database
 
   constructor(db: Database) {
