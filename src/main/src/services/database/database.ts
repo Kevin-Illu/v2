@@ -1,11 +1,11 @@
 import ConnectionManager from './connection'
-import QueryRunner from './queryRunner'
+import QueryRunner from './query-runner'
 
 import { Service } from '@main/types'
 
 class DatabaseService implements Service {
-  private connectionManager: ConnectionManager | undefined
-  public queryRunner: QueryRunner | undefined
+  private connectionManager!: ConnectionManager
+  public queryRunner!: QueryRunner
 
   public name: string
   private databasePath: string
