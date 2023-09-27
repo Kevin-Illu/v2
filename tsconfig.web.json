@@ -3,7 +3,7 @@
   "include": [
     "src/renderer/src/env.d.ts",
     "src/renderer/src/**/*",
-    "src/renderer/src/**/*.tsx",
+    "src/renderer/src/**/*.{ts, tsx}",
     "src/preload/*.d.ts"
   ],
   "compilerOptions": {
@@ -11,10 +11,8 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@renderer/*": [
-        "src/renderer/src/*"
-      ],
-      "$types/*": ["./types/*"]
+      "@renderer/*": ["src/renderer/src/*"],
+      "$types/*": ["types/*"]
     }
   }
 }

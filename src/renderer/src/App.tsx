@@ -1,11 +1,17 @@
 import { Theme } from '@radix-ui/themes'
-import { Home } from './pages/home'
-import '@radix-ui/themes/styles.css'
+import { HomePage } from './pages'
 
 function App(): JSX.Element {
   return (
-    <Theme appearance="dark" accentColor="lime" grayColor="olive" radius="small">
-      <Home />
+    <Theme
+      appearance="dark"
+      accentColor="mint"
+      grayColor="olive"
+      radius="medium"
+      panelBackground="translucent"
+      scaling="110%"
+    >
+      <HomePage />
     </Theme>
   )
 }
