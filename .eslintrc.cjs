@@ -1,6 +1,7 @@
 module.exports = {
   rules: {
-    '@typescript-eslint/explicit-function-return-type': 'off'
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    'react/prop-types': [0]
   },
   overrides: [
     {
