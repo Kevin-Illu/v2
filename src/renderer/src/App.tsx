@@ -1,5 +1,5 @@
 import { Theme } from '@radix-ui/themes'
-import { HomePage } from './pages'
+import { TodoPage } from './pages'
 
 function App(): JSX.Element {
   return (
@@ -11,7 +11,7 @@ function App(): JSX.Element {
       panelBackground="translucent"
       scaling="110%"
     >
-      <HomePage />
+      <TodoPage />
     </Theme>
   )
 }
