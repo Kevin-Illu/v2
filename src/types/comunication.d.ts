@@ -1,4 +1,4 @@
-import { Actions } from '../src/main/types'
+import { Actions } from '../main/src/types/service'
 
 // representa una accion que puede ser
 // disparada desde el renderer proces y

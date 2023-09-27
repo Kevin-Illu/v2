@@ -1,36 +1,49 @@
 import { join } from 'path'
 import { app, shell, BrowserWindow } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+
+import { Service } from '@main/types'
+
 import icon from '../../../resources/icon.png'
-import Database from './database/db'
-import Service from './services/service'
 
 class Application {
   private app: Electron.App
+  public services: Record<string, Service>
 
-  private db: Database
-
-  public services: {
-    [key: string]: Service
-  }
-
-  constructor(db: Database, services: { [key: string]: Service }) {
+  constructor(services: Record<string, Service>) {
     this.app = app
-    this.db = db
     this.app.on('activate', this.handleActivate)
-
-    // services should be initialized before initialization
     this.services = services
-
-    // on close window
-    this.app.on('window-all-closed', () => {
-      this.db.disconnect()
-      this.app.quit()
-    })
   }
 
   public start(): void {
-    this.app.whenReady().then(this.handleReady)
+    this.app.whenReady().then(() => {
+      this.handleReady()
+
+      // services should be initialized before initialization
+      this.initializeServices()
+
+      this.handleWindowAllClosed()
+    })
+  }
+
+  private initializeServices(): void {
+    Object.values(this.services).forEach((service) => {
+      service.initialize()
+    })
+  }
+
+  private cleanupServices(): void {
+    Object.values(this.services).forEach((service) => {
+      service.cleanup()
+    })
+  }
+
+  private handleWindowAllClosed(): void {
+    this.app.on('window-all-closed', () => {
+      this.cleanupServices()
+      this.app.quit()
+    })
   }
 
   private createMainWindow = (): void => {

@@ -12,7 +12,7 @@
     "baseUrl": ".",
     "paths": {
       "@renderer/*": ["src/renderer/src/*"],
-      "$types/*": ["types/*"]
+      "$globalTypes/*": ["src/types/*"]
     }
   }
 }

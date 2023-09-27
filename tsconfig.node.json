@@ -1,13 +1,13 @@
 {
   "extends": "@electron-toolkit/tsconfig/tsconfig.node.json",
-  "include": ["electron.vite.config.*", "src/main/**/*", "src/preload/**/*", "types/**/*"],
+  "include": ["electron.vite.config.*", "src/main/**/*", "src/preload/**/*", "src/types/**/*"],
   "exclude": ["resources"],
   "compilerOptions": {
     "composite": true,
     "types": ["electron-vite/node"],
     "paths": {
       "@main/*": ["./src/main/src/*"],
-      "$types/*": ["./types/*"],
+      "$globalTypes/*": ["./src/types/*"],
     }
   }
 }
