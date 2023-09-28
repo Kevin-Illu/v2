@@ -9,7 +9,7 @@ export interface ICommunicationService extends Service {
    * Objeto que define las acciones disponibles para el servicio de comunicación.
    * Las acciones se utilizan para comunicarse entre el proceso principal y el proceso de renderizado.
    */
-  _actions?: ActionMap
+  _actions?: ActionMap<any>
 
   /**
    * Maneja una acción específica en un canal de comunicación.
@@ -30,12 +30,13 @@ export interface ICommunicationService extends Service {
  * Representa la estructura de un objeto que contiene una función 'dispatch'
  * que puede tomar argumentos opcionales y devuelve algún resultado.
  */
-type ActionPayload = {
-  dispatch: (args?: any) => any
-}
 
 /**
  * Representa un mapa de acciones donde las claves son nombres de acciones
  * y los valores son objetos que contienen una función 'dispatch'.
  */
-export type ActionMap = Record<string, ActionPayload>
+export type ActionMap<T> = {
+  [K in keyof T]: {
+    dispatch: T[K]
+  }
+}

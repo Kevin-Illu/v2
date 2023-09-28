@@ -1,9 +1,10 @@
-import { Action, State } from '$globalTypes/index'
+import { Action, State, Task, TodoActions } from '$globalTypes/index'
 import { ActionMap, MainDatabaseInstance } from '@main/types'
 import CommunicationService from '../communication-service'
 
 class TodoService extends CommunicationService {
-  public _actions: ActionMap
+  public _actions: ActionMap<TodoActions>
+
   private _db: MainDatabaseInstance
 
   constructor(db: MainDatabaseInstance, name: string) {
@@ -24,6 +25,11 @@ class TodoService extends CommunicationService {
 
   public getStates = (): Promise<State[]> => {
     return this._db.queryRunner.fetch<State[]>('SELECT * FROM state')
+  }
+
+  public getTaskById = (action: Action): Promise<Task[]> => {
+    const id = action.payload
+    return this._db.queryRunner.fetch<Task[]>('SELECT * FROM todos WHERE id = ?', id)
   }
 
   public initialize(): void {
