@@ -12,29 +12,38 @@ class TodoService extends CommunicationService {
     this._db = db
 
     this._actions = {
-      states: {
+      ['get-states']: {
         dispatch: this.getStates
+      },
+      ['get-todos']: {
+        dispatch: this.getTodos
+      },
+      ['get-task-by-id']: {
+        dispatch: (id: string): Promise<Task> => this.getTaskById(id)
       }
     }
-  }
-
-  _dispatcher = (action: Action): Promise<void> => {
-    const actionName = action.name as string
-    return this._actions[actionName].dispatch()
   }
 
   public getStates = (): Promise<State[]> => {
     return this._db.queryRunner.fetch<State[]>('SELECT * FROM state')
   }
 
-  public getTaskById = (action: Action): Promise<Task[]> => {
-    const id = action.payload
-    return this._db.queryRunner.fetch<Task[]>('SELECT * FROM todos WHERE id = ?', id)
+  public getTodos = (): Promise<Task[]> => {
+    return this._db.queryRunner.fetch<Task[]>('SELECT * FROM todos')
+  }
+
+  public getTaskById = (taskId: string): Promise<Task> => {
+    return this._db.queryRunner.fetch<Task[]>('SELECT * FROM todos WHERE id = ?', taskId)[0]
   }
 
   public initialize(): void {
     console.log('initializing TodoService')
     this.handleAction('services:todo', this._dispatcher)
+  }
+
+  _dispatcher = (action: Action): Promise<void> => {
+    const actionName = action.name as string
+    return this._actions[actionName].dispatch()
   }
 
   public cleanup(): void {

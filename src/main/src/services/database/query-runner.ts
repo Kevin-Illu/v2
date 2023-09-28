@@ -24,9 +24,9 @@ class QueryRunner {
 
   // retorna el resultado de una consulta select
   // retorna una promesa que al resolverse retorna un array de <T>
-  public fetch<T>(query: SQLQuery): Promise<T> {
+  public fetch<T>(query: SQLQuery, params: any = []): Promise<T> {
     return new Promise((resolve, reject) => {
-      this.db.all(query, [], (err, rows: T) => {
+      this.db.all(query, params, (err, rows: T) => {
         if (err) {
           reject(err)
         } else {
