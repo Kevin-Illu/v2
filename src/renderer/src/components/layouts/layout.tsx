@@ -8,10 +8,10 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <Box className="w-screen h-screen flex flex-col bg-white dark:bg-black">
+    <Box className="w-screen h-screen flex flex-col" color="lima">
       <NavBar />
 
-      <ScrollArea className="h-full w-full relative">
+      <ScrollArea className="h-full w-full relative" color="lima">
         <Container className="px-8 lg:px-0">{children}</Container>
       </ScrollArea>
 

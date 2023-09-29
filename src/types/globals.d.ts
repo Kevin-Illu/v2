@@ -1,10 +1,12 @@
 export interface State {
   id: number
-  name: string
+  state_name: string
   description: string
+  color_name: string
+  hex_value: string
 }
 
-export interface Task {
+export interface Todo {
   id: number
   name: string
   description: string
