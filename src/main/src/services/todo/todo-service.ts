@@ -1,8 +1,8 @@
 import { Action, State, Todo, TodoActions } from '$globalTypes/index'
-import { ActionMap, MainDatabaseInstance } from '@main/types'
+import { ActionMap, ICommunicationService, MainDatabaseInstance } from '@main/types'
 import CommunicationService from '../communication-service'
 
-class TodoService extends CommunicationService {
+export class TodoService extends CommunicationService implements ICommunicationService {
   public _actions: ActionMap<TodoActions>
 
   private _db: MainDatabaseInstance
@@ -40,14 +40,19 @@ class TodoService extends CommunicationService {
     return this._db.queryRunner.fetch<Todo[]>('SELECT * FROM todos WHERE id = ?', taskId)[0]
   }
 
+  public _dispatcher = <TodoActions>(action: Action<TodoActions>): Promise<void> => {
+    const actionName = action.name as string
+
+    if (action.payload !== null) {
+      return this._actions[actionName].dispatch(action.payload)
+    }
+
+    return this._actions[actionName].dispatch()
+  }
+
   public initialize(): void {
     console.log('initializing TodoService')
     this.handleAction('services:todo', this._dispatcher)
-  }
-
-  _dispatcher = (action: Action): Promise<void> => {
-    const actionName = action.name as string
-    return this._actions[actionName].dispatch()
   }
 
   public cleanup(): void {
@@ -55,5 +60,3 @@ class TodoService extends CommunicationService {
     console.log('close TodoService')
   }
 }
-
-export default TodoService

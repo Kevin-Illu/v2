@@ -1,2 +1,1 @@
-export * from './hook'
-export * from './hotkeys'
+export * from './hooks'

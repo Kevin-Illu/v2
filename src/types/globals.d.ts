@@ -12,3 +12,9 @@ export interface Todo {
   description: string
   state_id: number
 }
+
+export interface HotKey {
+  id: number
+  key: string
+  action: string
+}

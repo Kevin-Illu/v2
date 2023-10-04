@@ -1,8 +1,18 @@
 import { ipcMain } from 'electron'
-import { ICommunicationService } from '@main/types'
+import { ActionMap } from '@main/types'
 
-abstract class CommunicationService implements ICommunicationService {
+interface ICommunication {
+  /**
+   * Maneja una acción específica en un canal de comunicación.
+   * @param channel - El canal en el que se recibe la acción.
+   * @param callback - La función de devolución de llamada que se ejecuta cuando se recibe la acción.
+   */
+  handleAction?: (channel: string, callback: (args?: any) => void) => void
+}
+
+abstract class CommunicationService implements ICommunication {
   public name: string
+  public _actions: ActionMap<any> = {}
 
   constructor(name: string) {
     this.name = name
@@ -13,16 +23,6 @@ abstract class CommunicationService implements ICommunicationService {
       const result = await callback(args)
       return result
     })
-  }
-
-  // Override this method
-  public initialize(): void {}
-
-  // TODO: implementar esto apropiadamente :c
-  public cleanup(chanel: string = ''): void {
-    if (chanel === '') return
-
-    ipcMain.removeHandler(chanel)
   }
 }
 

@@ -20,6 +20,7 @@ class DatabaseService implements Service {
     console.log('initializing database service')
     this.connectionManager = new ConnectionManager(this.databasePath)
     this.queryRunner = new QueryRunner(this.connectionManager.db)
+    console.log(this.queryRunner)
   }
 
   public cleanup(): void {

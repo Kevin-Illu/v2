@@ -1,5 +1,6 @@
 import { Theme } from '@radix-ui/themes'
-import { TodoPage } from './pages'
+import { SettingsPage } from './pages'
+import { SettingsProvider } from './context'
 
 function App(): JSX.Element {
   return (
@@ -11,7 +12,9 @@ function App(): JSX.Element {
       panelBackground="translucent"
       scaling="110%"
     >
-      <TodoPage />
+      <SettingsProvider>
+        <SettingsPage />
+      </SettingsProvider>
     </Theme>
   )
 }

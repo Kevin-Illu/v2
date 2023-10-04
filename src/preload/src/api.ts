@@ -1,19 +1,25 @@
-import { Action } from '$globalTypes/comunication'
+import { Action, SettignsActions, TodoActions } from '$globalTypes/comunication'
 import { ipcRenderer } from 'electron'
 
 export interface APIService {
   todos: {
-    get<T>(action: Action): Promise<T>
+    get<T>(action: Action<TodoActions>): Promise<T>
+  }
+  settings: {
+    get<T>(ations: Action<SettignsActions>): Promise<T>
   }
 }
 
 const api: APIService = {
   todos: {
-    get: <T>(action: Action): Promise<T> =>
-      ipcRenderer.invoke('services:todo', {
-        name: action.name,
-        payload: action.payload
-      })
+    // eslint-disable-next-line prettier/prettier
+    get: <T>(action: Action<TodoActions>): Promise<T> =>
+      ipcRenderer.invoke('services:todo', action)
+  },
+
+  settings: {
+    get: <T>(action: Action<SettignsActions>): Promise<T> =>
+      ipcRenderer.invoke('services:settings', action)
   }
 }
 
