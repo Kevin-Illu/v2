@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react'
 type KeyLoaderReturn = {
   isLoading: boolean
   hotkeys: HotKey[]
-  loadkeys: () => Promise<void>
-  setHotKeys: React.Dispatch<React.SetStateAction<HotKey[]>>
 }
 
 export function useHotKeyLoader(): KeyLoaderReturn {
@@ -26,12 +24,10 @@ export function useHotKeyLoader(): KeyLoaderReturn {
 
   useEffect(() => {
     loadHotKeys()
-  }, []) // Llamar loadHotKeys al montar el componente
+  }, [])
 
   return {
     isLoading,
-    hotkeys: hotKeys,
-    setHotKeys,
-    loadkeys: loadHotKeys
+    hotkeys: hotKeys
   }
 }

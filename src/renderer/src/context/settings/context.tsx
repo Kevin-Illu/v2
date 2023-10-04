@@ -16,13 +16,13 @@ interface ProviderProps {
 }
 
 export const SettingsProvider: FC<ProviderProps> = ({ children }) => {
-  const { isLoading, hotkeys } = useHotKeyLoader()
+  const { hotkeys, isLoading } = useHotKeyLoader()
 
   return (
     <context.Provider
       value={{
         hotkeys: {
-          isLoading,
+          isLoading: isLoading,
           keys: hotkeys
         }
       }}

@@ -52,7 +52,7 @@ export class TodoService extends CommunicationService implements ICommunicationS
 
   public initialize(): void {
     console.log('initializing TodoService')
-    this.handleAction('services:todo', this._dispatcher)
+    this.handleAction('services:todos', this._dispatcher)
   }
 
   public cleanup(): void {

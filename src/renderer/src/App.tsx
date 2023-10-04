@@ -1,6 +1,6 @@
 import { Theme } from '@radix-ui/themes'
-import { SettingsPage } from './pages'
 import { SettingsProvider } from './context'
+import { TodoPage } from './pages'
 
 function App(): JSX.Element {
   return (
@@ -13,7 +13,7 @@ function App(): JSX.Element {
       scaling="110%"
     >
       <SettingsProvider>
-        <SettingsPage />
+        <TodoPage />
       </SettingsProvider>
     </Theme>
   )

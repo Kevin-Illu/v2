@@ -19,13 +19,18 @@ export class SettingsService extends CommunicationService implements ICommunicat
     }
   }
 
-  public getHotKeys(): Promise<HotKey[]> {
+  public getHotKeys = (): Promise<HotKey[]> => {
     // return this._db.queryRunner.fetch<HotKey[]>('SELECT * FROM hotkey')
     return this._db.queryRunner.fetch<HotKey[]>('SELECT * FROM hotkey')
   }
 
   public _dispatcher = <SettingsActions>(action: Action<SettingsActions>): Promise<void> => {
     const actionName = action.name as string
+
+    if (action.payload !== null) {
+      return this._actions[actionName].dispatch(action.payload)
+    }
+
     return this._actions[actionName].dispatch()
   }
 

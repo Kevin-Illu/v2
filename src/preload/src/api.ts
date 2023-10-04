@@ -14,7 +14,7 @@ const api: APIService = {
   todos: {
     // eslint-disable-next-line prettier/prettier
     get: <T>(action: Action<TodoActions>): Promise<T> =>
-      ipcRenderer.invoke('services:todo', action)
+      ipcRenderer.invoke('services:todos', action)
   },
 
   settings: {

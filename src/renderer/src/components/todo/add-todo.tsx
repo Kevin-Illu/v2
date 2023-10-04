@@ -17,7 +17,7 @@ export const AddTodo = () => {
   }, [])
 
   if (error) {
-    return <>{error}</>
+    return <p>{error}</p>
   }
 
   return (
