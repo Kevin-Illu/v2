@@ -1,10 +1,8 @@
 import { useContext } from 'react'
 import { context } from './context'
 
-export const useSettigs = () => {
-  const { hotkeys } = useContext(context)
+export const useSettings = () => {
+  const { settings } = useContext(context)
 
-  return {
-    hotkeys
-  }
+  return settings
 }

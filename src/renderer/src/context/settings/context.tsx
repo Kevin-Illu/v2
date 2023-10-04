@@ -3,9 +3,11 @@ import { useHotKeyLoader } from '@renderer/hotkeys'
 import { FC, ReactNode, createContext } from 'react'
 
 interface ContextProps {
-  hotkeys: {
-    keys: HotKey[]
-    isLoading: boolean
+  settings: {
+    hotkeys: {
+      keys: HotKey[]
+      isLoading: boolean
+    }
   }
 }
 
@@ -21,9 +23,11 @@ export const SettingsProvider: FC<ProviderProps> = ({ children }) => {
   return (
     <context.Provider
       value={{
-        hotkeys: {
-          isLoading: isLoading,
-          keys: hotkeys
+        settings: {
+          hotkeys: {
+            isLoading: isLoading,
+            keys: hotkeys
+          }
         }
       }}
     >
