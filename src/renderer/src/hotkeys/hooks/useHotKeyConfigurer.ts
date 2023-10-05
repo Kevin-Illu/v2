@@ -1,21 +1,35 @@
-import { HotKey } from '$globalTypes/globals'
-import { useEffect } from 'react'
-import { useHotKeyLoader } from './useHotKeyLoader'
+import { useEffect, useCallback } from 'react'
 
-type HotKeyConfigurerReturn = {
-  isLoading: boolean
-  hotkeys: HotKey[]
+type OptionalConfig = Pick<KeyboardEvent, 'altKey' | 'ctrlKey' | 'shiftKey'>
+
+interface ShortcutConfig extends Partial<OptionalConfig> {
+  code: KeyboardEvent['code']
+  shortcutTarget?: HTMLElement
 }
 
-export const useHotKeyConfigurer = (): HotKeyConfigurerReturn => {
-  const { hotkeys, isLoading } = useHotKeyLoader()
+type ShortcutAction = (e: KeyboardEvent) => void
+
+export default function useKeyboardShortcut(
+  shortcutAction: ShortcutAction,
+  config: ShortcutConfig
+): void {
+  const targetElement = config.shortcutTarget || document
+
+  const eventHandler = useCallback(
+    (e: KeyboardEvent) => {
+      const { code, ctrlKey, altKey, shiftKey } = e
+      if (config.code !== code) return
+      if (config.ctrlKey && !ctrlKey) return
+      if (config.shiftKey && !shiftKey) return
+      if (config.altKey && !altKey) return
+
+      shortcutAction(e)
+    },
+    [shortcutAction, config]
+  )
 
   useEffect(() => {
-    console.log(hotkeys)
-  }, [isLoading])
-
-  return {
-    isLoading,
-    hotkeys
-  }
+    targetElement.addEventListener('keydown', eventHandler)
+    return () => targetElement.removeEventListener('keydown', eventHandler)
+  }, [targetElement, eventHandler])
 }

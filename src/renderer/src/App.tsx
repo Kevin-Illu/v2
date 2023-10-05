@@ -5,11 +5,11 @@ import { TodoPage } from './pages'
 function App(): JSX.Element {
   return (
     <Theme
-      appearance="dark"
-      accentColor="mint"
-      grayColor="olive"
+      appearance="light"
+      accentColor="blue"
+      grayColor="sand"
       radius="medium"
-      panelBackground="translucent"
+      panelBackground="solid"
       scaling="110%"
     >
       <SettingsProvider>

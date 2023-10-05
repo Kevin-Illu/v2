@@ -1,7 +1,6 @@
 import { type State } from '$globalTypes/globals'
-import { Select } from '@radix-ui/themes'
+import { Flex, RadioGroup } from '@radix-ui/themes'
 import { FC } from 'react'
-
 interface StateListProps {
   states: State[]
 }
@@ -12,18 +11,14 @@ export const StatesList: FC<StateListProps> = ({ states }) => {
   })
 
   return (
-    <Select.Root>
-      <Select.Trigger placeholder="Initial state..." variant="soft" />
-      <Select.Content>
-        <Select.Group>
-          <Select.Label>States</Select.Label>
-          {filteredStates.map(({ state_name: name, id }) => (
-            <Select.Item value={name} key={id}>
-              {name}
-            </Select.Item>
-          ))}
-        </Select.Group>
-      </Select.Content>
-    </Select.Root>
+    <RadioGroup.Root>
+      <Flex justify="between" align="center">
+        {filteredStates.map((state) => (
+          <Flex key={state.id} gap="2" justify="between" align="center">
+            <RadioGroup.Item value={state.id.toString()} /> {state.state_name}
+          </Flex>
+        ))}
+      </Flex>
+    </RadioGroup.Root>
   )
 }
