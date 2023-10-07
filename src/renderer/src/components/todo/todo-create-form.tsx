@@ -13,12 +13,14 @@ import {
   TextField
 } from '@radix-ui/themes'
 import { type State } from '$globalTypes/globals'
+import { Formik } from 'formik'
+import { FormikProps } from 'formik/dist/types'
 
-interface TodoCreateFormProps {
+interface TodoFormDialogProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const TodoCreateForm: FC<TodoCreateFormProps> = ({ setOpen }) => {
+export const TodoFormDialog: FC<TodoFormDialogProps> = ({ setOpen }) => {
   const [todoStates, setTodoStates] = useState<State[]>([])
   const fetchStates = window.api.todos
 
@@ -32,8 +34,8 @@ export const TodoCreateForm: FC<TodoCreateFormProps> = ({ setOpen }) => {
     })
   }, [])
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = (values) => {
+    console.log(values)
     setOpen(false)
   }
 
@@ -44,48 +46,81 @@ export const TodoCreateForm: FC<TodoCreateFormProps> = ({ setOpen }) => {
         <Text>get started creating something fabolus!</Text>
       </DialogDescription>
 
-      <form onSubmit={handleSubmit}>
-        <Flex direction="column" gap="4">
-          <label>
-            <Text mb="4">Title</Text>
-            <TextField.Input placeholder="something special" />
-          </label>
-          <label>
-            <Text mb="4">Description</Text>
-            <TextArea placeholder="explain yours goals ..." />
-          </label>
-          <label>
-            <Text mb="4">which state do you use?</Text>
-            <StateSelectionGroup states={todoStates} />
-          </label>
-        </Flex>
-
-        <Flex gap="3" mt="4" justify="end">
-          <DialogClose>
-            <Button variant="soft" color="gray">
-              Cancel
-            </Button>
-          </DialogClose>
-          <Button type="submit">create</Button>
-        </Flex>
-      </form>
+      <TodoCreateForm stateList={todoStates} handleSubmit={handleSubmit} />
     </DialogContent>
+  )
+}
+
+const TodoCreateForm = ({ stateList, handleSubmit }) => {
+  return (
+    <Formik
+      initialValues={{
+        title: '',
+        description: '',
+        stateId: '1'
+      }}
+      onSubmit={(values) => {
+        handleSubmit(values)
+      }}
+    >
+      {(formik) => (
+        <form onSubmit={formik.handleSubmit}>
+          <Flex direction="column" gap="4">
+            <label>
+              <Text>Title</Text>
+              <TextField.Input {...formik.getFieldProps('title')} placeholder="your goal" />
+            </label>
+            <label>
+              <Text mb="4">Description</Text>
+              <TextArea
+                placeholder="explain yours goals ..."
+                {...formik.getFieldProps('description')}
+              />
+            </label>
+            <label>
+              <Text mb="4">which state do you use?</Text>
+              <StateSelectionGroup states={stateList} formik={formik} />
+            </label>
+          </Flex>
+
+          <Flex gap="3" mt="4" justify="end">
+            <DialogClose>
+              <Button variant="soft" color="gray">
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button type="submit">create</Button>
+          </Flex>
+        </form>
+      )}
+    </Formik>
   )
 }
 
 const StateSelectionGroup: FC<{
   states: State[]
-}> = ({ states }) => {
+  formik: FormikProps<{
+    title: string
+    description: string
+    stateId: string
+  }>
+}> = ({ states, formik }) => {
   return (
-    <RadioGroupRoot>
+    <RadioGroupRoot value={formik.values.stateId} name="stateId" onChange={formik.handleChange}>
       <Flex direction="row" gap="4">
         {states.map((state) => (
-          <Flex key={state.id} direction="row" gap="3" align="center">
-            <RadioGroupItem value={state.id.toString()} />
-            <Text>{state.state_name}</Text>
-          </Flex>
+          <StateSelectionItem key={state.id} state={state} />
         ))}
       </Flex>
     </RadioGroupRoot>
+  )
+}
+
+const StateSelectionItem: FC<{ state: State }> = ({ state }) => {
+  return (
+    <label key={state.id} className="flex items-center gap-3">
+      <RadioGroupItem value={state.id.toString()} />
+      <Text>{state.state_name}</Text>
+    </label>
   )
 }
