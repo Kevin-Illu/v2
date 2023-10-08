@@ -8,12 +8,12 @@ export const TodoCreateForm = ({ stateList, handleSubmit }) => {
   return (
     <Formik
       initialValues={{
-        title: '',
+        name: '',
         description: '',
-        stateId: '1'
+        state_id: '1'
       }}
       validationSchema={Yup.object({
-        title: Yup.string().required('Is required.')
+        name: Yup.string().required('Is required.')
       })}
       onSubmit={(values) => {
         handleSubmit(values)
@@ -24,7 +24,7 @@ export const TodoCreateForm = ({ stateList, handleSubmit }) => {
           <Flex direction="column" gap="4">
             <InputTextField
               label="Title"
-              name="title"
+              name="name"
               placeholder="new placeholder"
               formik={formik}
             />

@@ -9,3 +9,8 @@ export type MainDatabaseInstance = MainDatabase
 
 // Tipo de datos para representar una consulta SQL en forma de cadena.
 export type SQLQuery = string
+
+export interface RunResult {
+  lastID: number // El último ID de inserción (si es aplicable)
+  changes: number // La cantidad de cambios realizados por la consulta
+}

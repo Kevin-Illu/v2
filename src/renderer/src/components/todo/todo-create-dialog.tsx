@@ -1,7 +1,8 @@
-import { State } from '$globalTypes/globals'
+import { State, Todo } from '$globalTypes/globals'
 import { DialogContent, DialogDescription, DialogTitle, Text } from '@radix-ui/themes'
 import { useEffect, useState, FC } from 'react'
 import { TodoCreateForm } from './todo-create-form'
+import { type RunResult } from 'sqlite3'
 
 interface TodoFormDialogProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -9,10 +10,10 @@ interface TodoFormDialogProps {
 
 export const TodoFormDialog: FC<TodoFormDialogProps> = ({ setOpen }) => {
   const [todoStates, setTodoStates] = useState<State[]>([])
-  const fetchStates = window.api.todos
+  const TodosService = window.api.todos
 
   useEffect(() => {
-    fetchStates.get<State[]>({ name: 'get-states', payload: null }).then((states) => {
+    TodosService.get<State[]>({ name: 'get-states', payload: null }).then((states) => {
       const CANCELED = 4
       const COMPLETED = 6
       const filteredStates = states.filter((s) => s.id !== CANCELED && s.id !== COMPLETED)
@@ -21,9 +22,15 @@ export const TodoFormDialog: FC<TodoFormDialogProps> = ({ setOpen }) => {
     })
   }, [])
 
-  const handleSubmit = (values) => {
-    console.log(values)
-    setOpen(false)
+  const handleSubmit = (values: Todo) => {
+    TodosService.insert<RunResult>({ name: 'insert-new-todo', payload: values })
+      .then(() => {
+        setOpen(false)
+      })
+      .catch(() => {
+        // TODO: manejar el error adecuadamente
+        setOpen(false)
+      })
   }
 
   return (

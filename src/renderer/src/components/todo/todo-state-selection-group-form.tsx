@@ -8,7 +8,7 @@ export const StateSelectionGroup: FC<{
   formik: FormikProps<any>
 }> = ({ states, formik }) => {
   return (
-    <RadioGroupRoot name="stateId" onChange={formik.handleChange}>
+    <RadioGroupRoot name="state_id" onChange={formik.handleChange}>
       <Flex direction="row" gap="4">
         {states.map((state) => (
           <StateSelectionItem key={state.id} state={state} />

@@ -4,6 +4,7 @@ import { ipcRenderer } from 'electron'
 export interface APIService {
   todos: {
     get<T>(action: Action<TodoActions>): Promise<T>
+    insert<T>(action: Action<TodoActions>): Promise<T>
   }
   settings: {
     get<T>(ations: Action<SettignsActions>): Promise<T>
@@ -14,6 +15,8 @@ const api: APIService = {
   todos: {
     // eslint-disable-next-line prettier/prettier
     get: <T>(action: Action<TodoActions>): Promise<T> =>
+      ipcRenderer.invoke('services:todos', action),
+    insert: <T>(action: Action<TodoActions>): Promise<T> =>
       ipcRenderer.invoke('services:todos', action)
   },
 
