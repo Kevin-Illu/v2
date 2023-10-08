@@ -1,21 +1,35 @@
-import { Flex, Text, TextField } from '@radix-ui/themes'
+import { Flex, Text, TextArea, TextField } from '@radix-ui/themes'
 import { FC } from 'react'
+import { ErrorMessage } from 'formik'
+import { FormikProps } from 'formik/dist/types'
 
-interface TextFieldInputProps {
+interface TextFieldProps {
   name: string
   label: string
-  value: string
-  id?: string
   placeholder?: string
+  formik: FormikProps<any>
 }
 
-export const TextFieldInput: FC<TextFieldInputProps> = ({ name, label, ...props }) => {
+export const InputTextField: FC<TextFieldProps> = ({ label, name, formik, ...props }) => {
   return (
     <label>
-      <Flex align="center" justify="between" direction="row">
+      <Flex align="center" justify="between">
         <Text>{label}</Text>
+        <ErrorMessage name={name}>{(message) => <Text color="red">{message}</Text>}</ErrorMessage>
       </Flex>
-      <TextField.Input name={name} {...props} />
+      <TextField.Input {...formik.getFieldProps(name)} {...props} />
+    </label>
+  )
+}
+
+export const AreaTextField: FC<TextFieldProps> = ({ label, name, formik, ...props }) => {
+  return (
+    <label>
+      <Flex align="center" justify="between">
+        <Text>{label}</Text>
+        <ErrorMessage name={name}>{(message) => <Text color="red">{message}</Text>}</ErrorMessage>
+      </Flex>
+      <TextArea {...formik.getFieldProps(name)} {...props} />
     </label>
   )
 }
