@@ -4,6 +4,8 @@ import { ErrorMessage } from 'formik'
 import { FormikProps } from 'formik/dist/types'
 
 interface TextFieldProps {
+  className?: string
+  style?: React.CSSProperties
   name: string
   label: string
   placeholder?: string
