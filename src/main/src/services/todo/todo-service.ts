@@ -44,6 +44,7 @@ export class TodoService extends CommunicationService implements ICommunicationS
   }
 
   public createNewTodo = (todo: Todo): Promise<RunResult> => {
+    console.log(todo)
     return this._db.queryRunner.execute(
       `
       INSERT INTO todo (user_id, state_id, name, description, created_date, created_time, color_id)
