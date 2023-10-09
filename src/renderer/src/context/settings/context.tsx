@@ -1,37 +1,4 @@
-import { HotKey } from '$globalTypes/globals'
-import { useHotKeyLoader } from '@renderer/hotkeys'
-import { FC, ReactNode, createContext } from 'react'
+import { createContext } from 'react'
+import { SettingsContextProps } from './types'
 
-interface ContextProps {
-  settings: {
-    hotkeys: {
-      keys: HotKey[]
-      isLoading: boolean
-    }
-  }
-}
-
-export const context = createContext({} as ContextProps)
-
-interface ProviderProps {
-  children: ReactNode
-}
-
-export const SettingsProvider: FC<ProviderProps> = ({ children }) => {
-  const { hotkeys, isLoading } = useHotKeyLoader()
-
-  return (
-    <context.Provider
-      value={{
-        settings: {
-          hotkeys: {
-            isLoading: isLoading,
-            keys: hotkeys
-          }
-        }
-      }}
-    >
-      {children}
-    </context.Provider>
-  )
-}
+export const SettingsContext = createContext({} as SettingsContextProps)

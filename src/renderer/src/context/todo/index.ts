@@ -1,4 +1,3 @@
 export * from './context'
-export * from './provider'
-export * from './types'
 export * from './reducer'
+export * from './types'

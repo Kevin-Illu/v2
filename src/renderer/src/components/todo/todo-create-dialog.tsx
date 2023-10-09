@@ -1,15 +1,12 @@
 import { State, Todo } from '$globalTypes/globals'
 import { DialogContent, DialogDescription, DialogTitle, Text } from '@radix-ui/themes'
-import { useEffect, useState, FC } from 'react'
+import { useEffect, useState } from 'react'
 import { TodoCreateForm } from './todo-create-form'
 import { type RunResult } from 'sqlite3'
+import { useTodoContext } from '@renderer/hooks/useTodoContext'
 
-interface TodoFormDialogProps {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setIsTodoCreated: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-export const TodoFormDialog: FC<TodoFormDialogProps> = ({ setOpen, setIsTodoCreated }) => {
+export const TodoFormDialog = () => {
+  const { setIsDialogOpen, setIsTodoCreated } = useTodoContext()
   const [todoStates, setTodoStates] = useState<State[]>([])
   const TodosService = window.api.todos
 
@@ -26,12 +23,12 @@ export const TodoFormDialog: FC<TodoFormDialogProps> = ({ setOpen, setIsTodoCrea
   const handleSubmit = (values: Todo) => {
     TodosService.dataAccessor<RunResult>({ name: 'create-new-todo', payload: values })
       .then(() => {
-        setOpen(false)
+        setIsDialogOpen(false)
         setIsTodoCreated(true)
       })
       .catch(() => {
         // TODO: manejar el error adecuadamente
-        setOpen(false)
+        setIsDialogOpen(false)
       })
   }
 

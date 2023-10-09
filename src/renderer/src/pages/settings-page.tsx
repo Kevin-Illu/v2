@@ -1,10 +1,10 @@
 import { Layout } from '@renderer/components'
-import { useSettings } from '@renderer/context/index'
+import { useSettingsContext } from '@renderer/hooks'
 
 export const SettingsPage = () => {
   const {
     hotkeys: { isLoading, keys }
-  } = useSettings()
+  } = useSettingsContext()
 
   if (isLoading) {
     return <p>cargando...</p>
