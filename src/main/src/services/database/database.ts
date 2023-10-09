@@ -15,14 +15,14 @@ class DatabaseService implements Service {
     this.name = name
   }
 
-  public initialize(): void {
+  public initialize = (): void => {
     // conect with the dabase
     console.log('initializing database service')
     this.connectionManager = new ConnectionManager(this.databasePath)
     this.queryRunner = new QueryRunner(this.connectionManager.db)
   }
 
-  public cleanup(): void {
+  public cleanup = (): void => {
     if (this.connectionManager === undefined) return
 
     console.log('close database service')

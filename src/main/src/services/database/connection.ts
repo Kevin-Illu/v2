@@ -9,7 +9,7 @@ class ConnectionManager {
     this.db = new sqlite3.Database(databasePath)
   }
 
-  public close(): void {
+  public close = (): void => {
     this.db.close()
   }
 }

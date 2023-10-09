@@ -2,7 +2,7 @@ import { HotKey } from './globals'
 
 export type Action<T> = {
   name: keyof T
-  payload: Parameters<ServiceActions[keyof ServiceActions]['dispatch']>[0] | null
+  payload?: Parameters<ServiceActions[keyof ServiceActions]['dispatch']>[0] | null
 }
 
 export type TodoActions = {

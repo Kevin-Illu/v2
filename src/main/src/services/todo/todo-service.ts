@@ -4,11 +4,13 @@ import CommunicationService from '../communication-service'
 
 export class TodoService extends CommunicationService implements ICommunicationService {
   public _actions: ActionMap<TodoActions>
-
+  public name: string
   private _db: MainDatabaseInstance
 
   constructor(db: MainDatabaseInstance, name: string) {
-    super(name)
+    super()
+
+    this.name = name
     this._db = db
 
     this._actions = {
@@ -44,7 +46,6 @@ export class TodoService extends CommunicationService implements ICommunicationS
   }
 
   public createNewTodo = (todo: Todo): Promise<RunResult> => {
-    console.log(todo)
     return this._db.queryRunner.execute(
       `
       INSERT INTO todo (user_id, state_id, name, description, created_date, created_time, color_id)
@@ -65,7 +66,7 @@ export class TodoService extends CommunicationService implements ICommunicationS
   public _dispatcher = <TodoActions>(action: Action<TodoActions>): Promise<void> => {
     const actionName = action.name as string
 
-    if (action.payload !== null) {
+    if (action.payload) {
       return this._actions[actionName].dispatch(action.payload)
     }
 
@@ -74,6 +75,11 @@ export class TodoService extends CommunicationService implements ICommunicationS
 
   public initialize(): void {
     console.log('initializing TodoService')
+    // ?INFO: necesito normalizar el channel name para que
+    // sea igual en todos los lados, el channel name es utilizado
+    // en el preload process por la api, talvez el channel name
+    // deveria convinarse con el service.name?
+    // ejemplo: chanel = `service:{this.name}`
     this.handleAction('services:todos', this._dispatcher)
   }
 

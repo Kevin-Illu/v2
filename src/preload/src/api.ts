@@ -12,7 +12,7 @@ export interface APIService {
 
 const api: APIService = {
   todos: {
-    dataAccessor: (action) => ipcRenderer.invoke('services:todo', action)
+    dataAccessor: (action) => ipcRenderer.invoke('services:todos', action)
   },
   settings: {
     dataAccessor: (action) => ipcRenderer.invoke('services:settings', action)

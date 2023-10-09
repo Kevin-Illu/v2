@@ -13,7 +13,7 @@ export function useHotKeyLoader(): KeyLoaderReturn {
 
   async function loadHotKeys(): Promise<void> {
     try {
-      const keys = await settings.get<HotKey[]>({ name: 'get-hotkeys', payload: null })
+      const keys = await settings.dataAccessor<HotKey[]>({ name: 'get-hotkeys' })
       setHotKeys(keys)
       setIsLoading(false)
     } catch (error) {

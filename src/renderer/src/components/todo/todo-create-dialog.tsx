@@ -13,7 +13,7 @@ export const TodoFormDialog: FC<TodoFormDialogProps> = ({ setOpen }) => {
   const TodosService = window.api.todos
 
   useEffect(() => {
-    TodosService.get<State[]>({ name: 'get-states', payload: null }).then((states) => {
+    TodosService.dataAccessor<State[]>({ name: 'get-states' }).then((states) => {
       const CANCELED = 4
       const COMPLETED = 6
       const filteredStates = states.filter((s) => s.id !== CANCELED && s.id !== COMPLETED)
@@ -23,7 +23,7 @@ export const TodoFormDialog: FC<TodoFormDialogProps> = ({ setOpen }) => {
   }, [])
 
   const handleSubmit = (values: Todo) => {
-    TodosService.insert<RunResult>({ name: 'insert-new-todo', payload: values })
+    TodosService.dataAccessor<RunResult>({ name: 'insert-new-todo', payload: values })
       .then(() => {
         setOpen(false)
       })
