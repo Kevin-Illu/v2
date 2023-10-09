@@ -6,9 +6,10 @@ import { type RunResult } from 'sqlite3'
 
 interface TodoFormDialogProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setIsTodoCreated: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const TodoFormDialog: FC<TodoFormDialogProps> = ({ setOpen }) => {
+export const TodoFormDialog: FC<TodoFormDialogProps> = ({ setOpen, setIsTodoCreated }) => {
   const [todoStates, setTodoStates] = useState<State[]>([])
   const TodosService = window.api.todos
 
@@ -23,9 +24,10 @@ export const TodoFormDialog: FC<TodoFormDialogProps> = ({ setOpen }) => {
   }, [])
 
   const handleSubmit = (values: Todo) => {
-    TodosService.dataAccessor<RunResult>({ name: 'insert-new-todo', payload: values })
+    TodosService.dataAccessor<RunResult>({ name: 'create-new-todo', payload: values })
       .then(() => {
         setOpen(false)
+        setIsTodoCreated(true)
       })
       .catch(() => {
         // TODO: manejar el error adecuadamente

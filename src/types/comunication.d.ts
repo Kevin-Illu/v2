@@ -9,7 +9,7 @@ export type TodoActions = {
   ['get-states']: () => Promise<State[]>
   ['get-todos']: () => Promise<Task[]>
   ['get-task-by-id']: (id: string) => Promise<Task>
-  ['insert-new-todo']: (todo: Todo) => Promise<any>
+  ['create-new-todo']: (todo: Todo) => Promise<any>
 }
 
 export type SettignsActions = {

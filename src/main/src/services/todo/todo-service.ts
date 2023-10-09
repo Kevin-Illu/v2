@@ -1,4 +1,4 @@
-import { Action, State, Todo, TodoActions } from '$globalTypes/index'
+import { Action, State, Todo, TodoActions, TodoResponse } from '$globalTypes/index'
 import { ActionMap, ICommunicationService, MainDatabaseInstance, RunResult } from '@main/types'
 import CommunicationService from '../communication-service'
 
@@ -21,9 +21,9 @@ export class TodoService extends CommunicationService implements ICommunicationS
         dispatch: this.getTodos
       },
       ['get-task-by-id']: {
-        dispatch: (id: string): Promise<Todo> => this.getTodoById(id)
+        dispatch: (id: string): Promise<TodoResponse> => this.getTodoById(id)
       },
-      ['insert-new-todo']: {
+      ['create-new-todo']: {
         dispatch: (todo: Todo): Promise<RunResult> => this.createNewTodo(todo)
       }
     }
@@ -37,12 +37,22 @@ export class TodoService extends CommunicationService implements ICommunicationS
     `)
   }
 
-  public getTodos = (): Promise<Todo[]> => {
-    return this._db.queryRunner.fetch<Todo>('SELECT * FROM todos')
+  public getTodos = (): Promise<TodoResponse[]> => {
+    return this._db.queryRunner.fetch<TodoResponse>(`
+      SELECT
+      todo.id as todo_id
+      , todo.name as todo_name
+      , todo.description as todo_description
+      , todo.archived as todo_archived
+      , state.name as state_name
+      , state.description as state_description
+      FROM TODO INNER JOIN state
+      on todo.state_id = state.id
+    `)
   }
 
-  public getTodoById = (taskId: string): Promise<Todo> => {
-    return this._db.queryRunner.fetch<Todo>('SELECT * FROM todos WHERE id = ?', [taskId])[0]
+  public getTodoById = (taskId: string): Promise<TodoResponse> => {
+    return this._db.queryRunner.fetch<TodoResponse>('SELECT * FROM todo WHERE id = ?', [taskId])[0]
   }
 
   public createNewTodo = (todo: Todo): Promise<RunResult> => {

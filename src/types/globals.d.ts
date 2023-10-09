@@ -13,6 +13,15 @@ export interface Todo {
   state_id: number
 }
 
+export interface TodoResponse {
+  todo_id: number
+  todo_name: string
+  todo_description: string
+  todo_archived: boolean
+  state_name: string
+  state_description: string
+}
+
 export interface HotKey {
   id: number
   key: string
