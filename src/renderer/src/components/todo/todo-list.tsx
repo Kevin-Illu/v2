@@ -23,16 +23,23 @@ export const TodoList = () => {
       })
   }
 
+  // load the todos at the first time
   useEffect(() => {
     getTodos()
   }, [])
 
+  // load the todos when the
+  // \todo created function is called
   useEffect(() => {
     if (isTodoCreated) {
       getTodos()
     }
   }, [isTodoCreated])
 
+  // when the create todo function is called
+  // the isTodoCreted state is true
+  // we need to revert the state to avoid the
+  // getTodos function call
   useEffect(() => {
     setIsTodoCreated(false)
   }, [isTodoCreated])
