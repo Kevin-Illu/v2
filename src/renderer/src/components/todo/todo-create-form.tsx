@@ -25,17 +25,17 @@ export const TodoCreateForm = ({ stateList, handleSubmit }) => {
             <InputTextField
               label="Title"
               name="name"
-              placeholder="new placeholder"
+              placeholder="Enter your chosen title"
               formik={formik}
             />
             <AreaTextField
               label="Description"
               name="description"
-              placeholder="explain your goals"
+              placeholder="Provide a description"
               formik={formik}
             />
             <label>
-              <Text mb="4">which state do you use?</Text>
+              <Text mb="4">Which state do you use?</Text>
               <StateSelectionGroup states={stateList} formik={formik} />
             </label>
           </Flex>

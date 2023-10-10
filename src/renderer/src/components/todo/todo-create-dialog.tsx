@@ -34,9 +34,9 @@ export const TodoFormDialog = () => {
 
   return (
     <DialogContent className="max-w-sm">
-      <DialogTitle>Create a new Todo</DialogTitle>
+      <DialogTitle>Make Every Day Count!</DialogTitle>
       <DialogDescription mb="4">
-        <Text>get started creating something fabolus!</Text>
+        <Text>Create tasks to inspire you to make the most of each day.</Text>
       </DialogDescription>
 
       <TodoCreateForm stateList={todoStates} handleSubmit={handleSubmit} />

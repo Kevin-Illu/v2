@@ -8,7 +8,7 @@ export const TodoPage = () => {
       <TodoProvider>
         <Box className="h-full w-full flex flex-col gap-2 py-4">
           <Box className="py-2">
-            <Heading>Your todos :)</Heading>
+            <Heading>Task List: Stay Organized and Productiv</Heading>
           </Box>
           <Separator orientation="horizontal" size="4" />
           <TodoList />

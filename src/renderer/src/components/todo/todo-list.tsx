@@ -54,7 +54,7 @@ export const TodoList = () => {
         <Box key={todo.todo_id} className="flex justify-between gap-4">
           <Flex justify="between" gap="4" className="rounded-md p-4 w-full">
             <Box>
-              <header className="flex gap-4">
+              <header className="flex gap-4 pb-2">
                 <Heading as="h4">{todo.todo_name}</Heading>
                 <Badge radius="large">{todo.state_name}</Badge>
               </header>
