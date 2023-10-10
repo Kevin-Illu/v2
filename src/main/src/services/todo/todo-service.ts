@@ -39,8 +39,9 @@ export class TodoService extends CommunicationService implements ICommunicationS
 
   public getTodos = (): Promise<TodoResponse[]> => {
     return this._db.queryRunner.fetch<TodoResponse>(`
-      SELECT
-      todo.id as todo_id
+      SELECT  todo.id as todo_id
+      , todo.created_time
+      , todo.created_date
       , todo.name as todo_name
       , todo.description as todo_description
       , todo.archived as todo_archived
@@ -48,6 +49,7 @@ export class TodoService extends CommunicationService implements ICommunicationS
       , state.description as state_description
       FROM TODO INNER JOIN state
       on todo.state_id = state.id
+      ORDER BY todo.created_time DESC
     `)
   }
 

@@ -20,6 +20,8 @@ export interface TodoResponse {
   todo_archived: boolean
   state_name: string
   state_description: string
+  created_time: string
+  created_date: string
 }
 
 export interface HotKey {
