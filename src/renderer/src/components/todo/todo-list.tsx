@@ -17,7 +17,6 @@ export const TodoList = () => {
     TodosService.dataAccessor<TodoResponse[]>({ name: 'get-todos' })
       .then((todos) => {
         setTodos(todos)
-        console.log(todos)
       })
       .catch((error) => {
         console.error(error)

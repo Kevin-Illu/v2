@@ -11,7 +11,7 @@ type returnType = {
 }
 
 const getSecondsDiff = (timestamp: Date): number => {
-  return (Date.now() - timestamp.getTime()) / 1000
+  return Math.abs((Date.now() - timestamp.getTime()) / 1000)
 }
 
 const getUnitAndValueDate = (secondsElapsed: number): returnType => {

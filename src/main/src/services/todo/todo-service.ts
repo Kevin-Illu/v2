@@ -49,7 +49,7 @@ export class TodoService extends CommunicationService implements ICommunicationS
       , state.description as state_description
       FROM TODO INNER JOIN state
       on todo.state_id = state.id
-      ORDER BY todo.created_time DESC
+      ORDER BY todo.id DESC
     `)
   }
 
