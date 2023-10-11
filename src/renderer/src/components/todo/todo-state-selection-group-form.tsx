@@ -11,18 +11,19 @@ export const StateSelectionGroup: FC<{
     <RadioGroupRoot name="state_id" onChange={formik.handleChange}>
       <Flex direction="row" gap="4">
         {states.map((state) => (
-          <StateSelectionItem key={state.id} state={state} />
+          <StateSelectionItem key={state.id} {...state} />
         ))}
       </Flex>
     </RadioGroupRoot>
   )
 }
 
-const StateSelectionItem: FC<{ state: State }> = ({ state }) => {
+interface StateItemProps extends State {}
+const StateSelectionItem: FC<StateItemProps> = ({ id, state_name }) => {
   return (
-    <label key={state.id} className="flex items-center gap-3">
-      <RadioGroupItem value={state.id.toString()} />
-      <Text>{state.state_name}</Text>
+    <label key={id} className="flex items-center gap-3">
+      <RadioGroupItem value={id.toString()} />
+      <Text>{state_name}</Text>
     </label>
   )
 }
