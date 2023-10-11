@@ -54,7 +54,7 @@ export const TodoList = () => {
         </Flex>
       </header>
       {todos.map((todo) => (
-        <TodoItem key={todo.todo_id} todo={todo} />
+        <TodoItem key={todo.todo_id} {...todo} />
       ))}
     </Box>
   )
