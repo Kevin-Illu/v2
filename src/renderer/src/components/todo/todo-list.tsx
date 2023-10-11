@@ -14,7 +14,7 @@ export const TodoList = () => {
   const TodosService = window.api.todos
 
   function getTodos() {
-    TodosService.dataAccessor<TodoResponse[]>({ name: 'get-todos' })
+    TodosService.dataAccessor<TodoResponse[]>({ type: 'get-todos' })
       .then((todos) => {
         setTodos(todos)
       })

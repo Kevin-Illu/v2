@@ -11,7 +11,7 @@ export const TodoFormDialog = () => {
   const TodosService = window.api.todos
 
   useEffect(() => {
-    TodosService.dataAccessor<State[]>({ name: 'get-states' }).then((states) => {
+    TodosService.dataAccessor<State[]>({ type: 'get-states' }).then((states) => {
       const CANCELED = 4
       const COMPLETED = 6
       const filteredStates = states.filter((s) => s.id !== CANCELED && s.id !== COMPLETED)
@@ -21,7 +21,7 @@ export const TodoFormDialog = () => {
   }, [])
 
   const handleSubmit = (values: Todo) => {
-    TodosService.dataAccessor<RunResult>({ name: 'create-new-todo', payload: values })
+    TodosService.dataAccessor<RunResult>({ type: 'create-new-todo', payload: values })
       .then(() => {
         setIsDialogOpen(false)
         setIsTodoCreated(true)

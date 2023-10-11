@@ -1,7 +1,7 @@
 import { HotKey } from './globals'
 
-export type Action<T> = {
-  name: keyof T
+export type ClientAction<T> = {
+  type: keyof T
   payload?: Parameters<ServiceActions[keyof ServiceActions]['dispatch']>[0] | null
 }
 

@@ -1,8 +1,8 @@
-import { Action, SettignsActions, TodoActions } from '$globalTypes/comunication'
+import { ClientAction, SettignsActions, TodoActions } from '$globalTypes/comunication'
 import { ipcRenderer } from 'electron'
 
 type Accessor<TypeOfAction> = {
-  dataAccessor<T>(action: Action<TypeOfAction>): Promise<T>
+  dataAccessor<T>(action: ClientAction<TypeOfAction>): Promise<T>
 }
 
 export interface APIService {

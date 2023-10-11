@@ -1,4 +1,4 @@
-import { Action, State, Todo, TodoActions, TodoResponse } from '$globalTypes/index'
+import { ClientAction, State, Todo, TodoActions, TodoResponse } from '$globalTypes/index'
 import { ActionMap, ICommunicationService, MainDatabaseInstance, RunResult } from '@main/types'
 import CommunicationService from '../communication-service'
 
@@ -75,14 +75,14 @@ export class TodoService extends CommunicationService implements ICommunicationS
     )
   }
 
-  public _dispatcher = <TodoActions>(action: Action<TodoActions>): Promise<void> => {
-    const actionName = action.name as string
+  public _dispatcher = <TodoActions>(action: ClientAction<TodoActions>): Promise<void> => {
+    const type = action.type as string
 
     if (action.payload) {
-      return this._actions[actionName].dispatch(action.payload)
+      return this._actions[type].dispatch(action.payload)
     }
 
-    return this._actions[actionName].dispatch()
+    return this._actions[type].dispatch()
   }
 
   public initialize(): void {

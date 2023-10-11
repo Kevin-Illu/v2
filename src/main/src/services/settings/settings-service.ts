@@ -1,6 +1,6 @@
 import { ActionMap, ICommunicationService, MainDatabaseInstance } from '@main/types'
 import CommunicationService from '../communication-service'
-import { Action, SettignsActions } from '$globalTypes/comunication'
+import { ClientAction, SettignsActions } from '$globalTypes/comunication'
 import { HotKey } from '$globalTypes/globals'
 
 export class SettingsService extends CommunicationService implements ICommunicationService {
@@ -21,18 +21,17 @@ export class SettingsService extends CommunicationService implements ICommunicat
   }
 
   public getHotKeys = (): Promise<HotKey[]> => {
-    // return this._db.queryRunner.fetch<HotKey[]>('SELECT * FROM hotkey')
     return this._db.queryRunner.fetch<HotKey>('SELECT * FROM hotkey')
   }
 
-  public _dispatcher = <SettingsActions>(action: Action<SettingsActions>): Promise<void> => {
-    const actionName = action.name as string
+  public _dispatcher = <SettingsActions>(action: ClientAction<SettingsActions>): Promise<void> => {
+    const type = action.type as string
 
     if (action.payload) {
-      return this._actions[actionName].dispatch(action.payload)
+      return this._actions[type].dispatch(action.payload)
     }
 
-    return this._actions[actionName].dispatch()
+    return this._actions[type].dispatch()
   }
 
   initialize = (): void => {
