@@ -1,6 +1,6 @@
 import { TodoResponse } from '$globalTypes/globals'
 import { useEffect, useState } from 'react'
-import { Box, Flex, Text } from '@radix-ui/themes'
+import { Box, Em, Flex, Text } from '@radix-ui/themes'
 import { useTodoContext } from '@renderer/hooks'
 import { TodoItem } from './todo-item'
 
@@ -45,10 +45,18 @@ export const TodoList = () => {
   return (
     <Box className="flex flex-col gap-6 py-4">
       <header>
-        <Flex justify="between" align="center">
-          <Text>Todos</Text>
+        <Flex
+          justify="between"
+          align="center"
+          className="text-zinc-600 dark:text-zinc-400 font-bold"
+        >
+          <Text>
+            <Em>Todos</Em>
+          </Text>
           <Box className="w-28">
-            <Text>Actions</Text>
+            <Text>
+              <Em>Actions</Em>
+            </Text>
           </Box>
         </Flex>
       </header>
