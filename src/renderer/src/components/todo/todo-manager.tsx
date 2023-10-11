@@ -7,7 +7,7 @@ export const TodoManager = () => {
   const { isDialogOpen } = state
 
   return (
-    <Box className="absolute bottom-0 left-0 right-0 w-[36rem] md:w-[42rem] mx-auto mb-4">
+    <Box className="absolute bottom-0 left-0 right-0 w-full px-14 xl:px-28 mx-auto mb-4">
       <DialogRoot open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <TodoFormDialog />
         <AddTodoButton />
