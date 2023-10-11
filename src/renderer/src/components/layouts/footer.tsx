@@ -3,7 +3,7 @@ import { GitHubLogoIcon, VercelLogoIcon, FramerLogoIcon } from '@radix-ui/react-
 
 export const Footer = () => {
   return (
-    <footer className="w-full h-10 bg-white border-solid border-t-[1px] px-4">
+    <footer className="w-full h-10 border-solid border-t-[1px] border-zinc-200 dark:border-zinc-800 px-4">
       <Flex align="center" justify="end" gap="2" className="w-full h-full">
         <GitHubLogoIcon />
         <VercelLogoIcon />

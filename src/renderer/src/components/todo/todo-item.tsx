@@ -1,7 +1,7 @@
 import React from 'react'
 import { TodoResponse } from '$globalTypes/globals'
 import { ArchiveIcon, CheckIcon } from '@radix-ui/react-icons'
-import { Badge, Box, Card, Heading, IconButton, Text } from '@radix-ui/themes'
+import { Badge, Box, Heading, IconButton, Text } from '@radix-ui/themes'
 import { getTimeAgo } from '@renderer/utils'
 
 interface ItemProps {
@@ -14,30 +14,31 @@ export const TodoItem: React.FC<ItemProps> = ({ todo }) => {
 
   return (
     <Box key={todo.todo_id} className="flex justify-between gap-8">
-      <Card asChild variant="classic" className="p-4 w-full">
-        <a href="#">
-          <header className="flex gap-4 items-center py-4 ">
-            <Heading as="h4">{todo.todo_name}</Heading>
-          </header>
+      <a
+        href="#"
+        className="border-[2px] w-full px-8 py-4 rounded-xl border-zinc-200 dark:border-zinc-800 outline-none focus:border-lime-500 focus:dark:border-lime-800 transition-colors"
+      >
+        <header className="flex gap-4 items-center py-4 ">
+          <Heading as="h4">{todo.todo_name}</Heading>
+        </header>
 
-          <footer className="flex justify-between items-center w-full text-zinc-400">
-            <Box className="flex gap-4">
-              <Badge radius="large" size="1" className="h-8">
-                {todo.state_name}
-              </Badge>
-              <div className="flex gap-2 items-center">
-                <Text size="1">{timeAgo}</Text>
-              </div>
-            </Box>
+        <footer className="flex justify-between items-center w-full text-zinc-400">
+          <Box className="flex gap-4">
+            <Badge radius="large" size="1" className="h-8">
+              {todo.state_name}
+            </Badge>
+            <div className="flex gap-2 items-center">
+              <Text size="1">{timeAgo}</Text>
+            </div>
+          </Box>
 
-            <Box className="w-60 text-end">
-              <Text as="p" className="text-zinc-400 truncate" size="1">
-                {todo.todo_description}
-              </Text>
-            </Box>
-          </footer>
-        </a>
-      </Card>
+          <Box className="w-60 text-end">
+            <Text as="p" className="text-zinc-400 truncate" size="1">
+              {todo.todo_description}
+            </Text>
+          </Box>
+        </footer>
+      </a>
 
       <Box className="flex justify-between items-start gap-2">
         <IconButton variant="soft" color="grass" size="4">

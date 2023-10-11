@@ -4,14 +4,7 @@ import { TodoPage } from './pages'
 
 function App(): JSX.Element {
   return (
-    <Theme
-      appearance="light"
-      accentColor="blue"
-      grayColor="sand"
-      radius="medium"
-      panelBackground="solid"
-      scaling="110%"
-    >
+    <Theme accentColor="lime" grayColor="olive" radius="full" scaling="110%">
       <SettingsProvider>
         <TodoPage />
       </SettingsProvider>

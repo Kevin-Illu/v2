@@ -35,10 +35,6 @@ export const TodoList = () => {
     }
   }, [isTodoCreated])
 
-  // when the create todo function is called
-  // the isTodoCreted state is true
-  // we need to revert the state to avoid the
-  // getTodos function call
   useEffect(() => {
     setIsTodoCreated(false)
   }, [isTodoCreated])
@@ -48,7 +44,7 @@ export const TodoList = () => {
   }
 
   return (
-    <Box className="flex flex-col gap-4 py-4">
+    <Box className="flex flex-col gap-6 py-4">
       <header>
         <Flex justify="between" align="center">
           <Text>Todos</Text>
