@@ -1,7 +1,7 @@
 import React from 'react'
 import { TodoResponse } from '$globalTypes/globals'
 import { ArchiveIcon, CheckIcon } from '@radix-ui/react-icons'
-import { Badge, Box, Flex, Heading, IconButton, Text } from '@radix-ui/themes'
+import { Badge, Box, Card, Heading, IconButton, Text } from '@radix-ui/themes'
 import { getTimeAgo } from '@renderer/utils'
 
 interface ItemProps {
@@ -13,9 +13,9 @@ export const TodoItem: React.FC<ItemProps> = ({ todo }) => {
   const timeAgo = getTimeAgo(timestamp)
 
   return (
-    <Box key={todo.todo_id} className="flex justify-between gap-12">
-      <Flex justify="between" gap="4" className="rounded-md w-full bg-zinc-100">
-        <Box className="p-4 w-full">
+    <Box key={todo.todo_id} className="flex justify-between gap-8">
+      <Card asChild variant="classic" className="p-4 w-full">
+        <a href="#">
           <header className="flex gap-4 items-center py-4 ">
             <Heading as="h4">{todo.todo_name}</Heading>
           </header>
@@ -30,23 +30,23 @@ export const TodoItem: React.FC<ItemProps> = ({ todo }) => {
               </div>
             </Box>
 
-            <Box className="w-60">
+            <Box className="w-60 text-end">
               <Text as="p" className="text-zinc-400 truncate" size="1">
                 {todo.todo_description}
               </Text>
             </Box>
           </footer>
-        </Box>
-      </Flex>
+        </a>
+      </Card>
 
-      <div className="rounded-md flex justify-between items-start gap-2 pt-4">
-        <IconButton variant="outline" color="gray" radius="full" size="4">
-          <ArchiveIcon />
-        </IconButton>
-        <IconButton variant="outline" radius="full" color="gray" size="4">
+      <Box className="flex justify-between items-start gap-2">
+        <IconButton variant="soft" color="grass" size="4">
           <CheckIcon />
         </IconButton>
-      </div>
+        <IconButton variant="soft" color="amber" size="4">
+          <ArchiveIcon />
+        </IconButton>
+      </Box>
     </Box>
   )
 }

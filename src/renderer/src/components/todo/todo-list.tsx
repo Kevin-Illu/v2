@@ -1,7 +1,7 @@
 import { TodoResponse } from '$globalTypes/globals'
 import { useEffect, useState } from 'react'
-import { Box } from '@radix-ui/themes'
-import { useTodoContext } from '@renderer/hooks/useTodoContext'
+import { Box, Flex, Text } from '@radix-ui/themes'
+import { useTodoContext } from '@renderer/hooks'
 import { TodoItem } from './todo-item'
 
 export const TodoList = () => {
@@ -29,8 +29,6 @@ export const TodoList = () => {
     getTodos()
   }, [])
 
-  // load the todos when the
-  // \todo created function is called
   useEffect(() => {
     if (isTodoCreated) {
       getTodos()
@@ -50,7 +48,15 @@ export const TodoList = () => {
   }
 
   return (
-    <Box className="flex flex-col gap-4">
+    <Box className="flex flex-col gap-4 py-4">
+      <header>
+        <Flex justify="between" align="center">
+          <Text>Todos</Text>
+          <Box className="w-28">
+            <Text>Actions</Text>
+          </Box>
+        </Flex>
+      </header>
       {todos.map((todo) => (
         <TodoItem key={todo.todo_id} todo={todo} />
       ))}
