@@ -1,5 +1,5 @@
 import React from 'react'
-import { TodoResponse } from '$globalTypes/globals'
+import { TodoResponse } from '$globalTypes/models'
 import { ArchiveIcon, CheckIcon } from '@radix-ui/react-icons'
 import { Badge, Box, Heading, IconButton, Text } from '@radix-ui/themes'
 import { getTimeAgo } from '@renderer/utils'
@@ -22,7 +22,7 @@ export const TodoItem: React.FC<ItemProps> = ({
     <Box key={todo_id} className="flex justify-between gap-8">
       <a
         href="#"
-        className="border-[2px] w-full px-8 py-4 rounded-xl border-zinc-200 dark:border-zinc-800 outline-none focus:border-lime-500 focus:dark:border-lime-800 transition-colors"
+        className="hover:dark:border-lime-600 hover:border-lime-400 border-[2px] w-full px-8 py-4 rounded-xl border-zinc-200 dark:border-zinc-800 outline-none focus:border-lime-500 focus:dark:border-lime-800 transition-colors"
       >
         <header className="flex gap-4 items-center py-4">
           <Heading as="h4">{todo_name}</Heading>

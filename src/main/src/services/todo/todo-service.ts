@@ -1,13 +1,14 @@
-import { ClientAction, Todo, TodoActions, TodoResponse } from '$globalTypes/index'
-import { ActionMap, ICommunicationService, MainDatabaseInstance, RunResult } from '@main/types'
 import CommunicationService from '../communication-service'
-import { TodoRepository } from '../../repositories/todo'
+import { ITodoRepository, TodoRepository } from '../../repositories/todo'
+
+import type { ClientAction, Todo, TodoActions, TodoResponse } from '$globalTypes/index'
+import type { ActionMap, ICommunicationService, MainDatabaseInstance, RunResult } from '@main/types'
 
 export class TodoService extends CommunicationService implements ICommunicationService {
   public name: string = 'Todo'
   public actions: ActionMap<TodoActions>
 
-  private todoRepo: TodoRepository
+  private todoRepo: ITodoRepository
 
   constructor(db: MainDatabaseInstance) {
     super()
