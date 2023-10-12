@@ -1,7 +1,9 @@
+import { HotKey } from '$globalTypes/globals'
+
 export interface SettingsContextProps {
   settings: {
     hotkeys: {
-      keys: any
+      keys: HotKey[]
       isLoading: boolean
     }
   }

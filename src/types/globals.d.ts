@@ -1,15 +1,31 @@
-export type ClientAction<T> = {
-  type: keyof T
-  payload?: Parameters<ServiceActions[keyof ServiceActions]['dispatch']>[0] | null
+export interface State {
+  id: number
+  state_name: string
+  description: string
+  color_name: string
+  hex_value: string
 }
 
-export type TodoActions = {
-  ['get-states']: () => Promise<State[]>
-  ['get-todos']: () => Promise<Task[]>
-  ['get-task-by-id']: (id: string) => Promise<Task>
-  ['create-new-todo']: (todo: Todo) => Promise<any>
+export interface Todo {
+  id: number
+  name: string
+  description: string
+  state_id: number
 }
 
-export type SettignsActions = {
-  // ['get-hotkeys']: () => Promise<HotKey[]>
+export interface TodoResponse {
+  todo_id: number
+  todo_name: string
+  todo_description: string
+  todo_archived: boolean
+  state_name: string
+  state_description: string
+  created_time: string
+  created_date: string
+}
+
+export interface HotKey {
+  id: number
+  key: string
+  action: string
 }
