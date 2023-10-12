@@ -4,16 +4,15 @@ import { ClientAction, SettignsActions } from '$globalTypes/comunication'
 import { HotKey } from '$globalTypes/globals'
 
 export class SettingsService extends CommunicationService implements ICommunicationService {
-  public name: string
-  private _db: MainDatabaseInstance
-  public _actions: ActionMap<SettignsActions>
+  public name: string = 'Settings'
+  private db: MainDatabaseInstance
+  public actions: ActionMap<SettignsActions>
 
-  constructor(db: MainDatabaseInstance, name: string) {
+  constructor(db: MainDatabaseInstance) {
     super()
-    this.name = name
-    this._db = db
+    this.db = db
 
-    this._actions = {
+    this.actions = {
       ['get-hotkeys']: {
         dispatch: this.getHotKeys
       }
@@ -21,17 +20,17 @@ export class SettingsService extends CommunicationService implements ICommunicat
   }
 
   public getHotKeys = (): Promise<HotKey[]> => {
-    return this._db.queryRunner.fetch<HotKey>('SELECT * FROM hotkey')
+    return this.db.fetch<HotKey>('SELECT * FROM hotkey')
   }
 
   public _dispatcher = <SettingsActions>(action: ClientAction<SettingsActions>): Promise<void> => {
     const type = action.type as string
 
     if (action.payload) {
-      return this._actions[type].dispatch(action.payload)
+      return this.actions[type].dispatch(action.payload)
     }
 
-    return this._actions[type].dispatch()
+    return this.actions[type].dispatch()
   }
 
   initialize = (): void => {

@@ -3,17 +3,15 @@ import { ActionMap, ICommunicationService, MainDatabaseInstance, RunResult } fro
 import CommunicationService from '../communication-service'
 
 export class TodoService extends CommunicationService implements ICommunicationService {
-  public _actions: ActionMap<TodoActions>
-  public name: string
-  private _db: MainDatabaseInstance
+  public name: string = 'Todo'
 
-  constructor(db: MainDatabaseInstance, name: string) {
+  public actions: ActionMap<TodoActions>
+  private db: MainDatabaseInstance
+
+  constructor(db: MainDatabaseInstance) {
     super()
-
-    this.name = name
-    this._db = db
-
-    this._actions = {
+    this.db = db
+    this.actions = {
       ['get-states']: {
         dispatch: this.getStates
       },
@@ -30,7 +28,7 @@ export class TodoService extends CommunicationService implements ICommunicationS
   }
 
   public getStates = (): Promise<State[]> => {
-    return this._db.queryRunner.fetch<State>(`
+    return this.db.fetch<State>(`
     SELECT s.id, s.name AS state_name, s.description, c.name AS color_name, c.hex_value
     FROM state AS s
     INNER JOIN color AS c ON c.id = s.color_id;
@@ -38,7 +36,7 @@ export class TodoService extends CommunicationService implements ICommunicationS
   }
 
   public getTodos = (): Promise<TodoResponse[]> => {
-    return this._db.queryRunner.fetch<TodoResponse>(`
+    return this.db.fetch<TodoResponse>(`
       SELECT  todo.id as todo_id
       , todo.created_time
       , todo.created_date
@@ -54,11 +52,11 @@ export class TodoService extends CommunicationService implements ICommunicationS
   }
 
   public getTodoById = (taskId: string): Promise<TodoResponse> => {
-    return this._db.queryRunner.fetch<TodoResponse>('SELECT * FROM todo WHERE id = ?', [taskId])[0]
+    return this.db.fetch<TodoResponse>('SELECT * FROM todo WHERE id = ?', [taskId])[0]
   }
 
   public createNewTodo = (todo: Todo): Promise<RunResult> => {
-    return this._db.queryRunner.execute(
+    return this.db.execute(
       `
       INSERT INTO todo (user_id, state_id, name, description, created_date, created_time, color_id)
       VALUES (
@@ -79,10 +77,10 @@ export class TodoService extends CommunicationService implements ICommunicationS
     const type = action.type as string
 
     if (action.payload) {
-      return this._actions[type].dispatch(action.payload)
+      return this.actions[type].dispatch(action.payload)
     }
 
-    return this._actions[type].dispatch()
+    return this.actions[type].dispatch()
   }
 
   public initialize(): void {

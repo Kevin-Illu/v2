@@ -8,6 +8,6 @@ export type ActionMap<T> = {
 }
 
 export interface ICommunicationService extends Service {
-  _actions: ActionMap<any>
+  actions: ActionMap<any>
   _dispatcher: <T>(action: ClientAction<T>) => Promise<void>
 }

@@ -2,14 +2,15 @@ import Application from './src/app'
 import { DatabaseService, TodoService } from './src/services'
 import { SettingsService } from './src/services/settings/settings-service'
 
-const db = new DatabaseService('./src/main/src/database/v2.db', 'database')
-const settignsService = new SettingsService(db, 'settings')
-const todoService = new TodoService(db, 'todo')
+// instance of services
+const dbS = new DatabaseService('./src/main/src/database/v2.db')
+const stS = new SettingsService(dbS)
+const tdS = new TodoService(dbS)
 
 const services = {
-  [db.name]: db,
-  [settignsService.name]: settignsService,
-  [todoService.name]: todoService
+  [dbS.name]: dbS,
+  [stS.name]: stS,
+  [tdS.name]: tdS
 }
 
 const app = new Application(services)
