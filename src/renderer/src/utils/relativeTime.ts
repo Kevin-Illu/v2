@@ -1,4 +1,5 @@
 const DATE_UNITS: Record<string, number> = {
+  year: 31536000,
   day: 86400,
   hour: 3600,
   minute: 60,

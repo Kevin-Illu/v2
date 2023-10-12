@@ -1,4 +1,4 @@
-import { ClientAction, SettignsActions, TodoActions } from '$globalTypes/comunication'
+import { ClientAction, TodoActions } from '$globalTypes/comunication'
 import { ipcRenderer } from 'electron'
 
 type Accessor<TypeOfAction> = {
@@ -7,15 +7,11 @@ type Accessor<TypeOfAction> = {
 
 export interface APIService {
   todos: Accessor<TodoActions>
-  settings: Accessor<SettignsActions>
 }
 
 const api: APIService = {
   todos: {
     dataAccessor: (action) => ipcRenderer.invoke('services:todos', action)
-  },
-  settings: {
-    dataAccessor: (action) => ipcRenderer.invoke('services:settings', action)
   }
 }
 

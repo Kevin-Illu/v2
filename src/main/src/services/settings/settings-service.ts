@@ -1,7 +1,7 @@
 import { ActionMap, ICommunicationService, MainDatabaseInstance } from '@main/types'
 import CommunicationService from '../communication-service'
 import { ClientAction, SettignsActions } from '$globalTypes/comunication'
-import { HotKey } from '$globalTypes/globals'
+import { HotKey } from '$globalTypes/models'
 
 export class SettingsService extends CommunicationService implements ICommunicationService {
   public name: string = 'Settings'

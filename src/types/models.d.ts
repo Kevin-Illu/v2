@@ -23,9 +23,3 @@ export interface TodoResponse {
   created_time: string
   created_date: string
 }
-
-export interface HotKey {
-  id: number
-  key: string
-  action: string
-}

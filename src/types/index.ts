@@ -1,2 +1,2 @@
 export * from './comunication'
-export * from './globals'
+export * from './models'
