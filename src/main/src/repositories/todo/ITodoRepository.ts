@@ -1,5 +1,5 @@
 import { RunResult } from '@main/types'
-import { State, Todo, TodoResponse } from '../../../../types/models'
+import { State, Todo, TodoResponse } from '$globalTypes/models'
 
 export interface ITodoRepository {
   create(todo: Todo): Promise<RunResult>

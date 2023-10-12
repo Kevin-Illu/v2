@@ -2,14 +2,10 @@ import sqlite3 from 'sqlite3'
 import { SQLiteDatabaseInstance, RunResult, SQLQuery, Service } from '@main/types'
 
 class DatabaseService implements Service {
-  public name: string = 'database'
-  private databasePath: string
-
+  public name = 'database'
   public db!: SQLiteDatabaseInstance
 
-  constructor(databasePath: string) {
-    this.databasePath = databasePath
-  }
+  constructor(private databasePath: string) {}
 
   public initialize = (): void => {
     this.db = new sqlite3.Database(this.databasePath)
@@ -31,7 +27,8 @@ class DatabaseService implements Service {
 
         this.db.run('COMMIT', (err: Error | null) => {
           if (err) {
-            this.db.run('ROLLBACK') // En caso de error, hacemos rollback
+            // En caso de error, hacemos rollback
+            this.db.run('ROLLBACK')
             reject(err)
           } else {
             resolve()

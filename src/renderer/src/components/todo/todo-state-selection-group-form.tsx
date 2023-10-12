@@ -1,4 +1,4 @@
-import { State } from '$globalTypes/globals'
+import { State } from '$globalTypes/models'
 import { Flex, RadioGroupItem, RadioGroupRoot, Text } from '@radix-ui/themes'
 import { type FormikProps } from 'formik/dist/types'
 import { FC } from 'react'
@@ -7,6 +7,7 @@ export const StateSelectionGroup: FC<{
   states: State[]
   formik: FormikProps<any>
 }> = ({ states, formik }) => {
+  console.log(states)
   return (
     <RadioGroupRoot name="state_id" onChange={formik.handleChange}>
       <Flex direction="row" gap="4">

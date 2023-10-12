@@ -8,5 +8,14 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "window.autoDetectColorScheme": true
+  "window.autoDetectColorScheme": true,
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "v2",
+      "database": "${workspaceFolder:todov2}/src/main/src/database/v2.db"
+    }
+  ],
+  "sqltools.useNodeRuntime": true
 }

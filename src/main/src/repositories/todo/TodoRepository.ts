@@ -7,43 +7,51 @@ export class TodoRepository implements ITodoRepository {
 
   public getStates = (): Promise<State[]> => {
     return this.db.fetch<State>(`
-    SELECT s.id, s.name AS state_name, s.description, c.name AS color_name, c.hex_value
-    FROM state AS s
-    INNER JOIN color AS c ON c.id = s.color_id;
+      SELECT id
+      , name AS state_name
+      , description
+      FROM states
     `)
   }
 
   public getAll = (): Promise<TodoResponse[]> => {
-    return this.db.fetch<TodoResponse>(`
-      SELECT  todo.id as todo_id
-      , todo.created_time
-      , todo.created_date
-      , todo.name as todo_name
-      , todo.description as todo_description
-      , todo.archived as todo_archived
-      , state.name as state_name
-      , state.description as state_description
-      FROM TODO INNER JOIN state
-      on todo.state_id = state.id
-      ORDER BY todo.id DESC
-    `)
+    return this.db.fetch<TodoResponse>(
+      `
+      SELECT  todos.id as todo_id
+      , todos.created_date
+      , todos.name as todo_name
+      , todos.description as todo_description
+      , todos.archived as todo_archived
+      , states.name as state_name
+      , states.description as state_description
+      FROM todos INNER JOIN states
+      ON todos.state_id = states.id
+      ORDER BY todos.id DESC
+    `
+    )
   }
 
   public getById = (taskId: string): Promise<TodoResponse> => {
-    return this.db.fetch<TodoResponse>('SELECT * FROM todo WHERE id = ?', [taskId])[0]
+    return this.db.fetch<TodoResponse>('SELECT * FROM todos WHERE id = ?', [taskId])[0]
   }
 
   public create = (todo: Todo): Promise<RunResult> => {
     return this.db.execute(
       `
-      INSERT INTO todo (user_id, state_id, name, description, created_date, created_time, color_id)
+      INSERT INTO todos (
+        user_id
+        , state_id
+        , name
+        , description
+        , created_date
+        , color_id
+      )
       VALUES (
         1,           -- user_id
         ?,           -- state_id
         ?,           -- name
         ?,           -- description
-        DATE('now'), -- created_date
-        TIME('now'), -- created_time
+        DATETIME('now'), -- created_date
         ?            -- color_id
       )
     `,

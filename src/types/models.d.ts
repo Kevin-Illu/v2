@@ -2,8 +2,6 @@ export interface State {
   id: number
   state_name: string
   description: string
-  color_name: string
-  hex_value: string
 }
 
 export interface Todo {
