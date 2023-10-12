@@ -3,3 +3,5 @@ dist
 out
 *.log*
 v2.db
+
+.env
