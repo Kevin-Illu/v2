@@ -1,7 +1,7 @@
 import { ClientAction, Todo, TodoActions, TodoResponse } from '$globalTypes/index'
 import { ActionMap, ICommunicationService, MainDatabaseInstance, RunResult } from '@main/types'
 import CommunicationService from '../communication-service'
-import { TodoRepository } from '../../repositories/TodoRepository'
+import { TodoRepository } from '../../repositories/todo'
 
 export class TodoService extends CommunicationService implements ICommunicationService {
   public name: string = 'Todo'
@@ -14,19 +14,19 @@ export class TodoService extends CommunicationService implements ICommunicationS
     this.todoRepo = new TodoRepository(db)
     this.actions = {
       ['get-states']: {
-        dispatch: this.todoRepo.getTodoStates
+        dispatch: this.todoRepo.getStates
       },
       ['get-todos']: {
-        dispatch: this.todoRepo.getTodos
+        dispatch: this.todoRepo.getAll
       },
       ['get-task-by-id']: {
         dispatch: (id: string): Promise<TodoResponse> => {
-          return this.todoRepo.getTodoById(id)
+          return this.todoRepo.getById(id)
         }
       },
       ['create-new-todo']: {
         dispatch: (todo: Todo): Promise<RunResult> => {
-          return this.todoRepo.createNewTodo(todo)
+          return this.todoRepo.create(todo)
         }
       }
     }

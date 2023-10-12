@@ -1,10 +1,11 @@
 import { State, Todo, TodoResponse } from '$globalTypes/models'
 import { MainDatabaseInstance, RunResult } from '@main/types'
+import { ITodoRepository } from './ITodoRepository'
 
-export class TodoRepository {
+export class TodoRepository implements ITodoRepository {
   constructor(private db: MainDatabaseInstance) {}
 
-  public getTodoStates = (): Promise<State[]> => {
+  public getStates = (): Promise<State[]> => {
     return this.db.fetch<State>(`
     SELECT s.id, s.name AS state_name, s.description, c.name AS color_name, c.hex_value
     FROM state AS s
@@ -12,7 +13,7 @@ export class TodoRepository {
     `)
   }
 
-  public getTodos = (): Promise<TodoResponse[]> => {
+  public getAll = (): Promise<TodoResponse[]> => {
     return this.db.fetch<TodoResponse>(`
       SELECT  todo.id as todo_id
       , todo.created_time
@@ -28,11 +29,11 @@ export class TodoRepository {
     `)
   }
 
-  public getTodoById = (taskId: string): Promise<TodoResponse> => {
+  public getById = (taskId: string): Promise<TodoResponse> => {
     return this.db.fetch<TodoResponse>('SELECT * FROM todo WHERE id = ?', [taskId])[0]
   }
 
-  public createNewTodo = (todo: Todo): Promise<RunResult> => {
+  public create = (todo: Todo): Promise<RunResult> => {
     return this.db.execute(
       `
       INSERT INTO todo (user_id, state_id, name, description, created_date, created_time, color_id)
