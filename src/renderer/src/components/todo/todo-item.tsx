@@ -8,18 +8,16 @@ interface ItemProps extends TodoResponse {}
 
 export const TodoItem: React.FC<ItemProps> = ({
   created_date,
-  created_time,
   todo_id,
   todo_archived,
   todo_description,
   todo_name,
   state_name
 }) => {
-  const timestamp = new Date(`${created_date} ${created_time}`)
+  const timestamp = new Date(created_date)
   const timeAgo = getTimeAgo(timestamp)
-
   return (
-    <Box key={todo_id} className="flex justify-between gap-8">
+    <Box className="flex justify-between gap-8">
       <a
         href="#"
         className="hover:dark:border-lime-600 hover:border-lime-400 border-[2px] w-full px-8 py-4 rounded-xl border-zinc-200 dark:border-zinc-800 outline-none focus:border-lime-500 focus:dark:border-lime-800 transition-colors"

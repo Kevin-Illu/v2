@@ -44,18 +44,16 @@ export class TodoRepository implements ITodoRepository {
         , name
         , description
         , created_date
-        , color_id
       )
       VALUES (
         1,           -- user_id
         ?,           -- state_id
         ?,           -- name
         ?,           -- description
-        DATETIME('now'), -- created_date
-        ?            -- color_id
+        DATETIME('now') -- created_date
       )
     `,
-      [todo.state_id, todo.name, todo.description, 1]
+      [todo.state_id, todo.name, todo.description]
     )
   }
 }

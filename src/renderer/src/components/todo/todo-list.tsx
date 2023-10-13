@@ -1,4 +1,4 @@
-import { TodoResponse } from '$globalTypes/globals'
+import { TodoResponse } from '$globalTypes/models'
 import { useEffect, useState } from 'react'
 import { Box, Em, Flex, Text } from '@radix-ui/themes'
 import { useTodoContext } from '@renderer/hooks'
