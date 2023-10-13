@@ -9,3 +9,7 @@ export type TodoActions = {
   ['get-task-by-id']: (id: string) => Promise<Task>
   ['create-new-todo']: (todo: Todo) => Promise<any>
 }
+
+export type SettingsActions = {
+  ['is-logged']: () => Promise<boolean>
+}

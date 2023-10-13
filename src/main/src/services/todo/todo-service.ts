@@ -33,7 +33,7 @@ export class TodoService extends CommunicationService implements ICommunication 
     }
   }
 
-  public _dispatcher = <TodoActions>(action: ClientAction<TodoActions>): Promise<void> => {
+  public _dispatcher = (action: ClientAction<TodoActions>): Promise<void> => {
     const type = action.type as string
 
     if (action.payload) {
