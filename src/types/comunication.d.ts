@@ -13,3 +13,8 @@ export type TodoActions = {
 export type SettingsActions = {
   ['is-logged']: () => Promise<boolean>
 }
+
+export type AuthActions = {
+  ['authenticate']: (newUser) => Promise<boolean>
+  ['is-authenticated']: () => Promise<boolean>
+}

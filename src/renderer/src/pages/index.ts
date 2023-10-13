@@ -1,2 +1,3 @@
-export { HomePage } from './home-page'
-export { TodoPage } from './todo-page'
+export * from './home-page'
+export * from './todo-page'
+export * from './register-page'

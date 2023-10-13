@@ -28,6 +28,7 @@
     "@radix-ui/themes": "^2.0.0-rc.3",
     "electron-updater": "^6.1.1",
     "formik": "^2.4.5",
+    "react-router-dom": "^6.16.0",
     "sqlite3": "^5.1.6",
     "yup": "^1.3.2"
   },
