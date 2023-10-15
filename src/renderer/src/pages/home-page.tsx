@@ -4,7 +4,7 @@ import { Layout } from '@renderer/components'
 export const HomePage = () => {
   return (
     <Layout>
-      <Heading>Hola mundo</Heading>
+      <Heading>Home page</Heading>
     </Layout>
   )
 }

@@ -1,17 +1,17 @@
-interface State {
+export interface State {
   id: number
   state_name: string
   description: string
 }
 
-interface Todo {
+export interface Todo {
   id: number
   name: string
   description: string
   state_id: number
 }
 
-interface TodoResponse {
+export interface TodoResponse {
   todo_id: number
   todo_name: string
   todo_description: string
@@ -21,7 +21,7 @@ interface TodoResponse {
   created_date: string
 }
 
-interface User {
+export interface User {
   name: string
   email: string
 }

@@ -3,8 +3,8 @@ import { useEffect, useReducer } from 'react'
 import { AuthContext } from './context'
 import { authReducer } from './reducer'
 
-import { User } from '$globalTypes/models'
-import { AuthState } from './types'
+import type { User } from '$globalTypes/models'
+import type { AuthState } from './types'
 
 const initialAuthState: AuthState = {
   isRegistered: false,
@@ -16,24 +16,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(authReducer, initialAuthState)
 
   const getMainUserInformation = async (): Promise<User | null> => {
-    const user = await AuthService.dataAccessor<User | null>({ type: 'get-user' })
-    return user
+    return await AuthService.dataAccessor<User | null>({ type: 'get-user' })
   }
 
   const registerNewUser = async (user: User) => {
     let userTemp: User | null = user
 
-    const isRegisterSuccessfully = await AuthService.dataAccessor<boolean>({
+    const isRegisteredSuccessfully = await AuthService.dataAccessor<boolean>({
       type: 'register-user',
       payload: user
     })
 
-    if (!isRegisterSuccessfully) {
+    if (!isRegisteredSuccessfully) {
       userTemp = null
     }
 
     setUserInformation(userTemp)
-    return isRegisterSuccessfully
+    return isRegisteredSuccessfully
   }
 
   const setUserInformation = (userInformation: User | null) => {

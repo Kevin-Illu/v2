@@ -1,8 +1,14 @@
 import { GearIcon } from '@radix-ui/react-icons'
 import { Avatar, Box, Em, Flex, IconButton, Text } from '@radix-ui/themes'
 import { ActionView } from './action-view'
+import { useAuthContext } from '@renderer/hooks/useAuthContext'
+import { User } from '$globalTypes/models'
 
 export const NavBar = () => {
+  const {
+    state: { user, isRegistered }
+  } = useAuthContext()
+
   return (
     <div className="w-full px-4 py-2 border-b-[1px] border-zinc-200 dark:border-zinc-800 max-h-14 flex justify-between items-center">
       <Box className="flex justify-start items-center w-[20%]">
@@ -20,11 +26,21 @@ export const NavBar = () => {
           <IconButton variant="ghost">
             <GearIcon width="24" height="24" />
           </IconButton>
-          <IconButton variant="outline">
-            <Avatar fallback="k" size="2" />
-          </IconButton>
+          {isRegistered && user ? <UserCard {...user} /> : null}
         </Flex>
       </Box>
     </div>
+  )
+}
+
+// TODO: mejorar este componente
+const UserCard: React.FC<User> = ({ name, email }) => {
+  const firstLetter = name[0]
+
+  return (
+    <IconButton variant="outline">
+      <Avatar fallback={firstLetter} size="2" />
+      {email}
+    </IconButton>
   )
 }
