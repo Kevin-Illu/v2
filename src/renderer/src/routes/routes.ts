@@ -1,28 +1,23 @@
-import { RegisterPage, TodoPage } from '@renderer/pages'
-
-type typeOfRoute = 'protected' | 'public' | 'private'
-
-interface Route {
-  to: string
-  path: string
-  nameLink: string
-  component: () => JSX.Element | JSX.Element
-  typeOfRoute: typeOfRoute
-}
+import { HomePage, SignInPage, SignUpPage } from '@renderer/pages'
+import { Route } from './types'
 
 export const routes: Route[] = [
   {
-    to: '/register',
-    path: '/register',
-    nameLink: 'register',
-    component: RegisterPage,
-    typeOfRoute: 'public'
+    path: '/',
+    link: 'home',
+    authType: 'private',
+    component: HomePage
   },
   {
-    to: '/todos',
-    path: '/todos',
-    nameLink: 'todos',
-    component: TodoPage,
-    typeOfRoute: 'protected'
+    path: '/signup',
+    link: 'signup',
+    authType: 'public',
+    component: SignUpPage
+  },
+  {
+    path: '/signin',
+    link: 'signin',
+    authType: 'public',
+    component: SignInPage
   }
 ]

@@ -1,3 +1,3 @@
-export const RegisterForm = () => {
+export const SignUpForm = () => {
   return <div>register-form</div>
 }

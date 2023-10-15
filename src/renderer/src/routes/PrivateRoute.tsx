@@ -1,12 +1,11 @@
 import { useAuthContext } from '@renderer/hooks/useAuthContext'
-import { FC, ReactNode } from 'react'
 import { Navigate } from 'react-router-dom'
 
 interface PrivateRouteProps {
-  children: ReactNode
+  children: React.ReactNode
 }
 
-export const PrivateRoute: FC<PrivateRouteProps> = ({ children }) => {
+export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const {
     state: { isRegistered }
   } = useAuthContext()
