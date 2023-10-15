@@ -1,5 +1,4 @@
-import { BrowserRouter, Routes } from 'react-router-dom'
-import { routes } from './routes'
+import { BrowserRouter } from 'react-router-dom'
 
 export const AppRouter = () => {
   return (

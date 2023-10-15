@@ -1,4 +1,6 @@
+import { User } from '$globalTypes/models'
+
 export interface IRepository {
-  authenticate(user: any): Promise<boolean>
-  isAuthenticated(): Promise<boolean>
+  register(user: any): Promise<boolean>
+  getUser(): Promise<User | null>
 }

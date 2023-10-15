@@ -1,10 +1,11 @@
-import { MainDatabaseInstance } from '@main/types'
-import { IRepository } from './IRepository'
+import { type User } from '$globalTypes/models'
+import { type MainDatabaseInstance } from '@main/types'
+import { type IRepository } from './IRepository'
 
 export class AuthRepository implements IRepository {
   constructor(public db: MainDatabaseInstance) {}
 
-  public authenticate = async (user: any): Promise<boolean> => {
+  public register = async (user: User): Promise<boolean> => {
     const res = await this.db.execute(
       `
     INSERT INTO users (name, email)
@@ -19,8 +20,8 @@ export class AuthRepository implements IRepository {
     return false
   }
 
-  public isAuthenticated = async (): Promise<boolean> => {
-    const isAuth = await this.db.fetch<number>('SELECT COUNT(*) FROM users')[0]
-    return !!isAuth
+  public getUser = async (): Promise<User | null> => {
+    const user = (await this.db.fetch<User>('SELECT * FROM users WHERE Id = 1')[0]) || null
+    return user
   }
 }

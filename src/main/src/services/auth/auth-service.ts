@@ -12,11 +12,11 @@ export class AuthService extends CommunicationService implements ICommunication 
     super()
     this.authRepo = new AuthRepository(db)
     this.actions = {
-      ['authenticate']: {
-        dispatch: (newUser: any): Promise<boolean> => this.authRepo.authenticate(newUser)
+      ['register-user']: {
+        dispatch: (newUser): Promise<boolean> => this.authRepo.register(newUser)
       },
-      ['is-authenticated']: {
-        dispatch: this.authRepo.isAuthenticated
+      ['get-user']: {
+        dispatch: this.authRepo.getUser
       }
     }
   }

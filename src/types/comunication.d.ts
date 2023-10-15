@@ -1,3 +1,5 @@
+import { User } from './models'
+
 export type ClientAction<T> = {
   type: keyof T
   payload?: Parameters<ServiceActions[keyof ServiceActions]['dispatch']>[0] | null
@@ -15,6 +17,6 @@ export type SettingsActions = {
 }
 
 export type AuthActions = {
-  ['authenticate']: (newUser) => Promise<boolean>
-  ['is-authenticated']: () => Promise<boolean>
+  ['register-user']: (newUser: User) => Promise<boolean>
+  ['get-user']: () => Promise<User | null>
 }
