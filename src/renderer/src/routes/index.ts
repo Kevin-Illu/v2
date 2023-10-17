@@ -1,4 +1,4 @@
-export * from './AppRouter'
-export * from './PrivateRoute'
-export * from './PublicRoute'
+export * from './app-router'
+export * from './private-route'
+export * from './public-route'
 export * from './routes'

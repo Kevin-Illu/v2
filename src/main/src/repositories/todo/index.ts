@@ -1,2 +1,2 @@
 export * from './ITodoRepository'
-export * from './TodoRepository'
+export * from './todo-repository'

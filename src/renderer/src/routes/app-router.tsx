@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { PrivateRoute } from './PrivateRoute'
-import { PublicRoute } from './PublicRoute'
+import { PrivateRoute } from './private-route'
+import { PublicRoute } from './public-route'
 import { routes } from './routes'
 
 const Wrapper = {

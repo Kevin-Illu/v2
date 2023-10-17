@@ -44,6 +44,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     getMainUserInformation().then((userInformation) => {
       setUserInformation(userInformation)
     })
+
+    console.log(state.user, state.isRegistered)
   }, [])
 
   return (

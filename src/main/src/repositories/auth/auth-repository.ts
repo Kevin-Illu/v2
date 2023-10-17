@@ -21,7 +21,7 @@ export class AuthRepository implements IRepository {
   }
 
   public getUser = async (): Promise<User | null> => {
-    const user = (await this.db.fetch<User>('SELECT * FROM users WHERE Id = 1')[0]) || null
-    return user
+    const user = await this.db.fetch<User>('SELECT * FROM users WHERE Id = 1')
+    return user[0] || null
   }
 }

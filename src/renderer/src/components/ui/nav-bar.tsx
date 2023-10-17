@@ -1,5 +1,5 @@
 import { GearIcon } from '@radix-ui/react-icons'
-import { Avatar, Box, Em, Flex, IconButton, Text } from '@radix-ui/themes'
+import { Avatar, Box, Em, Flex, HoverCard, IconButton, Text } from '@radix-ui/themes'
 import { ActionView } from './action-view'
 import { useAuthContext } from '@renderer/hooks/useAuthContext'
 import { User } from '$globalTypes/models'
@@ -23,24 +23,39 @@ export const NavBar = () => {
       </Box>
       <Box className="text-end flex justify-end items-center w-[20%]">
         <Flex gap="3" align="center">
+          {isRegistered && user ? <UserCard {...user} /> : null}
           <IconButton variant="ghost">
             <GearIcon width="24" height="24" />
           </IconButton>
-          {isRegistered && user ? <UserCard {...user} /> : null}
         </Flex>
       </Box>
     </div>
   )
 }
 
-// TODO: mejorar este componente
 const UserCard: React.FC<User> = ({ name, email }) => {
   const firstLetter = name[0]
 
   return (
-    <IconButton variant="outline">
-      <Avatar fallback={firstLetter} size="2" />
-      {email}
-    </IconButton>
+    <HoverCard.Root>
+      <HoverCard.Trigger>
+        <IconButton variant="outline">
+          <Avatar fallback={firstLetter} size="2" />
+        </IconButton>
+      </HoverCard.Trigger>
+      <HoverCard.Content>
+        <Flex align="center" gap="4">
+          <Box>
+            <Avatar fallback={firstLetter} size="4" />
+          </Box>
+          <Box>
+            <Text as="p" className="font-semibold">
+              {name}
+            </Text>
+            <Text as="p">{email}</Text>
+          </Box>
+        </Flex>
+      </HoverCard.Content>
+    </HoverCard.Root>
   )
 }

@@ -1,6 +1,6 @@
 import { Theme } from '@radix-ui/themes'
 import { AuthProvider } from './context/auth'
-import { AppRouter } from './routes/AppRouter'
+import { AppRouter } from './routes/app-router'
 
 function App(): JSX.Element {
   return (
