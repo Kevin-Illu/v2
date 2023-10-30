@@ -24,7 +24,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit: handleSubmit }
       }}
     >
       {(formik) => (
-        <form onSubmit={formik.handleSubmit} className="py-4 w-1/2 max-w-7xl">
+        <form onSubmit={formik.handleSubmit} className="py-4 w-1/2 px-4">
           <Box className="pb-4">
             <InputTextField
               name="name"
@@ -40,7 +40,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit: handleSubmit }
             />
           </Box>
 
-          <Button type="submit">Get Started</Button>
+          <Button type="submit">Continue</Button>
         </form>
       )}
     </Formik>

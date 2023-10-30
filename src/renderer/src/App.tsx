@@ -4,7 +4,7 @@ import { AppRouter } from './routes/app-router'
 
 function App(): JSX.Element {
   return (
-    <Theme accentColor="lime" grayColor="olive" radius="full" scaling="110%">
+    <Theme accentColor="lime" grayColor="olive" radius="large" scaling="110%">
       <AuthProvider>
         <AppRouter />
       </AuthProvider>
