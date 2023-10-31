@@ -5,9 +5,18 @@ export interface Service {
    */
   name: string
 
-  // TODO: mejorar el rotorno de funciones
-  // o denifir un tipo de retorno
-
+  /*
+   * Aqui se ejecutan procesos necesarios para que
+   * funcione algun servicio y algunos procesos que el
+   * servicio necesite para funcionar
+   */
   initialize: (args?: any) => void
+
+
+  /*
+   * Algunos servicios necesitan ejecutar
+   * funciones que cierren procesos abiertos cuando
+   * ya no se necesita este servicio
+   */
   cleanup: (args?: any) => void
 }

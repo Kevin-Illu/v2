@@ -1,4 +1,4 @@
-import { State, Todo } from '$globalTypes/globals'
+import { State, Todo } from '$globalTypes/models'
 import { DialogContent, DialogDescription, DialogTitle, Text } from '@radix-ui/themes'
 import { useEffect, useState } from 'react'
 import { TodoCreateForm } from './todo-create-form'

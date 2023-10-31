@@ -1,13 +1,11 @@
 import { TodoProvider } from '@renderer/context/todo'
-import { Layout, TodoManager, TodoList } from '@renderer/components'
+import { Layout, TodoPageController } from '@renderer/components'
 
 export const TodoPage = () => {
   return (
     <Layout>
       <TodoProvider>
-        <TodoList />
-
-        <TodoManager />
+        <TodoPageController />
       </TodoProvider>
     </Layout>
   )

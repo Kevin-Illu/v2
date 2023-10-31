@@ -5,6 +5,7 @@ import { authReducer } from './reducer'
 
 import type { User } from '$globalTypes/models'
 import type { AuthState } from './types'
+import { getUserInformation, verifyUserRegistration } from './AuthService'
 
 const initialAuthState: AuthState = {
   isRegistered: false,
@@ -12,40 +13,24 @@ const initialAuthState: AuthState = {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const AuthService = window.api.auth
   const [state, dispatch] = useReducer(authReducer, initialAuthState)
 
-  const getMainUserInformation = async (): Promise<User | null> => {
-    return await AuthService.dataAccessor<User | null>({ type: 'get-user' })
-  }
-
   const registerNewUser = async (user: User) => {
-    let userTemp: User | null = user
+    const isRegisteredSuccessfully = await verifyUserRegistration(user)
+    setUserInformation(isRegisteredSuccessfully ? user : null)
 
-    const isRegisteredSuccessfully = await AuthService.dataAccessor<boolean>({
-      type: 'register-user',
-      payload: user
-    })
-
-    if (!isRegisteredSuccessfully) {
-      userTemp = null
-    }
-
-    setUserInformation(userTemp)
     return isRegisteredSuccessfully
   }
 
-  const setUserInformation = (userInformation: User | null) => {
-    dispatch({ type: 'SET_USER_INFORMATION', payload: userInformation })
-    dispatch({ type: 'SET_IS_REGISTERED', payload: !!userInformation })
+  const setUserInformation = (userInfo: User | null) => {
+    dispatch({ type: 'SET_USER_INFORMATION', payload: userInfo })
+    dispatch({ type: 'SET_IS_REGISTERED', payload: !!userInfo })
   }
 
   useEffect(() => {
-    getMainUserInformation().then((userInformation) => {
-      setUserInformation(userInformation)
+    getUserInformation().then((userInfo) => {
+      setUserInformation(userInfo)
     })
-
-    console.log(state.user, state.isRegistered)
   }, [])
 
   return (

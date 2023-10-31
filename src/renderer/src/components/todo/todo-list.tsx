@@ -1,47 +1,13 @@
-import { TodoResponse } from '$globalTypes/models'
-import { useEffect, useState } from 'react'
 import { Box, Em, Flex, Text } from '@radix-ui/themes'
-import { useTodoContext } from '@renderer/hooks'
 import { TodoItem } from './todo-item'
+import { TodoResponse } from '$globalTypes/models'
+import { FC } from 'react'
 
-export const TodoList = () => {
-  const {
-    state: { isTodoCreated },
-    setIsTodoCreated
-  } = useTodoContext()
+interface TodoListProps {
+  todos: TodoResponse[]
+}
 
-  const [todos, setTodos] = useState<TodoResponse[]>([])
-  const TodosService = window.api.todos
-
-  function getTodos() {
-    TodosService.dataAccessor<TodoResponse[]>({ type: 'get-todos' })
-      .then((todos) => {
-        setTodos(todos)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  }
-
-  // load the todos at the first time
-  useEffect(() => {
-    getTodos()
-  }, [])
-
-  useEffect(() => {
-    if (isTodoCreated) {
-      getTodos()
-    }
-  }, [isTodoCreated])
-
-  useEffect(() => {
-    setIsTodoCreated(false)
-  }, [isTodoCreated])
-
-  if (todos.length < 1) {
-    return <Box>Nothing todo? lets create a new Todo</Box>
-  }
-
+export const TodoList: FC<TodoListProps> = ({ todos }) => {
   return (
     <Box className="flex flex-col gap-6 py-4">
       <header>
@@ -60,9 +26,11 @@ export const TodoList = () => {
           </Box>
         </Flex>
       </header>
-      {todos.map((todo) => (
-        <TodoItem key={todo.todo_id} {...todo} />
-      ))}
+      <Box>
+        {todos.map((todo) => (
+          <TodoItem key={todo.todo_id} {...todo} />
+        ))}
+      </Box>
     </Box>
   )
 }

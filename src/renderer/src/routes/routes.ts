@@ -1,12 +1,12 @@
-import { HomePage, SignInPage, SignUpPage } from '@renderer/pages'
+import { SignInPage, SignUpPage, TodoPage } from '@renderer/pages'
 import { Route } from './types'
 
 export const routes: Route[] = [
   {
     path: '/',
-    link: 'home',
+    link: 'todos',
     authType: 'private',
-    component: HomePage
+    component: TodoPage
   },
   {
     path: '/signup',

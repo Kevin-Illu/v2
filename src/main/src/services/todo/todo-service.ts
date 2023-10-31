@@ -48,7 +48,6 @@ export class TodoService extends CommunicationService implements ICommunication 
   }
 
   public cleanup(): void {
-    // TODO: clean the handle action from ipcMain
     console.log('close TodoService')
   }
 }
