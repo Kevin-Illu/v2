@@ -2,16 +2,15 @@ import { State, Todo } from '$globalTypes/models'
 import { DialogContent, DialogDescription, DialogTitle, Text } from '@radix-ui/themes'
 import { useEffect, useState } from 'react'
 import { TodoCreateForm } from './todo-create-form'
-import { type RunResult } from 'sqlite3'
 import { useTodoContext } from '@renderer/hooks/useTodoContext'
+import { createNewTodo, getTodoStates } from '@renderer/context/todo/todo-service'
 
 export const TodoFormDialog = () => {
   const { setIsDialogOpen, setIsTodoCreated } = useTodoContext()
   const [todoStates, setTodoStates] = useState<State[]>([])
-  const TodosService = window.api.todos
 
   useEffect(() => {
-    TodosService.dataAccessor<State[]>({ type: 'get-states' }).then((states) => {
+    getTodoStates().then((states) => {
       const CANCELED = 4
       const COMPLETED = 6
       const filteredStates = states.filter((s) => s.id !== CANCELED && s.id !== COMPLETED)
@@ -20,14 +19,13 @@ export const TodoFormDialog = () => {
     })
   }, [])
 
-  const handleSubmit = (values: Todo) => {
-    TodosService.dataAccessor<RunResult>({ type: 'create-new-todo', payload: values })
+  const handleSubmit = (todo: Todo) => {
+    createNewTodo(todo)
       .then(() => {
         setIsDialogOpen(false)
         setIsTodoCreated(true)
       })
       .catch(() => {
-        // TODO: manejar el error adecuadamente
         setIsDialogOpen(false)
       })
   }

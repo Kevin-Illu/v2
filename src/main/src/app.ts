@@ -108,7 +108,7 @@ class Application {
   // for applications and their menu bar to stay active until the user quits
   // explicitly with Cmd + Q.
 
-  // TODO: "implement this method when the the application is executed in macOS"
+  // INFO: "implement this method when the the application is executed in macOS"
 }
 
 export default Application
