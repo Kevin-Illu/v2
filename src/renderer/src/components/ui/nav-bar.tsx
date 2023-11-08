@@ -43,7 +43,7 @@ const UserCard: React.FC<User> = ({ name, email }) => {
           <Avatar fallback={firstLetter} size="2" />
         </IconButton>
       </HoverCard.Trigger>
-      <HoverCard.Content>
+      <HoverCard.Content size="1">
         <Flex align="center" gap="4">
           <Box>
             <Avatar fallback={firstLetter} size="4" />

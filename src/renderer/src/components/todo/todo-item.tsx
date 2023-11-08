@@ -24,7 +24,7 @@ export const TodoItem: FC<ItemProps> = (todo) => {
   const [showSaveButton, setShowSaveButton] = useState(false)
 
   const handleOpenDialog = (isOpen: boolean) => {
-    // cuando se abre el dialog y se cierra es necesario
+    // cuando el dialog esta abierto y se cierra, es necesario
     // establecer el todo editado en null
     if (isDialogOpen && !isOpen) {
       setEditingTodo(null)
@@ -34,12 +34,11 @@ export const TodoItem: FC<ItemProps> = (todo) => {
   }
 
   const handleSubmit = (newName: string) => {
-    const newTodo: Partial<Todo> = {
+    updateTodo({
       id: todo.todo_id,
       name: newName
-    }
+    } as Todo)
 
-    updateTodo(newTodo as Todo)
     setWasEdited(false)
   }
 
@@ -78,7 +77,13 @@ export const TodoItem: FC<ItemProps> = (todo) => {
                   formik.handleChange(e)
                   setWasEdited(todo_name !== e.target.value)
                 }}
-                onBlur={formik.handleBlur}
+                onBlur={(e) => {
+                  if (e.target.value === '') {
+                    formik.values.todo_name = todo_name
+                    setWasEdited(false)
+                  }
+                  formik.handleBlur(e)
+                }}
               />
 
               <Flex gap="4" justify="between" align="center">
