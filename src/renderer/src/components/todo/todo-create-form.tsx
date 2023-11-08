@@ -1,21 +1,27 @@
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-import { Button, DialogClose, Flex, Text } from '@radix-ui/themes'
-import { AreaTextField, InputTextField } from '../ui'
-import { StateSelectionGroup } from './todo-state-selection-group-form'
+import { Button, DialogClose, Flex } from '@radix-ui/themes'
+import { InputTextField } from '../ui'
+import { State, Todo } from '$globalTypes/models'
+import { FC } from 'react'
 
-export const TodoCreateForm = ({ stateList, handleSubmit }) => {
+interface CreateTodoFormProps {
+  stateList: State[]
+  handleSubmit: (todo: Todo) => void
+}
+
+export const CreateTodoForm: FC<CreateTodoFormProps> = ({ handleSubmit }) => {
   return (
     <Formik
       initialValues={{
         name: '',
-        description: '',
-        state_id: '1'
+        state_id: 1,
+        description: ''
       }}
       validationSchema={Yup.object({
         name: Yup.string().required('Is required.')
       })}
-      onSubmit={(values) => {
+      onSubmit={(values: Todo) => {
         handleSubmit(values)
       }}
     >
@@ -28,16 +34,6 @@ export const TodoCreateForm = ({ stateList, handleSubmit }) => {
               placeholder="Enter your chosen title"
               formik={formik}
             />
-            <AreaTextField
-              label="Description"
-              name="description"
-              placeholder="Provide a description"
-              formik={formik}
-            />
-            <label>
-              <Text mb="4">Which state do you use?</Text>
-              <StateSelectionGroup states={stateList} formik={formik} />
-            </label>
           </Flex>
 
           <Flex gap="3" mt="4" justify="end">

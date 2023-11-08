@@ -26,11 +26,11 @@ export const TodoList: FC<TodoListProps> = ({ todos }) => {
           </Box>
         </Flex>
       </header>
-      <Box>
+      <Flex direction="column" gap="4">
         {todos.map((todo) => (
           <TodoItem key={todo.todo_id} {...todo} />
         ))}
-      </Box>
+      </Flex>
     </Box>
   )
 }

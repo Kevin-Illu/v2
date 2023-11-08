@@ -6,6 +6,8 @@ export function todoReducer(state: TodoState, action: TodoAction): TodoState {
       return { ...state, isTodoCreated: action.payload }
     case 'SET_DIALOG_OPEN':
       return { ...state, isDialogOpen: action.payload }
+    case 'SET_EDITING_TODO':
+      return { ...state, editingTodo: action.payload }
     default:
       return state
   }

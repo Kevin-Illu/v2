@@ -1,4 +1,5 @@
-import { State, Todo, TodoResponse } from '$globalTypes/models'
+import { State, Todo } from '$globalTypes/models'
+import { TodoResponse } from '$globalTypes/databaseResponse'
 import { RunResult } from 'sqlite3'
 
 const TodosService = window.api.todos

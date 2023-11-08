@@ -1,14 +1,14 @@
-import { User } from './models'
+import { State, Todo, User } from './models'
 
 export type ClientAction<T> = {
   type: keyof T
-  payload?: Parameters<ServiceActions[keyof ServiceActions]['dispatch']>[0] | null
+  payload?: unknown
 }
 
 export type TodoActions = {
   ['get-states']: () => Promise<State[]>
-  ['get-todos']: () => Promise<Task[]>
-  ['get-task-by-id']: (id: string) => Promise<Task>
+  ['get-todos']: () => Promise<Todo[]>
+  ['get-task-by-id']: (id: string) => Promise<Todo>
   ['create-new-todo']: (todo: Todo) => Promise<any>
 }
 

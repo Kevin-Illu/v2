@@ -12,7 +12,6 @@ export interface Service {
    */
   initialize: (args?: any) => void
 
-
   /*
    * Algunos servicios necesitan ejecutar
    * funciones que cierren procesos abiertos cuando

@@ -1,6 +1,9 @@
+import { TodoResponse } from '$globalTypes/databaseResponse'
+
 export interface TodoState {
   isTodoCreated: boolean
   isDialogOpen: boolean
+  editingTodo: TodoResponse | null
 }
 
 export interface SetTodoCreatedAction {
@@ -13,4 +16,9 @@ export interface SetDialogOpenAction {
   payload: boolean
 }
 
-export type TodoAction = SetTodoCreatedAction | SetDialogOpenAction
+export interface SetEditingTodoAction {
+  type: 'SET_EDITING_TODO'
+  payload: TodoResponse | null
+}
+
+export type TodoAction = SetTodoCreatedAction | SetDialogOpenAction | SetEditingTodoAction

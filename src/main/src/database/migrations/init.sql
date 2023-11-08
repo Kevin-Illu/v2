@@ -1,5 +1,5 @@
 /*
- 
+
  Creación de la tabla 'users'
  */
 CREATE TABLE IF NOT EXISTS users (
@@ -8,10 +8,10 @@ CREATE TABLE IF NOT EXISTS users (
   email VARCHAR(255) NOT NULL
 );
 /*
- 
+
  table states and
  default values
- 
+
  */
 CREATE TABLE IF NOT EXISTS states (
   id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -26,8 +26,8 @@ VALUES ("Active", "Things are happening!"),
   ("Deferred", "Put off until tomorrow"),
   ("Completed", "Things are done!");
 /*
- 
- 
+
+
  Creación de la tabla 'todos'
  */
 CREATE TABLE IF NOT EXISTS todos (
@@ -43,9 +43,9 @@ CREATE TABLE IF NOT EXISTS todos (
   FOREIGN KEY (state_id) REFERENCES states(id)
 );
 /*
- 
- 
- 
+
+
+
  Creación de la tabla 'steps'
  */
 CREATE TABLE IF NOT EXISTS steps (
@@ -55,3 +55,9 @@ CREATE TABLE IF NOT EXISTS steps (
   completed BOOLEAN NOT NULL DEFAULT 0,
   FOREIGN KEY (todo_id) REFERENCES todos(id)
 );
+
+/*
+para pruebas:
+  DELETE from todos
+  DELETE FROM sqlite_sequence WHERE name = 'todos';
+*/

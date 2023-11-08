@@ -1,60 +1,72 @@
-import React from 'react'
-import { TodoResponse } from '$globalTypes/models'
-import { ArchiveIcon, CheckIcon, ChevronRightIcon } from '@radix-ui/react-icons'
-import { Badge, Box, Heading, IconButton, Text } from '@radix-ui/themes'
-import { getTimeAgo } from '@renderer/utils'
+import { FC, useState } from 'react'
+import { TodoResponse } from '$globalTypes/databaseResponse'
+import { ArchiveIcon, Pencil1Icon } from '@radix-ui/react-icons'
+import { Box, Dialog, DialogTrigger, Flex, IconButton } from '@radix-ui/themes'
+import { useTodoContext } from '@renderer/hooks'
+import { Formik } from 'formik'
+import * as Yup from 'yup'
+import { InputTextField } from '../ui'
+import { EditTodoDialog } from './todo-editing-dialog'
 
 interface ItemProps extends TodoResponse {}
 
-export const TodoItem: React.FC<ItemProps> = ({
-  created_date,
-  todo_id,
-  todo_archived,
-  todo_description,
-  todo_name,
-  state_name
-}) => {
-  const timestamp = new Date(created_date)
-  const timeAgo = getTimeAgo(timestamp)
+export const TodoItem: FC<ItemProps> = (todo) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const { todo_id, todo_name } = todo
+  const [todoName] = useState(todo_name)
+  const {
+    setEditingTodo,
+    state: { editingTodo }
+  } = useTodoContext()
+  const handleEditionTodo = () => setEditingTodo(todo)
+
+  const handleOpenDialog = (isOpen: boolean) => {
+    // cuando se abre el dialog y se cierra es necesario
+    // establecer el todo editado en null
+    if (isDialogOpen && !isOpen) {
+      setEditingTodo(null)
+    }
+
+    setIsDialogOpen(isOpen)
+  }
+
+  const handleSubmit = (value: string) => {
+    console.log(value)
+  }
+
   return (
-    <Box className="flex justify-between gap-8">
-      <a
-        href="#"
-        className="hover:dark:border-lime-600 hover:border-lime-400 border-[2px] w-full px-8 py-4 rounded-xl border-zinc-200 dark:border-zinc-800 outline-none focus:border-lime-500 focus:dark:border-lime-800 transition-colors"
-      >
-        <header className="flex gap-4 py-4 justify-between items-center">
-          <Heading as="h4">{todo_name}</Heading>
-          <Text>
-            <ChevronRightIcon />
-          </Text>
-        </header>
-
-        <footer className="flex justify-between items-center w-full text-zinc-400">
-          <Box className="flex gap-4">
-            <Badge radius="large" size="1" className="h-8">
-              {state_name}
-            </Badge>
-            <div className="flex gap-2 items-center">
-              <Text size="1">{timeAgo}</Text>
-            </div>
-          </Box>
-
-          <Box className="w-60 text-end">
-            <Text as="p" className="text-zinc-400 truncate" size="1">
-              {todo_description}
-            </Text>
-          </Box>
-        </footer>
-      </a>
-
-      <Box className="flex justify-between items-start gap-2">
-        <IconButton variant="soft" color="grass" size="4">
-          <CheckIcon />
-        </IconButton>
-        <IconButton variant="soft" color="amber" disabled={!!todo_archived} size="4">
-          <ArchiveIcon />
-        </IconButton>
+    <Dialog.Root onOpenChange={handleOpenDialog} open={isDialogOpen}>
+      <Box className="flex justify-between gap-8" key={todo_id}>
+        <Formik
+          initialValues={{
+            todo_name: todoName
+          }}
+          validationSchema={Yup.object({
+            todo_name: Yup.string().required('Ok?')
+          })}
+          onSubmit={({ todo_name }) => {
+            handleSubmit(todo_name)
+          }}
+        >
+          {(formik) => (
+            <form onSubmit={formik.handleSubmit} className="w-full">
+              <InputTextField label="" name="todo_name" formik={formik} />
+            </form>
+          )}
+        </Formik>
+        <Flex gap="4" justify="between" align="center">
+          <DialogTrigger>
+            <IconButton variant="ghost" onClick={handleEditionTodo}>
+              <Pencil1Icon />
+            </IconButton>
+          </DialogTrigger>
+          <IconButton variant="ghost">
+            <ArchiveIcon />
+          </IconButton>
+        </Flex>
       </Box>
-    </Box>
+
+      {editingTodo && <EditTodoDialog />}
+    </Dialog.Root>
   )
 }

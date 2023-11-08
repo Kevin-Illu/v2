@@ -1,7 +1,7 @@
 import { State, Todo } from '$globalTypes/models'
 import { DialogContent, DialogDescription, DialogTitle, Text } from '@radix-ui/themes'
 import { useEffect, useState } from 'react'
-import { TodoCreateForm } from './todo-create-form'
+import { CreateTodoForm } from './todo-create-form'
 import { useTodoContext } from '@renderer/hooks/useTodoContext'
 import { createNewTodo, getTodoStates } from '@renderer/context/todo/todo-service'
 
@@ -36,8 +36,7 @@ export const TodoFormDialog = () => {
       <DialogDescription mb="4">
         <Text>Create tasks to inspire you to make the most of each day.</Text>
       </DialogDescription>
-
-      <TodoCreateForm stateList={todoStates} handleSubmit={handleSubmit} />
+      <CreateTodoForm stateList={todoStates} handleSubmit={handleSubmit} />
     </DialogContent>
   )
 }
