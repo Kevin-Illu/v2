@@ -1,6 +1,6 @@
 import { Box, Em, Flex, Text } from '@radix-ui/themes'
 import { TodoItem } from './todo-item'
-import { TodoResponse } from '$globalTypes/models'
+import { TodoResponse } from '$globalTypes/databaseResponse'
 import { FC } from 'react'
 
 interface TodoListProps {

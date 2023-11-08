@@ -1,7 +1,7 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { TodoResponse } from '$globalTypes/databaseResponse'
 import { ArchiveIcon, Pencil1Icon } from '@radix-ui/react-icons'
-import { Box, Dialog, DialogTrigger, Flex, IconButton } from '@radix-ui/themes'
+import { Box, Button, Dialog, DialogTrigger, Flex, IconButton } from '@radix-ui/themes'
 import { useTodoContext } from '@renderer/hooks'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -9,12 +9,16 @@ import { EditTodoDialog } from './todo-editing-dialog'
 
 interface ItemProps extends TodoResponse {}
 
+// TODO: mostrar el boton de save cuando el usuario edite el texto
 export const TodoItem: FC<ItemProps> = (todo) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [wasEdited, setWasEdited] = useState(false)
+  const [showSaveButton, setShowSetButton] = useState(false)
+
   const { todo_id, todo_name } = todo
   const [todoName, setTodoName] = useState(todo_name)
   const { setEditingTodo } = useTodoContext()
-  const handleEditionTodo = () => setEditingTodo(todo)
+  const handleEditingTodo = () => setEditingTodo(todo)
 
   const handleOpenDialog = (isOpen: boolean) => {
     // cuando se abre el dialog y se cierra es necesario
@@ -29,6 +33,10 @@ export const TodoItem: FC<ItemProps> = (todo) => {
   const handleSubmit = (value: string) => {
     setTodoName(value)
   }
+
+  useEffect(() => {
+    setShowSetButton(wasEdited)
+  }, [wasEdited])
 
   return (
     <Dialog.Root onOpenChange={handleOpenDialog} open={isDialogOpen}>
@@ -54,15 +62,19 @@ export const TodoItem: FC<ItemProps> = (todo) => {
                 name="todo_name"
                 value={formik.values.todo_name}
                 className="w-full focus:outline-none"
-                onChange={formik.handleChange}
+                onChange={(e) => {
+                  setWasEdited(todoName !== e.target.value)
+                  formik.handleChange(e)
+                }}
                 onBlur={formik.handleBlur}
               />
             </form>
           )}
         </Formik>
         <Flex gap="4" justify="between" align="center">
+          {showSaveButton ? <Button variant="ghost">save</Button> : null}
           <DialogTrigger>
-            <IconButton variant="ghost" onClick={handleEditionTodo}>
+            <IconButton variant="ghost" onClick={handleEditingTodo}>
               <Pencil1Icon />
             </IconButton>
           </DialogTrigger>
