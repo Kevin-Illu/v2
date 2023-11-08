@@ -1,9 +1,9 @@
 import * as Yup from 'yup'
-import { DialogContent, Flex, IconButton } from '@radix-ui/themes'
+import { Button, DialogClose, DialogContent, Flex, IconButton } from '@radix-ui/themes'
 import { useTodoContext } from '@renderer/hooks'
 import { Formik } from 'formik'
 import { InputTextField } from '../ui'
-import { ArrowDownIcon } from '@radix-ui/react-icons'
+import { ArrowBottomLeftIcon } from '@radix-ui/react-icons'
 
 export const EditTodoDialog = () => {
   const {
@@ -35,17 +35,25 @@ export const EditTodoDialog = () => {
       >
         {(formik) => (
           <form onSubmit={formik.handleSubmit} className="w-full">
-            <Flex gap="2" justify="between" align="center">
-              <InputTextField label="" name="todo_name" formik={formik} className="flex-1" />
+            <Flex gap="4" justify="between" align="center">
+              <InputTextField label="" name="todo_name" formik={formik} className="w-full" />
               <Flex>
-                <IconButton>
-                  <ArrowDownIcon />
+                <IconButton variant="solid" type="button">
+                  <ArrowBottomLeftIcon />
                 </IconButton>
               </Flex>
             </Flex>
           </form>
         )}
       </Formik>
+      <Flex gap="3" mt="4" justify="end">
+        <DialogClose>
+          <Button variant="soft" color="gray">
+            Cancel
+          </Button>
+        </DialogClose>
+        <Button type="submit">save</Button>
+      </Flex>
     </DialogContent>
   )
 }

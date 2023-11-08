@@ -5,11 +5,13 @@ import { FormikProps } from 'formik/dist/types'
 
 interface TextFieldProps {
   className?: string
+  inputClassName?: string
   style?: React.CSSProperties
   name: string
-  label: string
+  label?: string
   placeholder?: string
   formik: FormikProps<any>
+  variant?: 'classic' | 'surface' | 'soft'
 }
 
 export const InputTextField: FC<TextFieldProps> = ({
@@ -17,15 +19,22 @@ export const InputTextField: FC<TextFieldProps> = ({
   name,
   formik,
   className,
+  variant = 'surface',
+  inputClassName,
   ...props
 }) => {
   return (
     <label className={className}>
       <Flex align="center" justify="between">
-        <Text>{label}</Text>
+        {label && <Text>{label}</Text>}
         <ErrorMessage name={name}>{(message) => <Text color="red">{message}</Text>}</ErrorMessage>
       </Flex>
-      <TextField.Input {...formik.getFieldProps(name)} {...props} />
+      <TextField.Input
+        className={inputClassName}
+        variant={variant}
+        {...formik.getFieldProps(name)}
+        {...props}
+      />
     </label>
   )
 }

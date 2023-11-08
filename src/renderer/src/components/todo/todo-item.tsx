@@ -5,7 +5,6 @@ import { Box, Dialog, DialogTrigger, Flex, IconButton } from '@radix-ui/themes'
 import { useTodoContext } from '@renderer/hooks'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-import { InputTextField } from '../ui'
 import { EditTodoDialog } from './todo-editing-dialog'
 
 interface ItemProps extends TodoResponse {}
@@ -13,7 +12,7 @@ interface ItemProps extends TodoResponse {}
 export const TodoItem: FC<ItemProps> = (todo) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const { todo_id, todo_name } = todo
-  const [todoName] = useState(todo_name)
+  const [todoName, setTodoName] = useState(todo_name)
   const { setEditingTodo } = useTodoContext()
   const handleEditionTodo = () => setEditingTodo(todo)
 
@@ -28,12 +27,15 @@ export const TodoItem: FC<ItemProps> = (todo) => {
   }
 
   const handleSubmit = (value: string) => {
-    console.log(value)
+    setTodoName(value)
   }
 
   return (
     <Dialog.Root onOpenChange={handleOpenDialog} open={isDialogOpen}>
-      <Box className="flex justify-between gap-8" key={todo_id}>
+      <Box
+        className="flex justify-between items-center gap-8 border-solid border-[1px] px-4 py-2 rounded-xl"
+        key={todo_id}
+      >
         <Formik
           initialValues={{
             todo_name: todoName
@@ -47,7 +49,14 @@ export const TodoItem: FC<ItemProps> = (todo) => {
         >
           {(formik) => (
             <form onSubmit={formik.handleSubmit} className="w-full">
-              <InputTextField label="" name="todo_name" formik={formik} />
+              <input
+                type="text"
+                name="todo_name"
+                value={formik.values.todo_name}
+                className="w-full focus:outline-none"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
             </form>
           )}
         </Formik>
