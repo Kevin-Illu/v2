@@ -12,9 +12,15 @@ interface TextFieldProps {
   formik: FormikProps<any>
 }
 
-export const InputTextField: FC<TextFieldProps> = ({ label, name, formik, ...props }) => {
+export const InputTextField: FC<TextFieldProps> = ({
+  label,
+  name,
+  formik,
+  className,
+  ...props
+}) => {
   return (
-    <label>
+    <label className={className}>
       <Flex align="center" justify="between">
         <Text>{label}</Text>
         <ErrorMessage name={name}>{(message) => <Text color="red">{message}</Text>}</ErrorMessage>
@@ -24,9 +30,9 @@ export const InputTextField: FC<TextFieldProps> = ({ label, name, formik, ...pro
   )
 }
 
-export const AreaTextField: FC<TextFieldProps> = ({ label, name, formik, ...props }) => {
+export const AreaTextField: FC<TextFieldProps> = ({ label, name, formik, className, ...props }) => {
   return (
-    <label>
+    <label className={className}>
       <Flex align="center" justify="between">
         <Text>{label}</Text>
         <ErrorMessage name={name}>{(message) => <Text color="red">{message}</Text>}</ErrorMessage>

@@ -14,10 +14,7 @@ export const TodoItem: FC<ItemProps> = (todo) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const { todo_id, todo_name } = todo
   const [todoName] = useState(todo_name)
-  const {
-    setEditingTodo,
-    state: { editingTodo }
-  } = useTodoContext()
+  const { setEditingTodo } = useTodoContext()
   const handleEditionTodo = () => setEditingTodo(todo)
 
   const handleOpenDialog = (isOpen: boolean) => {
@@ -66,7 +63,7 @@ export const TodoItem: FC<ItemProps> = (todo) => {
         </Flex>
       </Box>
 
-      {editingTodo && <EditTodoDialog />}
+      <EditTodoDialog />
     </Dialog.Root>
   )
 }
