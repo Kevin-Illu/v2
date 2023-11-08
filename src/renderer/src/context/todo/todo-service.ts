@@ -33,3 +33,7 @@ export async function createNewTodo(todo: Todo): Promise<RunResult> {
 export async function getTodoStates(): Promise<State[]> {
   return await TodosService.dataAccessor<State[]>({ type: 'get-states' })
 }
+
+export async function updateTodo(todo: Todo): Promise<boolean> {
+  return await TodosService.dataAccessor<boolean>({ type: 'update-todo', payload: todo })
+}

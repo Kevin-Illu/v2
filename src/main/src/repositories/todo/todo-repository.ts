@@ -1,4 +1,5 @@
-import { State, Todo, TodoResponse } from '$globalTypes/models'
+import { State, Todo } from '$globalTypes/models'
+import { TodoResponse } from '$globalTypes/databaseResponse'
 import { MainDatabaseInstance, RunResult } from '@main/types'
 import { ITodoRepository } from './ITodoRepository'
 
@@ -54,6 +55,17 @@ export class TodoRepository implements ITodoRepository {
       )
     `,
       [todo.state_id, todo.name, todo.description]
+    )
+  }
+
+  public update = (todo: Todo): Promise<RunResult> => {
+    return this.db.execute(
+      `
+        UPDATE todos
+        SET name = ?
+        WHERE id = ?
+      `,
+      [todo.name, todo.id]
     )
   }
 }

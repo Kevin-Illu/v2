@@ -6,19 +6,22 @@ import { useTodoContext } from '@renderer/hooks'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { EditTodoDialog } from './todo-editing-dialog'
+import { updateTodo } from '@renderer/context/todo/todo-service'
+import { Todo } from '$globalTypes/models'
 
 interface ItemProps extends TodoResponse {}
 
-// TODO: mostrar el boton de save cuando el usuario edite el texto
 export const TodoItem: FC<ItemProps> = (todo) => {
+  const { todo_id, todo_name } = todo
+  const { setEditingTodo } = useTodoContext()
+
+  // es necesario agregar el todo actual al contexto cuando
+  // se quiere editar en el dialog de edicion
+  const handleEditingTodo = () => setEditingTodo(todo)
+
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [wasEdited, setWasEdited] = useState(false)
-  const [showSaveButton, setShowSetButton] = useState(false)
-
-  const { todo_id, todo_name } = todo
-  const [todoName, setTodoName] = useState(todo_name)
-  const { setEditingTodo } = useTodoContext()
-  const handleEditingTodo = () => setEditingTodo(todo)
+  const [showSaveButton, setShowSaveButton] = useState(false)
 
   const handleOpenDialog = (isOpen: boolean) => {
     // cuando se abre el dialog y se cierra es necesario
@@ -30,12 +33,18 @@ export const TodoItem: FC<ItemProps> = (todo) => {
     setIsDialogOpen(isOpen)
   }
 
-  const handleSubmit = (value: string) => {
-    setTodoName(value)
+  const handleSubmit = (newName: string) => {
+    const newTodo: Partial<Todo> = {
+      id: todo.todo_id,
+      name: newName
+    }
+
+    updateTodo(newTodo as Todo)
+    setWasEdited(false)
   }
 
   useEffect(() => {
-    setShowSetButton(wasEdited)
+    setShowSaveButton(wasEdited)
   }, [wasEdited])
 
   return (
@@ -46,7 +55,7 @@ export const TodoItem: FC<ItemProps> = (todo) => {
       >
         <Formik
           initialValues={{
-            todo_name: todoName
+            todo_name
           }}
           validationSchema={Yup.object({
             todo_name: Yup.string().required('Ok?')
@@ -56,32 +65,40 @@ export const TodoItem: FC<ItemProps> = (todo) => {
           }}
         >
           {(formik) => (
-            <form onSubmit={formik.handleSubmit} className="w-full">
+            <form
+              onSubmit={formik.handleSubmit}
+              className="w-full flex justify-between items-center"
+            >
               <input
                 type="text"
                 name="todo_name"
                 value={formik.values.todo_name}
                 className="w-full focus:outline-none"
                 onChange={(e) => {
-                  setWasEdited(todoName !== e.target.value)
                   formik.handleChange(e)
+                  setWasEdited(todo_name !== e.target.value)
                 }}
                 onBlur={formik.handleBlur}
               />
+
+              <Flex gap="4" justify="between" align="center">
+                {showSaveButton && (
+                  <Button variant="ghost" type="submit">
+                    save
+                  </Button>
+                )}
+                <DialogTrigger>
+                  <IconButton variant="ghost" onClick={handleEditingTodo}>
+                    <Pencil1Icon />
+                  </IconButton>
+                </DialogTrigger>
+                <IconButton variant="ghost">
+                  <ArchiveIcon />
+                </IconButton>
+              </Flex>
             </form>
           )}
         </Formik>
-        <Flex gap="4" justify="between" align="center">
-          {showSaveButton ? <Button variant="ghost">save</Button> : null}
-          <DialogTrigger>
-            <IconButton variant="ghost" onClick={handleEditingTodo}>
-              <Pencil1Icon />
-            </IconButton>
-          </DialogTrigger>
-          <IconButton variant="ghost">
-            <ArchiveIcon />
-          </IconButton>
-        </Flex>
       </Box>
 
       <EditTodoDialog />

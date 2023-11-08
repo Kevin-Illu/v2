@@ -1,3 +1,4 @@
+import { TodoResponse } from './databaseResponse'
 import { State, Todo, User } from './models'
 
 export type ClientAction<T> = {
@@ -5,11 +6,13 @@ export type ClientAction<T> = {
   payload?: unknown
 }
 
+// TODO: mejorar el type de los returns
 export type TodoActions = {
   ['get-states']: () => Promise<State[]>
-  ['get-todos']: () => Promise<Todo[]>
-  ['get-task-by-id']: (id: string) => Promise<Todo>
+  ['get-todos']: () => Promise<TodoResponse[]>
+  ['get-task-by-id']: (id: string) => Promise<TodoResponse>
   ['create-new-todo']: (todo: Todo) => Promise<any>
+  ['update-todo']: (todo: Todo) => Promise<any>
 }
 
 export type SettingsActions = {
