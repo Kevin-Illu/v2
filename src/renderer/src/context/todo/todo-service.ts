@@ -1,14 +1,15 @@
-import { State, Todo } from '$globalTypes/models'
-import { TodoResponse } from '$globalTypes/databaseResponse'
+import { State } from '$globalTypes/models'
+import { Todo } from '$globalTypes/databaseResponse'
 import { RunResult } from 'sqlite3'
 
 const TodosService = window.api.todos
 
 /**
  * Obtiene la lista de todos desde el servicio y actualiza el estado con los resultados.
+ * @returns {Promise<Todo[]>}
  */
-export async function getTodosFromService(): Promise<TodoResponse[]> {
-  return await TodosService.dataAccessor<TodoResponse[]>({ type: 'get-todos' })
+export async function getTodosFromService(): Promise<Todo[]> {
+  return await TodosService.dataAccessor<Todo[]>({ type: 'get-todos' })
 }
 
 /**

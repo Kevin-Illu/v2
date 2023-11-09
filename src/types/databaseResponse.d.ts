@@ -27,7 +27,7 @@ export interface Todo {
   state_id: number
   state_name: string
   description: string | null
-  steps: Step[] | null
+  steps: Step[]
 }
 
 export interface Step {
@@ -35,5 +35,5 @@ export interface Step {
   name: string
   description: string | null
   completed: boolean
-  sub_steps: Step[] | null
+  sub_steps: Step[]
 }

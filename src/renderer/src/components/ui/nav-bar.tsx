@@ -10,7 +10,7 @@ export const NavBar = () => {
   } = useAuthContext()
 
   return (
-    <div className="w-full px-4 py-2 border-b-[1px] border-zinc-200 dark:border-zinc-800 max-h-14 flex justify-between items-center">
+    <div className="w-full px-4 py-1 border-b-[1px] border-zinc-200 dark:border-zinc-800 max-h-14 flex justify-between items-center">
       <Box className="flex justify-start items-center w-[20%]">
         <Text weight="bold">
           <Em>v2</Em>
@@ -24,7 +24,7 @@ export const NavBar = () => {
       <Box className="text-end flex justify-end items-center w-[20%]">
         <Flex gap="3" align="center">
           {isRegistered && user ? <UserCard {...user} /> : null}
-          <IconButton variant="ghost">
+          <IconButton variant="ghost" size="1">
             <GearIcon width="24" height="24" />
           </IconButton>
         </Flex>
@@ -39,8 +39,8 @@ const UserCard: React.FC<User> = ({ name, email }) => {
   return (
     <HoverCard.Root>
       <HoverCard.Trigger>
-        <IconButton variant="outline">
-          <Avatar fallback={firstLetter} size="2" />
+        <IconButton variant="outline" size="1">
+          <Avatar fallback={firstLetter} size="1" />
         </IconButton>
       </HoverCard.Trigger>
       <HoverCard.Content size="1">
