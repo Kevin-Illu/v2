@@ -48,13 +48,16 @@ CREATE TABLE IF NOT EXISTS todos (
 
  Creación de la tabla 'steps'
  */
-CREATE TABLE IF NOT EXISTS steps (
-  id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-  todo_id INTEGER NOT NULL,
-  description TEXT NOT NULL,
-  completed BOOLEAN NOT NULL DEFAULT 0,
-  FOREIGN KEY (todo_id) REFERENCES todos(id)
-);
+CREATE TABLE "steps" (
+	"id"	INTEGER NOT NULL,
+	"todo_id"	INTEGER NOT NULL,
+	"description"	TEXT,
+	"completed"	BOOLEAN NOT NULL DEFAULT 0,
+	"archived"	BOOLEAN NOT NULL DEFAULT 0,
+	"name"	TEXT NOT NULL, parent_step_id INTEGER NULL,
+	FOREIGN KEY("todo_id") REFERENCES "todos"("id"),
+	PRIMARY KEY("id" AUTOINCREMENT)
+)
 
 /*
 para pruebas:
