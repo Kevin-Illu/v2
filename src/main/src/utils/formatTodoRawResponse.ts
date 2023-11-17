@@ -1,5 +1,9 @@
 import { Todo, Step, RawTodo } from '$globalTypes/databaseResponse'
 
+/*
+ * return a redeable data structure for represent
+ * a todo tree
+ */
 export function formatRawData(rawData: RawTodo[]): Todo[] {
   const todosMap = new Map<number, Todo>()
 
@@ -35,25 +39,31 @@ export function formatRawData(rawData: RawTodo[]): Todo[] {
       todo = todosMap.get(todo_id)!
     }
 
-    const step: Step = {
-      id: step_id,
-      name: step_name,
-      description: step_description || null,
-      completed: Boolean(step_completed),
-      sub_steps: []
-    }
+    // verificar si existe el step
+    if (step_id !== null) {
+      const step: Step = {
+        id: step_id,
+        name: step_name,
+        description: step_description || null,
+        completed: Boolean(step_completed),
+        sub_steps: []
+      }
 
-    if (parent_step_id === null) {
-      todo.steps?.push(step)
-    } else if (todo.steps) {
-      const parentStep = findStepWithId(todo.steps, parent_step_id)
-      parentStep?.sub_steps?.push(step)
+      if (parent_step_id === null) {
+        todo.steps?.push(step)
+      } else if (todo.steps) {
+        const parentStep = findStepWithId(todo.steps, parent_step_id)
+        parentStep?.sub_steps?.push(step)
+      }
     }
   }
 
   return [...todosMap.values()]
 }
 
+/*
+ * find substeps and return it
+ */
 function findStepWithId(steps: Step[], id: number): Step | null {
   for (const step of steps) {
     if (step.id === id) {

@@ -2,7 +2,7 @@ import { useReducer } from 'react'
 import { TodoContext } from './context'
 import { todoReducer } from './reducer'
 import { TodoState } from './types'
-import { TodoResponse } from '$globalTypes/databaseResponse'
+import { Todo as TodoResponse } from '$globalTypes/databaseResponse'
 
 const initialTodoState: TodoState = {
   isTodoCreated: false,

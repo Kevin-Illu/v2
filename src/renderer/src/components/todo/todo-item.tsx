@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react'
-import { TodoResponse } from '$globalTypes/databaseResponse'
+import { Todo as TodoResponse } from '$globalTypes/databaseResponse'
 import { ArchiveIcon, Pencil1Icon } from '@radix-ui/react-icons'
 import { Box, Button, Dialog, DialogTrigger, Flex, IconButton } from '@radix-ui/themes'
 import { useTodoContext } from '@renderer/hooks'
@@ -89,7 +89,7 @@ export const TodoItem: FC<ItemProps> = (todo) => {
               <Flex gap="4" justify="between" align="center">
                 {showSaveButton && (
                   <Button variant="ghost" type="submit">
-                    save
+                    saveeee
                   </Button>
                 )}
                 <DialogTrigger>
