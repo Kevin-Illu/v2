@@ -2,7 +2,7 @@ import Application from './src/app'
 import { DatabaseService, TodoService, AuthService } from './src/services'
 
 // instance of services
-const dbS = new DatabaseService('./src/main/src/database/v2.db')
+const dbS = new DatabaseService('./database/v2.db')
 const authS = new AuthService(dbS)
 const todosS = new TodoService(dbS)
 

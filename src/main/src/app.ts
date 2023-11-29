@@ -4,7 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 
 import { Service } from '@main/types'
 
-import icon from '../../../resources/icon.png'
+// import icon from '../../../resources/icon.png'
 
 class Application {
   private app: Electron.App
@@ -54,7 +54,7 @@ class Application {
       minHeight: 600,
       show: false,
       autoHideMenuBar: true,
-      ...(process.platform === 'linux' ? { icon } : {}),
+      // ...(process.platform === 'linux' ? { icon } : {}),
       webPreferences: {
         preload: join(__dirname, '../preload/index.js'),
         sandbox: false
@@ -103,12 +103,6 @@ class Application {
       })
     })
   }
-
-  // Quit when all windows are closed, except on macOS. There, it's common
-  // for applications and their menu bar to stay active until the user quits
-  // explicitly with Cmd + Q.
-
-  // INFO: "implement this method when the the application is executed in macOS"
 }
 
 export default Application

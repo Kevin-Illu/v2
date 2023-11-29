@@ -8,7 +8,7 @@ export class AuthRepository implements IRepository {
   public register = async (user: User): Promise<boolean> => {
     const res = await this.db.execute(
       `
-    INSERT INTO users (name, email)
+    INSERT INTO user (name, email)
     VALUES (?,?)`,
       [user.name, user.email]
     )
@@ -21,7 +21,7 @@ export class AuthRepository implements IRepository {
   }
 
   public getUser = async (): Promise<User | null> => {
-    const user = await this.db.fetch<User>('SELECT * FROM users WHERE Id = 1')
+    const user = await this.db.fetch<User>('SELECT * FROM user WHERE Id = 1')
     return user[0] || null
   }
 }

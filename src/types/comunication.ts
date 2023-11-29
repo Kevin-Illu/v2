@@ -1,4 +1,4 @@
-import { TodoResponse } from './databaseResponse'
+import { Todo as TodoResponse } from './databaseResponse'
 import { State, Todo, User } from './models'
 
 export type ClientAction<T> = {
