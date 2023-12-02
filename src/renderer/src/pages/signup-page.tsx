@@ -5,8 +5,8 @@ import { AuthContext } from '@renderer/context/auth'
 import { useContext, useState } from 'react'
 
 interface ActionResponse {
-  status: "OK" | "FAILED";
-  message: string;
+  status: 'OK' | 'FAILED'
+  message: string
 }
 
 export const SignUpPage = () => {
@@ -17,15 +17,15 @@ export const SignUpPage = () => {
     registerNewUser(user).then((res) => {
       if (res) {
         setResponse({
-          status: "OK",
-          message: "user created"
+          status: 'OK',
+          message: 'user created'
         })
         return
       }
 
       setResponse({
-        status: "FAILED",
-        message: "user not created"
+        status: 'FAILED',
+        message: 'user creation failed'
       })
     })
   }
@@ -33,15 +33,13 @@ export const SignUpPage = () => {
   return (
     <Box className="w-screen h-screen">
       <Container className="px-8 xl:px-0 h-full flex justify-center items-center">
-        <div>
-          {response?.status && <p>{response.message}</p>}
-        </div>
+        <div>{response?.status && <p>{response.message}</p>}</div>
         <Box className="flex flex-col bg-white p-4 rounded-lg">
           <h1 className="text-4xl xl:text-6xl font-bold">
-            Sign up for our app and discover a new way to achieve your goals and dreams, one step at a
-            time. Take the first step towards organization and success!
+            Sign up for our app and discover a new way to achieve your goals and dreams, one step at
+            a time. Take the first step towards organization and success!
           </h1>
-          <Flex justify="center" align="center" className='w-full'>
+          <Flex justify="center" align="center" className="w-full">
             <SignUpForm onSubmit={handleSubmit} />
           </Flex>
         </Box>

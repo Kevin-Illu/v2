@@ -1,5 +1,6 @@
 import sqlite3 from 'sqlite3'
 import { SQLiteDatabaseInstance, RunResult, SQLQuery, Service } from '@main/types'
+import { DatabaseRepository } from '../../repositories/database/repository'
 
 class DatabaseService implements Service {
   public name = 'database'
@@ -8,7 +9,28 @@ class DatabaseService implements Service {
   constructor(private databasePath: string) {}
 
   public initialize = (): void => {
+    console.log('....')
+    console.log('initializing database')
+
     this.db = new sqlite3.Database(this.databasePath)
+    const repository = new DatabaseRepository(this)
+
+    // inicializa las tablas y los datos si no se han creado
+    console.log('checking first launch')
+    repository.checkFirstLaunch().then((firstLaunch) => {
+
+      console.log('is first launch: ', firstLaunch)
+
+      if (firstLaunch) {
+
+        console.log('initializing database schema')
+
+        repository.setupDatabaseSchema()
+        repository.populateTables()
+      }
+
+      console.log('database initialized successfully')
+    })
   }
 
   public cleanup = (): void => {
@@ -16,8 +38,8 @@ class DatabaseService implements Service {
   }
 
   // transaction methods
-  public runSerialQueries = (queries: SQLQuery[]): Promise<void> => {
-    return new Promise<void>((resolve, reject) => {
+  public runSerialQueries = (queries: SQLQuery[]): Promise<boolean> => {
+    return new Promise<boolean>((resolve, reject) => {
       this.db.serialize(() => {
         this.db.run('BEGIN TRANSACTION')
 
@@ -29,9 +51,9 @@ class DatabaseService implements Service {
           if (err) {
             // En caso de error, hacemos rollback
             this.db.run('ROLLBACK')
-            reject(err)
+            reject(false)
           } else {
-            resolve()
+            resolve(true)
           }
         })
       })

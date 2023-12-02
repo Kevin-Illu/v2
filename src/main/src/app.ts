@@ -3,6 +3,7 @@ import { app, shell, BrowserWindow } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 
 import { Service } from '@main/types'
+import { DatabaseService } from './services'
 
 // import icon from '../../../resources/icon.png'
 
@@ -19,10 +20,8 @@ class Application {
   public start(): void {
     this.app.whenReady().then(() => {
       this.handleReady()
-
       // services should be initialized before initialization
       this.initializeServices()
-
       this.handleWindowAllClosed()
     })
   }

@@ -32,10 +32,11 @@ export class AuthService extends CommunicationService implements ICommunication 
   }
 
   public initialize = (): void => {
-    console.log('initializing auth service')
+    // console.log('initializing auth service')
     this.handleAction('services:auth', this._dispatcher)
   }
+
   public cleanup = (): void => {
-    console.log('close auth service')
+    // console.log('close auth service')
   }
 }

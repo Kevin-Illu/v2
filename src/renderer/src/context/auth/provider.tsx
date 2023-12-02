@@ -27,6 +27,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     dispatch({ type: 'SET_IS_REGISTERED', payload: !!userInfo })
   }
 
+  // optienen el usuario cuando se inicia la aplicacion
+  // si es el primer launch optiene null y muestra el signup page
   useEffect(() => {
     getUserInformation().then((userInfo) => {
       setUserInformation(userInfo)
