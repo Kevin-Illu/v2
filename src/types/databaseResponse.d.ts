@@ -21,9 +21,9 @@ export interface RawTodo {
 }
 
 export interface Todo {
-  todo_id: number
-  todo_name: string
-  todo_archived: boolean
+  id: number
+  name: string
+  archived: boolean
   state_id: number
   state_name: string
   description: string | null
@@ -32,8 +32,15 @@ export interface Todo {
 
 export interface Step {
   id: number
+  parent_step_id: number | null
   name: string
   description: string | null
   completed: boolean
   sub_steps: Step[]
+}
+
+export interface State {
+  id: number
+  name: string
+  description: string
 }

@@ -1,5 +1,4 @@
-import { State as StateModel, Todo as TodoModel } from '$globalTypes/models'
-import { Todo, RawTodo } from '$globalTypes/databaseResponse'
+import { Todo, RawTodo, State, Step } from '$globalTypes/databaseResponse'
 import { MainDatabaseInstance, RunResult } from '@main/types'
 import { ITodoRepository } from './ITodoRepository'
 import { formatRawData } from '../../utils/formatTodoRawResponse'
@@ -8,10 +7,10 @@ import { formatRawData } from '../../utils/formatTodoRawResponse'
 export class TodoRepository implements ITodoRepository {
   constructor(private db: MainDatabaseInstance) {}
 
-  public getStates = (): Promise<StateModel[]> => {
-    return this.db.fetch<StateModel>(`
+  public getStates = (): Promise<State[]> => {
+    return this.db.fetch<State>(`
       SELECT id
-      , name AS state_name
+      , name
       , description
       FROM states
     `)
@@ -87,11 +86,11 @@ ORDER BY
     return formatedData
   }
 
-  public getById = (taskId: string): Promise<Todo> => {
-    return this.db.fetch<Todo>('SELECT * FROM todos WHERE id = ?', [taskId])[0]
+  public getById = (id: number): Promise<Todo> => {
+    return this.db.fetch<Todo>('SELECT * FROM todos WHERE id = ?', [id])[0]
   }
 
-  public create = (todo: TodoModel): Promise<RunResult> => {
+  public create = (todo: Todo, user_id: number): Promise<RunResult> => {
     return this.db.execute(
       `
       INSERT INTO todos (
@@ -102,18 +101,18 @@ ORDER BY
         , created_date
       )
       VALUES (
-        1,           -- user_id
+        ?,           -- user_id
         ?,           -- state_id
         ?,           -- name
         ?,           -- description
         DATETIME('now') -- created_date
       )
     `,
-      [todo.state_id, todo.name, todo.description]
+      [user_id, todo.state_id, todo.name, todo.description]
     )
   }
 
-  public update = (todo: TodoModel): Promise<RunResult> => {
+  public update = (todo: Todo): Promise<RunResult> => {
     return this.db.execute(
       `
         UPDATE todos
@@ -121,6 +120,29 @@ ORDER BY
         WHERE id = ?
       `,
       [todo.name, todo.id]
+    )
+  }
+
+  public createStep = (step: Step, todo_id: number): Promise<RunResult> => {
+    return this.db.execute(
+      `
+      INSERT INTO steps
+      (todo_id, parent_step_id, name, description, completed)
+      VALUES (?, ?, ?, ?, ?)
+      `,
+      [todo_id, step.parent_step_id, step.name, step.description, step.completed]
+    )
+  }
+
+  public updateStep = (step: Step): Promise<RunResult> => {
+    return this.db.execute(
+      `
+      UPDATE steps
+      SET name = ?,
+        description = ?,
+        completed = ?
+      WHERE id = ?`,
+      [step.name, step.description, step.completed, step.id]
     )
   }
 }

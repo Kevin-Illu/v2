@@ -26,9 +26,9 @@ export function formatRawData(rawData: RawTodo[]): Todo[] {
 
     if (!todosMap.has(todo_id)) {
       todo = {
-        todo_id,
-        todo_name,
-        todo_archived: Boolean(todo_archived),
+        id: todo_id,
+        name: todo_name,
+        archived: Boolean(todo_archived),
         state_id: todo_state_id,
         state_name: todo_state_name,
         description: todo_description || null,
@@ -43,6 +43,7 @@ export function formatRawData(rawData: RawTodo[]): Todo[] {
     if (step_id !== null) {
       const step: Step = {
         id: step_id,
+        parent_step_id,
         name: step_name,
         description: step_description || null,
         completed: Boolean(step_completed),

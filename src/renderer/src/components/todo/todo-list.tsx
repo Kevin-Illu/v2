@@ -25,6 +25,7 @@ interface TodoListProps {
 // }
 
 export const TodoList: FC<TodoListProps> = ({ todos }) => {
+  console.log(todos)
   return (
     <Box className="flex flex-col gap-4 pt-4">
       <header>
@@ -33,7 +34,7 @@ export const TodoList: FC<TodoListProps> = ({ todos }) => {
 
       <div className="flex flex-col gap-2">
         {todos.map((todo) => (
-          <TodoItem key={todo.todo_id} {...todo} />
+          <TodoItem key={todo.id} {...todo} />
         ))}
       </div>
     </Box>
@@ -59,10 +60,10 @@ const TodoItem = (todo: Todo) => {
   const handleEditTodo = () => setEditingTodo(todo)
 
   return (
-    <Box key={todo.todo_id} className="py-2 rounded-xl bg-white flex flex-col gap-1">
+    <Box key={todo.id} className="py-2 rounded-xl bg-white flex flex-col gap-1">
       <Box className={todoItemCssClasses}>
         <button className="w-full h-full py-4 flex" onClick={handleEditTodo}>
-          <p className="text-lg font-medium">{todo.todo_name}</p>
+          <p className="text-lg font-medium">{todo.name}</p>
         </button>
         <Box className="flex justify-between items-center gap-4">
           <IconButton variant="ghost" radius="full">

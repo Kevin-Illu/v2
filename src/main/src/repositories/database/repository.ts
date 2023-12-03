@@ -21,7 +21,7 @@ export class DatabaseRepository implements IRepository {
             id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             name VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL
-          );`
+          )`
       },
       states: {
         create: `
@@ -29,7 +29,7 @@ export class DatabaseRepository implements IRepository {
             id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             name TEXT NOT NULL,
             description TEXT NOT NULL
-          );`,
+          )`,
         default_values: `
             INSERT INTO states (name, description)
             VALUES ("Active", "Things are happening!"),
@@ -37,7 +37,7 @@ export class DatabaseRepository implements IRepository {
             ("Waiting", "Waiting for something else"),
             ("Canceled", "Never going to happen"),
             ("Deferred", "Put off until tomorrow"),
-            ("Completed", "Things are done!");`
+            ("Completed", "Things are done!")`
       },
       todos: {
         create: `
@@ -50,9 +50,10 @@ export class DatabaseRepository implements IRepository {
             archived BOOLEAN NOT NULL DEFAULT 0,
             created_date DATETIME NOT NULL,
             steps_id INTEGER NULL,
+            parent_step_id ITEGER NULL,
           FOREIGN KEY (user_id) REFERENCES user(id),
           FOREIGN KEY (state_id) REFERENCES states(id)
-        );`
+        )`
       },
       steps: {
         create: `
@@ -73,7 +74,7 @@ export class DatabaseRepository implements IRepository {
             key TEXT PRIMARY KEY,
             value TEXT NULL,
             description TEXT NULL
-          );`,
+          )`,
         default_values: `
           INSERT INTO global_config (key, value, description)
           VALUES ("initialized", "true", "indica si la aplicacion se inicializo con los datos por default"),
@@ -100,7 +101,13 @@ export class DatabaseRepository implements IRepository {
     const { user, states, todos, steps, global_config } = this.tables
 
     this.db
-      .runSerialQueries([user.create, states.create, todos.create, steps.create, global_config.create])
+      .runSerialQueries([
+        user.create,
+        states.create,
+        todos.create,
+        steps.create,
+        global_config.create
+      ])
       .then(() => console.log('setup database successfully'))
       .catch((error) => console.error('setup database failed', error))
   }
