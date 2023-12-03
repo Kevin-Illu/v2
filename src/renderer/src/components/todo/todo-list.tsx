@@ -54,9 +54,6 @@ hover:bg-lime-100 hover:border-lime-100
 
 const TodoItem = (todo: Todo) => {
   const { setEditingTodo } = useTodoContext()
-
-  // agrega este todo al contexto para que se utilize
-  // en la pagina principal
   const handleEditTodo = () => setEditingTodo(todo)
 
   return (
