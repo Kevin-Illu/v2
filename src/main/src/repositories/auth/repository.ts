@@ -1,6 +1,10 @@
-import { type User } from '$globalTypes/models'
-import { type MainDatabaseInstance } from '@main/types'
-import { type IRepository } from './IRepository'
+import { MainDatabaseInstance } from '@main/types'
+import { User } from '$globalTypes/databaseResponse'
+
+export interface IRepository {
+  register(user: any): Promise<boolean>
+  getUser(): Promise<User | null>
+}
 
 export class AuthRepository implements IRepository {
   constructor(public db: MainDatabaseInstance) {}

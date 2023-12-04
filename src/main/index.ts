@@ -1,5 +1,8 @@
 import Application from './src/app'
-import { DatabaseService, TodoService, AuthService } from './src/services'
+
+import { AuthService } from './src/services/auth'
+import { TodoService } from './src/services/todo'
+import { DatabaseService } from './src/services/database'
 
 // instance of services
 const dbS = new DatabaseService('./database/v2.db')

@@ -3,7 +3,6 @@ import { app, shell, BrowserWindow } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 
 import { Service } from '@main/types'
-import { DatabaseService } from './services'
 
 // import icon from '../../../resources/icon.png'
 

@@ -1,7 +1,18 @@
 import { Todo, RawTodo, State, Step } from '$globalTypes/databaseResponse'
 import { MainDatabaseInstance, RunResult } from '@main/types'
-import { ITodoRepository } from './ITodoRepository'
 import { formatRawData } from '../../utils/formatTodoRawResponse'
+
+interface ITodoRepository {
+  create(todo: Todo, user_id: number): Promise<RunResult>
+  createStep(step: Step, todo_id: number): Promise<RunResult>
+
+  getStates(): Promise<State[]>
+  getAll(): Promise<Todo[]>
+  getById(id: number): Promise<Todo>
+
+  update(todo: Todo): Promise<RunResult>
+  updateStep(step: Step): Promise<RunResult>
+}
 
 // TODO: clean the return types of this repository
 export class TodoRepository implements ITodoRepository {
