@@ -1,8 +1,9 @@
 import sqlite3 from 'sqlite3'
-import { SQLiteDatabaseInstance, RunResult, SQLQuery, Service } from '@main/types'
-import { DatabaseRepository } from '../../repositories/database/repository'
+import { DatabaseRepository } from '../../repositories/database'
 
-class DatabaseService implements Service {
+import { SQLiteDatabaseInstance, RunResult, SQLQuery, Service } from '@main/types'
+
+export class DatabaseService implements Service {
   public name = 'database'
   public db!: SQLiteDatabaseInstance
 
@@ -18,11 +19,9 @@ class DatabaseService implements Service {
     // inicializa las tablas y los datos si no se han creado
     console.log('checking first launch')
     repository.checkFirstLaunch().then((firstLaunch) => {
-
       console.log('is first launch: ', firstLaunch)
 
       if (firstLaunch) {
-
         console.log('initializing database schema')
 
         repository.setupDatabaseSchema()
@@ -85,5 +84,3 @@ class DatabaseService implements Service {
     })
   }
 }
-
-export default DatabaseService

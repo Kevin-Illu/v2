@@ -1,14 +1,15 @@
-import CommunicationService from '../communication-service'
-import { ITodoRepository, TodoRepository } from '../../repositories/todo'
+import CommunicationService from '../communication'
+import { TodoRepository } from '../../repositories/todo'
 
-import type { ClientAction, Todo, TodoActions, TodoResponse } from '$globalTypes/index'
+import type { Todo } from '$globalTypes/databaseResponse'
 import type { ActionMap, ICommunication, MainDatabaseInstance, RunResult } from '@main/types'
+import type { ClientAction, TodoActions } from '$globalTypes/index'
 
 export class TodoService extends CommunicationService implements ICommunication {
   public name = 'Todo'
   public actions: ActionMap<TodoActions>
 
-  private todoRepo: ITodoRepository
+  private todoRepo: TodoRepository
 
   constructor(db: MainDatabaseInstance) {
     super()
@@ -21,13 +22,16 @@ export class TodoService extends CommunicationService implements ICommunication 
         dispatch: this.todoRepo.getAll
       },
       ['get-task-by-id']: {
-        dispatch: (id: string): Promise<TodoResponse> => {
+        dispatch: (id: number): Promise<Todo> => {
           return this.todoRepo.getById(id)
         }
       },
       ['create-new-todo']: {
         dispatch: (todo: Todo): Promise<RunResult> => {
-          return this.todoRepo.create(todo)
+          // TODO: need to know the main user
+          // from the global_config table
+          const user_id = 1
+          return this.todoRepo.create(todo, user_id)
         }
       },
       ['update-todo']: {

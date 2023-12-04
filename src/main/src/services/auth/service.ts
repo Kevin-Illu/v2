@@ -1,6 +1,7 @@
-import { ActionMap, ICommunication, MainDatabaseInstance } from '@main/types'
-import CommunicationService from '../communication-service'
 import { AuthActions, ClientAction } from '$globalTypes/comunication'
+import { ActionMap, ICommunication, MainDatabaseInstance } from '@main/types'
+
+import CommunicationService from '../communication'
 import { AuthRepository } from '../../repositories/auth'
 
 export class AuthService extends CommunicationService implements ICommunication {
