@@ -3,8 +3,8 @@ import { MainDatabaseInstance, RunResult } from '@main/types'
 import { formatRawData } from '../../utils/formatTodoRawResponse'
 
 interface ITodoRepository {
-  create(todo: Todo, user_id: number): Promise<RunResult>
-  createStep(step: Step, todo_id: number): Promise<RunResult>
+  create(todo: Partial<Todo>, user_id: number): Promise<RunResult>
+  createStep(step: Partial<Step>, todo_id: number): Promise<RunResult>
 
   getStates(): Promise<State[]>
   getAll(): Promise<Todo[]>
@@ -101,7 +101,7 @@ ORDER BY
     return this.db.fetch<Todo>('SELECT * FROM todos WHERE id = ?', [id])[0]
   }
 
-  public create = (todo: Todo, user_id: number): Promise<RunResult> => {
+  public create = (todo: Partial<Todo>, user_id: number): Promise<RunResult> => {
     return this.db.execute(
       `
       INSERT INTO todos (
@@ -134,7 +134,7 @@ ORDER BY
     )
   }
 
-  public createStep = (step: Step, todo_id: number): Promise<RunResult> => {
+  public createStep = (step: Partial<Step>, todo_id: number): Promise<RunResult> => {
     return this.db.execute(
       `
       INSERT INTO steps
