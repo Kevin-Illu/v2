@@ -97,10 +97,10 @@ export class DatabaseRepository implements IRepository {
       })
       .catch(() => true)
 
-  public setupDatabaseSchema = (): void => {
+  public setupDatabaseSchema = async (): Promise<void> => {
     const { user, states, todos, steps, global_config } = this.tables
 
-    this.db
+    return await this.db
       .runSerialQueries([
         user.create,
         states.create,
@@ -109,15 +109,15 @@ export class DatabaseRepository implements IRepository {
         global_config.create
       ])
       .then(() => console.log('setup database successfully'))
-      .catch((error) => console.error('setup database failed', error))
+      .catch((error: any) => console.error('setup database failed', error))
   }
 
-  public populateTables = (): void => {
+  public populateTables = async (): Promise<void> => {
     const { states, global_config } = this.tables
 
-    this.db
+    return await this.db
       .runSerialQueries([states.default_values!, global_config.default_values!])
       .then(() => console.log('populated successfully'))
-      .catch((error) => console.error('populated failed', error))
+      .catch((error: any) => console.error('populated failed', error))
   }
 }
