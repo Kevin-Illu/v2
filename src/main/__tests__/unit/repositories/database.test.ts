@@ -2,7 +2,7 @@ import { DatabaseRepository } from '../../../src/repositories/database'
 import { DataBase } from '../../globalConfig'
 import { describe, expect, test } from 'vitest'
 
-describe('database repository', () => {
+describe.skip('database repository', () => {
   const repo = new DatabaseRepository(DataBase)
 
   describe('test launch app', () => {

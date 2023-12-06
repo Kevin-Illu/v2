@@ -2,15 +2,24 @@ import { Todo, RawTodo, State, Step } from '$globalTypes/databaseResponse'
 import { MainDatabaseInstance, RunResult } from '@main/types'
 import { formatRawData } from '../../utils/formatTodoRawResponse'
 
+// TODO: es necesario mejorar y normalizar el return
+// de cada funcion
 interface ITodoRepository {
-  create(todo: Partial<Todo>, user_id: number): Promise<RunResult>
+  // TODO: mejorar el tipado en los argumentos
+  createTodo(todo: Partial<Todo>, user_id: number): Promise<RunResult>
   createStep(step: Partial<Step>, todo_id: number): Promise<RunResult>
 
+  // TODO: crear nuevos tipos de dato reales, estos
+  // seran una copia exacta de la respuesta de la BD
   getStates(): Promise<State[]>
-  getAll(): Promise<Todo[]>
-  getById(id: number): Promise<Todo>
+  getTodos(): Promise<Todo[]>
+  getTodoById(id: number): Promise<Todo>
+  getStepById(id: number): Promise<Step>
 
-  update(todo: Todo): Promise<RunResult>
+  // TODO: agregar mas propiedades editables a las consutlas,
+  // mejorar el tipado de los argumentos para indicar que propiedad es obligatoria
+  // y cual no lo es
+  updateTodo(todo: Todo): Promise<RunResult>
   updateStep(step: Step): Promise<RunResult>
 }
 
@@ -27,7 +36,7 @@ export class TodoRepository implements ITodoRepository {
     `)
   }
 
-  public getAll = async (): Promise<Todo[]> => {
+  public getTodos = async (): Promise<Todo[]> => {
     const rawData = await this.db.fetch<RawTodo>(
       `
 WITH RECURSIVE steps_tree(
@@ -97,11 +106,12 @@ ORDER BY
     return formatedData
   }
 
-  public getById = (id: number): Promise<Todo> => {
-    return this.db.fetch<Todo>('SELECT * FROM todos WHERE id = ?', [id])[0]
+  public getTodoById = async (id: number): Promise<Todo> => {
+    const result = await this.db.fetch<Todo>('SELECT * FROM todos WHERE id = ?', [id])
+    return result[0]
   }
 
-  public create = (todo: Partial<Todo>, user_id: number): Promise<RunResult> => {
+  public createTodo = (todo: Partial<Todo>, user_id: number): Promise<RunResult> => {
     return this.db.execute(
       `
       INSERT INTO todos (
@@ -123,8 +133,8 @@ ORDER BY
     )
   }
 
-  public update = (todo: Todo): Promise<RunResult> => {
-    return this.db.execute(
+  public updateTodo = async (todo: Todo): Promise<RunResult> => {
+    const result = await this.db.execute(
       `
         UPDATE todos
         SET name = ?
@@ -132,6 +142,8 @@ ORDER BY
       `,
       [todo.name, todo.id]
     )
+
+    return result
   }
 
   public createStep = (step: Partial<Step>, todo_id: number): Promise<RunResult> => {
@@ -155,5 +167,10 @@ ORDER BY
       WHERE id = ?`,
       [step.name, step.description, step.completed, step.id]
     )
+  }
+
+  public getStepById = async (id: number): Promise<Todo> => {
+    const result = await this.db.fetch<Todo>('SELECT * FROM steps WHERE id = ?', [id])
+    return result[0]
   }
 }
