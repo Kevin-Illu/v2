@@ -13,7 +13,7 @@ const todoMock: Partial<Todo> = {
   description: 'example.example'
 }
 
-// TODO: check was wrong with this table
+// TODO: check what is wrong with this table
 const todoDbResponse = {
   archived: 0,
   id: 1,

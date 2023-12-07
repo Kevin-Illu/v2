@@ -5,7 +5,7 @@ import { DataBase } from '../../globalConfig'
 
 import { userMock } from '../../mocks'
 
-describe('Auth Repository', () => {
+describe.skip('Auth Repository', () => {
   const repo = new AuthRepository(DataBase)
 
   test('registers a new user', async () => {

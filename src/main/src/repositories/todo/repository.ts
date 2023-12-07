@@ -169,8 +169,8 @@ ORDER BY
     )
   }
 
-  public getStepById = async (id: number): Promise<Todo> => {
-    const result = await this.db.fetch<Todo>('SELECT * FROM steps WHERE id = ?', [id])
+  public getStepById = async (id: number): Promise<Step> => {
+    const result = await this.db.fetch<Step>('SELECT * FROM steps WHERE id = ?', [id])
     return result[0]
   }
 }
