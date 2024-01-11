@@ -15,14 +15,6 @@ export class DatabaseRepository implements IRepository {
   private tables: { [key: string]: table }
   constructor(private db: MainDatabaseInstance) {
     this.tables = {
-      user: {
-        create: `
-          CREATE TABLE IF NOT EXISTS user (
-            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            name VARCHAR(255) NOT NULL,
-            email VARCHAR(255) NOT NULL
-          )`
-      },
       states: {
         create: `
           CREATE TABLE IF NOT EXISTS states (
@@ -43,29 +35,12 @@ export class DatabaseRepository implements IRepository {
         create: `
           CREATE TABLE IF NOT EXISTS todos (
             id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            user_id INTEGER NOT NULL,
             state_id INTEGER NOT NULL,
             name TEXT NOT NULL,
             description TEXT NULL,
             archived BOOLEAN NOT NULL DEFAULT 0,
             created_date DATETIME NOT NULL,
-            steps_id INTEGER NULL,
-            parent_step_id ITEGER NULL,
-          FOREIGN KEY (user_id) REFERENCES user(id),
           FOREIGN KEY (state_id) REFERENCES states(id)
-        )`
-      },
-      steps: {
-        create: `
-          CREATE TABLE IF NOT EXISTS steps (
-            id INTEGER NOT NULL,
-            todo_id INTEGER NOT NULL,
-            description TEXT,
-            completed BOOLEAN NOT NULL DEFAULT 0,
-            archived BOOLEAN NOT NULL DEFAULT 0,
-            name TEXT NOT NULL, parent_step_id INTEGER NULL,
-          FOREIGN KEY("todo_id") REFERENCES "todos"("id"),
-          PRIMARY KEY("id" AUTOINCREMENT)
         )`
       },
       global_config: {
@@ -77,8 +52,7 @@ export class DatabaseRepository implements IRepository {
           )`,
         default_values: `
           INSERT INTO global_config (key, value, description)
-          VALUES ("initialized", "true", "indica si la aplicacion se inicializo con los datos por default"),
-          ("main_user_id", NULL, "id del usuario principal")
+          VALUES ("initialized", "true", "indica si la aplicacion se inicializo con los datos por default")
         `
       }
     }
@@ -91,23 +65,17 @@ export class DatabaseRepository implements IRepository {
   public checkFirstLaunch = (): Promise<boolean> =>
     this.db
       .fetch<{ value: string }>("SELECT value FROM global_config WHERE key = 'initialized'")
-      .then((result) => {
+      .then((result: { value: string }) => {
         const { value } = result[0]
         return value !== 'true'
       })
       .catch(() => true)
 
   public setupDatabaseSchema = async (): Promise<void> => {
-    const { user, states, todos, steps, global_config } = this.tables
+    const { states, todos, global_config } = this.tables
 
     return await this.db
-      .runSerialQueries([
-        user.create,
-        states.create,
-        todos.create,
-        steps.create,
-        global_config.create
-      ])
+      .runSerialQueries([states.create, todos.create, global_config.create])
       .then(() => console.log('setup database successfully'))
       .catch((error: any) => console.error('setup database failed', error))
   }

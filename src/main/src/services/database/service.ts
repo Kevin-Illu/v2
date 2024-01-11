@@ -18,7 +18,9 @@ export class DatabaseService implements Service {
 
     // inicializa las tablas y los datos si no se han creado
     console.log('checking first launch')
+    console.log('....')
     repository.checkFirstLaunch().then((firstLaunch) => {
+      console.log('....')
       console.log('is first launch: ', firstLaunch)
 
       if (firstLaunch) {
@@ -29,6 +31,7 @@ export class DatabaseService implements Service {
       }
 
       console.log('database initialized successfully')
+      console.log('....')
     })
   }
 
