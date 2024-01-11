@@ -1,21 +1,25 @@
-import { Box, Container, ScrollArea } from '@radix-ui/themes'
+import { Box, Container, ScrollArea, Theme } from '@radix-ui/themes'
 import { NavBar } from '../../ui'
 import { Footer } from './Footer'
+import { Outlet } from 'react-router-dom'
+import { ThemeProvider } from '@renderer/theme/ThemeProvider'
 
-interface LayoutProps {
-  children: React.ReactNode
-}
-
-export const Layout: React.FC<LayoutProps> = ({ children }) => {
+export const Layout: React.FC = () => {
   return (
-    <Box className="w-screen h-screen flex flex-col">
-      <NavBar />
+    <ThemeProvider defaultTheme="system" storageKey="ui-theme">
+      <Theme>
+        <Box className="w-screen h-screen flex flex-col">
+          <NavBar />
 
-      <ScrollArea className="h-full w-full relative">
-        <Container className="px-8 lg:px-0">{children}</Container>
-      </ScrollArea>
+          <ScrollArea className="h-full w-full relative">
+            <Container className="px-8 lg:px-0">
+              <Outlet />
+            </Container>
+          </ScrollArea>
 
-      <Footer />
-    </Box>
+          <Footer />
+        </Box>
+      </Theme>
+    </ThemeProvider>
   )
 }
