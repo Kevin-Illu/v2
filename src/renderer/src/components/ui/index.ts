@@ -1,2 +1,1 @@
-export * from './nav-bar'
-export * from './form-fields'
+export * from './NavBar'

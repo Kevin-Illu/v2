@@ -1,2 +1,2 @@
-export * from './footer'
-export * from './layout'
+export * from './window/Footer'
+export * from './window/Layout'

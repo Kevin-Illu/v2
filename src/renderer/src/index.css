@@ -4,5 +4,5 @@
 
 
 body {
-  @apply w-screen h-screen bg-zinc-900
+  @apply w-screen h-screen !bg-zinc-900/60
 }

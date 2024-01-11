@@ -1,6 +1,6 @@
 import { Box, Container, ScrollArea } from '@radix-ui/themes'
-import { NavBar } from '../ui'
-import { Footer } from './footer'
+import { NavBar } from '../../ui'
+import { Footer } from './Footer'
 
 interface LayoutProps {
   children: React.ReactNode

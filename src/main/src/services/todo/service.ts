@@ -19,11 +19,11 @@ export class TodoService extends CommunicationService implements ICommunication 
         dispatch: this.todoRepo.getStates
       },
       ['get-todos']: {
-        dispatch: this.todoRepo.getAll
+        dispatch: this.todoRepo.getTodos
       },
       ['get-task-by-id']: {
         dispatch: (id: number): Promise<Todo> => {
-          return this.todoRepo.getById(id)
+          return this.todoRepo.getTodoById(id)
         }
       },
       ['create-new-todo']: {
@@ -31,12 +31,12 @@ export class TodoService extends CommunicationService implements ICommunication 
           // TODO: need to know the main user
           // from the global_config table
           const user_id = 1
-          return this.todoRepo.create(todo, user_id)
+          return this.todoRepo.createTodo(todo, user_id)
         }
       },
       ['update-todo']: {
         dispatch: (todo: Todo): Promise<any> => {
-          return this.todoRepo.update(todo)
+          return this.todoRepo.updateTodo(todo)
         }
       }
     }
