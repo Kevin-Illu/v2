@@ -37,70 +37,7 @@ export class TodoRepository implements ITodoRepository {
   }
 
   public getTodos = async (): Promise<Todo[]> => {
-    const rawData = await this.db.fetch<RawTodo>(
-      `
-WITH RECURSIVE steps_tree(
-  id,
-  todo_id,
-  parent_step_id,
-  name,
-  level,
-  parent_name
-) AS (
-  SELECT
-    s.id,
-    s.todo_id,
-    s.parent_step_id,
-    s.name,
-    0 AS level,
-    NULL AS parent_name
-  FROM
-    steps s
-  WHERE
-    s.parent_step_id IS NULL
-
-  UNION ALL
-
-  SELECT
-    s.id,
-    s.todo_id,
-    s.parent_step_id,
-    s.name,
-    st.level + 1 AS level,
-    st.name AS parent_name
-  FROM
-    steps s
-  JOIN
-    steps_tree st ON st.id = s.parent_step_id
-)
-
-SELECT
-  t.id AS todo_id,
-  t.name AS todo_name,
-  t.state_id as todo_state_id,
-  (SELECT name from states WHERE id = t.state_id) as todo_state_name,
-  st.id AS step_id,
-  st.name AS step_name,
-  st.parent_step_id,
-  st.level,
-  st.parent_name,
-  t.description AS todo_description,
-  s.description AS step_description,
-  t.archived AS todo_archived,
-  s.completed AS step_completed
-FROM
-  todos t
-LEFT JOIN
-  steps_tree st ON t.id = st.todo_id
-LEFT JOIN
-  steps s ON s.id = st.id
-ORDER BY
-  t.id,
-  st.level,
-  st.id,
-  st.parent_name;
-    `
-    )
+    const rawData = await this.db.fetch<RawTodo>(`SELECT * FROM Todos`)
 
     const formatedData = formatRawData(rawData)
     return formatedData
