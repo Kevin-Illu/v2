@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { CreateTodo } from './pages/create-todo/createTodo'
+import { CreateTodo } from './pages/create-todo/CreateTodo'
 import { Layout } from './components'
 import App from './App'
 
