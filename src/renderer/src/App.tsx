@@ -2,13 +2,14 @@ import { Box, Link as RadixLink } from '@radix-ui/themes'
 import { Todo } from '$globalTypes/databaseResponse'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-
-function getTodos(): Promise<Todo[]> {
-  return window.api.todos.dataAccessor<Todo[]>({ type: 'get-todos' })
-}
+import useConfigContext from './hooks/consumers/useConfigContext'
+import { getTodos } from './services/todos'
 
 function App(): JSX.Element {
   const [todos, setTodos] = React.useState<Todo[]>([])
+  const setWindowTitle = useConfigContext((s) => s.setDinamicTitle)
+
+  React.useEffect(() => setWindowTitle('todo list'), [])
 
   React.useEffect(() => {
     getTodos().then((todos) => {

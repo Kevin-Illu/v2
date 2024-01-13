@@ -1,18 +1,25 @@
-import { Box, TextField, Section, Button, Badge } from '@radix-ui/themes'
+import {
+  Box,
+  TextField,
+  Section,
+  RadioGroup,
+  Flex,
+  Text,
+  IconButton,
+  Tooltip
+} from '@radix-ui/themes'
 import { State } from '$globalTypes/databaseResponse'
 import * as React from 'react'
 import useConfigContext from '@renderer/hooks/consumers/useConfigContext'
-
-function getTodoStates(): Promise<State[]> {
-  return window.api.todos.dataAccessor({ type: 'get-states' })
-}
+import { PlusIcon } from '@radix-ui/react-icons'
+import { getTodoStates } from '@renderer/services/todos'
 
 export function CreateTodo() {
   const [states, setStates] = React.useState<State[]>([])
-  const setDinamicTitle = useConfigContext((s) => s.setDinamicTitle)
+  const setWindowTitle = useConfigContext((s) => s.setDinamicTitle)
 
   React.useEffect(() => {
-    setDinamicTitle('create todo')
+    setWindowTitle('create todo')
   }, [])
 
   React.useEffect(() => {
@@ -27,13 +34,24 @@ export function CreateTodo() {
         <div>
           <TextField.Input className="flex-1" size="3" placeholder="write your great idea!" />
         </div>
-        <div className="flex gap-2 py-2">
-          {states.map(({ id, name }) => (
-            <Badge key={id}>{name}</Badge>
-          ))}
-        </div>
-        <div className="flex justify-end py-2">
-          <Button>create</Button>
+        <RadioGroup.Root defaultValue="1" className="pt-2">
+          <Flex gap="4">
+            {states.length &&
+              states.map((state) => (
+                <Text key={state.id} as="label" size="2">
+                  <Flex gap="2">
+                    <RadioGroup.Item value={state.id.toString()} /> {state.name}
+                  </Flex>
+                </Text>
+              ))}
+          </Flex>
+        </RadioGroup.Root>
+        <div className="flex justify-end py-8">
+          <Tooltip content="Create Todo">
+            <IconButton radius="full" size="2">
+              <PlusIcon />
+            </IconButton>
+          </Tooltip>
         </div>
       </Section>
     </Box>
