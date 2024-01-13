@@ -60,6 +60,10 @@ class Application {
       }
     })
 
+    if (is.dev) {
+      mainWindow.webContents.openDevTools({ mode: 'detach' })
+    }
+
     mainWindow.on('ready-to-show', () => {
       mainWindow.show()
     })
