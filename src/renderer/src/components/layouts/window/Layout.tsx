@@ -1,13 +1,13 @@
-import { Box, Container, ScrollArea, Theme } from '@radix-ui/themes'
+import { Box, Container, ScrollArea, Theme, ThemePanel } from '@radix-ui/themes'
 import { NavBar } from '../../ui'
 import { Footer } from './Footer'
 import { Outlet } from 'react-router-dom'
-import { ThemeProvider } from '@renderer/theme/ThemeProvider'
+import ConfigProvider from '@renderer/providers/ConfigProvider'
 
 export const Layout: React.FC = () => {
   return (
-    <ThemeProvider defaultTheme="system" storageKey="ui-theme">
-      <Theme>
+    <ConfigProvider theme="system">
+      <Theme accentColor="red" grayColor="sand" radius="large" scaling="110%">
         <Box className="w-screen h-screen flex flex-col">
           <NavBar />
 
@@ -20,6 +20,6 @@ export const Layout: React.FC = () => {
           <Footer />
         </Box>
       </Theme>
-    </ThemeProvider>
+    </ConfigProvider>
   )
 }
