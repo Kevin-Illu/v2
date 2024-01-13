@@ -8,7 +8,6 @@ import type { ClientAction, TodoActions } from '$globalTypes/index'
 export class TodoService extends CommunicationService implements ICommunication {
   public name = 'Todo'
   public actions: ActionMap<TodoActions>
-
   private todoRepo: TodoRepository
 
   constructor(db: MainDatabaseInstance) {
@@ -28,10 +27,7 @@ export class TodoService extends CommunicationService implements ICommunication 
       },
       ['create-new-todo']: {
         dispatch: (todo: Todo): Promise<RunResult> => {
-          // TODO: need to know the main user
-          // from the global_config table
-          const user_id = 1
-          return this.todoRepo.createTodo(todo, user_id)
+          return this.todoRepo.createTodo(todo)
         }
       },
       ['update-todo']: {
