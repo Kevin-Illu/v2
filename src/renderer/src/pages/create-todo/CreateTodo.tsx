@@ -1,20 +1,19 @@
-import { Box, TextField, Section, Text, Button, IconButton, Badge } from '@radix-ui/themes'
-import { DotsVerticalIcon, ChevronLeftIcon } from '@radix-ui/react-icons'
-import { useNavigate } from 'react-router-dom'
+import { Box, TextField, Section, Button, Badge } from '@radix-ui/themes'
 import { State } from '$globalTypes/databaseResponse'
 import * as React from 'react'
+import useConfigContext from '@renderer/hooks/consumers/useConfigContext'
 
 function getTodoStates(): Promise<State[]> {
   return window.api.todos.dataAccessor({ type: 'get-states' })
 }
 
 export function CreateTodo() {
-  const navigate = useNavigate()
   const [states, setStates] = React.useState<State[]>([])
+  const setDinamicTitle = useConfigContext((s) => s.setDinamicTitle)
 
-  const handleGoBackBtnClick = () => {
-    navigate('/')
-  }
+  React.useEffect(() => {
+    setDinamicTitle('create todo')
+  }, [])
 
   React.useEffect(() => {
     getTodoStates().then((states) => {
@@ -24,20 +23,6 @@ export function CreateTodo() {
 
   return (
     <Box className="flex flex-col">
-      <div className="flex items-center justify-between gap-4 py-2">
-        <IconButton onClick={handleGoBackBtnClick} variant="ghost">
-          <ChevronLeftIcon />
-        </IconButton>
-        <div className="flex-1 flex justify-center items-center">
-          <Text className="font-bold">Create Todo</Text>
-        </div>
-        <div>
-          <IconButton variant="ghost">
-            <DotsVerticalIcon />
-          </IconButton>
-        </div>
-      </div>
-
       <Section>
         <div>
           <TextField.Input className="flex-1" size="3" placeholder="write your great idea!" />

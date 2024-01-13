@@ -1,4 +1,4 @@
-import { Box, Container, ScrollArea, Theme, ThemePanel } from '@radix-ui/themes'
+import { Box, Container, ScrollArea, Theme } from '@radix-ui/themes'
 import { NavBar } from '../../ui'
 import { Footer } from './Footer'
 import { Outlet } from 'react-router-dom'
