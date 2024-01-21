@@ -1,4 +1,4 @@
-import { Todo } from '$globalTypes/databaseResponse'
+import { State, Todo } from '$globalTypes/databaseResponse'
 
 const service = window.api.todos
 

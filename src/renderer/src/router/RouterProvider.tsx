@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { CreateTodo } from './../pages/create-todo/CreateTodo'
+import { CreateTodoPage } from './../pages/create-todo/CreateTodo'
 import { Layout } from './../components'
 import App from './../App'
 
@@ -11,7 +11,7 @@ const router = createBrowserRouter([
       { index: true, element: <App /> },
       {
         path: 'create',
-        element: <CreateTodo />
+        element: <CreateTodoPage />
       }
     ]
   }

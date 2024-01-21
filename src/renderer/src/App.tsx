@@ -1,15 +1,14 @@
-import { Box, Link as RadixLink } from '@radix-ui/themes'
 import { Todo } from '$globalTypes/databaseResponse'
 import * as React from 'react'
-import { Link } from 'react-router-dom'
 import useConfigContext from './hooks/consumers/useConfigContext'
 import { getTodos } from './services/todos'
+import { TodoListPage } from './pages'
 
 function App(): JSX.Element {
   const [todos, setTodos] = React.useState<Todo[]>([])
-  const setWindowTitle = useConfigContext((s) => s.setDinamicTitle)
+  const setPageTitle = useConfigContext((s) => s.setDinamicTitle)
 
-  React.useEffect(() => setWindowTitle('todo list'), [])
+  React.useEffect(() => setPageTitle('v2'), [])
 
   React.useEffect(() => {
     getTodos().then((todos) => {
@@ -17,28 +16,7 @@ function App(): JSX.Element {
     })
   }, [])
 
-  return <TodoList todos={todos} />
-}
-
-const TodoList = ({ todos }: { todos: Todo[] }) => {
-  if (!todos.length) {
-    return (
-      <div>
-        <p>start creating todos :)</p>
-        <RadixLink asChild>
-          <Link to={'/create'}>create new todo</Link>
-        </RadixLink>
-      </div>
-    )
-  }
-
-  return (
-    <div>
-      {todos.map((todo) => (
-        <Box key={todo.id}>{todo.name}</Box>
-      ))}
-    </div>
-  )
+  return <TodoListPage todos={todos} />
 }
 
 export default App

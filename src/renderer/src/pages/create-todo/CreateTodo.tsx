@@ -14,7 +14,7 @@ import useConfigContext from '@renderer/hooks/consumers/useConfigContext'
 import { PlusIcon } from '@radix-ui/react-icons'
 import { getTodoStates } from '@renderer/services/todos'
 
-export function CreateTodo() {
+export function CreateTodoPage() {
   const [states, setStates] = React.useState<State[]>([])
   const setWindowTitle = useConfigContext((s) => s.setDinamicTitle)
 
