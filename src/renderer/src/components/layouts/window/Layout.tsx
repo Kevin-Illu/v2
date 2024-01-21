@@ -7,7 +7,7 @@ import ConfigProvider from '@renderer/providers/ConfigProvider'
 export const Layout: React.FC = () => {
   return (
     <ConfigProvider theme="system">
-      <Theme accentColor="gray" grayColor="sand" radius="large" scaling="110%">
+      <Theme accentColor="red" grayColor="mauve" radius="medium" scaling="110%">
         <Box className="w-screen h-screen flex flex-col">
           <NavBar />
 
