@@ -39,7 +39,6 @@ export class TodoRepository implements ITodoRepository {
   }
 
   public createTodo = (todo: Partial<Todo>): Promise<RunResult> => {
-    console.log(todo)
     return this.db.execute(
       `
       INSERT INTO todos (
