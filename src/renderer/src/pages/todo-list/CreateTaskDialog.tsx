@@ -27,9 +27,11 @@ export const CreateTaskDialog = ({ children }) => {
 
   return (
     <Dialog.Root>
-      <Flex className="py-4" align="center" justify="end">
-        <Dialog.Trigger>{children}</Dialog.Trigger>
-      </Flex>
+      <div className="sticky bottom-0">
+        <Flex className="py-4" align="center" justify="end">
+          <Dialog.Trigger>{children}</Dialog.Trigger>
+        </Flex>
+      </div>
 
       <Dialog.Content style={{ maxWidth: 580 }}>
         <Formik
@@ -73,7 +75,9 @@ export const CreateTaskDialog = ({ children }) => {
                     Cancel
                   </Button>
                 </Dialog.Close>
-                <Button type="submit">Add Todo</Button>
+                <Dialog.Close>
+                  <Button type="submit">Add Todo</Button>
+                </Dialog.Close>
               </Flex>
             </form>
           )}

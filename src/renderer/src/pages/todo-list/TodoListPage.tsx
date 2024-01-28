@@ -36,5 +36,5 @@ export function TodoListPage() {
 
   const content = todos.length > 0 ? <TodoList todos={todos} /> : <EmptyView />
 
-  return <div className="h-full pt-16 mx-auto flex flex-col items-center">{content}</div>
+  return <div className="h-full mx-auto flex flex-col items-center">{content}</div>
 }
