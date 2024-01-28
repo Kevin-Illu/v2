@@ -6,8 +6,8 @@ import { update } from '@renderer/services/todos'
 
 export const ArchiveTodoButton = ({ todo }: { todo: Todo }) => {
   const revalidateTodoList = useConfigContext((s) => s.setListRevalidation)
+
   const archiveTodo = () => {
-    console.log(todo.id)
     const archiveTodo: Todo = {
       ...todo,
       archived: true
