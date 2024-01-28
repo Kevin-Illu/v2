@@ -6,8 +6,8 @@ export function create(todo: Partial<Todo>) {
   return service.dataAccessor({ type: 'create-new-todo', payload: todo })
 }
 
-export function update(todoId: number) {
-  return service.dataAccessor({ type: 'update-todo', payload: todoId })
+export function update(todo: Partial<Todo>) {
+  return service.dataAccessor({ type: 'update-todo', payload: todo })
 }
 
 export function getTodos(): Promise<Todo[]> {
