@@ -12,8 +12,12 @@ export interface ConfigState extends ConfigProps {
       title: string
       dinamicTitle: string | null
     }
+    todoList: {
+      revalidateList: boolean
+    }
   }
   setTheme: (theme: suportedThemes) => void
+  setListRevalidation: (revalidate: boolean) => void
   setDinamicTitle: (title: string) => void
 }
 

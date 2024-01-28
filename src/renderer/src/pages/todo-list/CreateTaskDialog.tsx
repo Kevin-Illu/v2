@@ -1,11 +1,14 @@
 import { Todo } from '$globalTypes/databaseResponse'
 import { Dialog, Flex, TextField, TextArea, Text, Button } from '@radix-ui/themes'
+import useConfigContext from '@renderer/hooks/consumers/useConfigContext'
 import { create } from '@renderer/services/todos'
 import { Formik } from 'formik'
 
 import * as Yup from 'yup'
 
 export const CreateTaskDialog = ({ children }) => {
+  const revalidateTaskList = useConfigContext((s) => s.setListRevalidation)
+
   const newTodoSchema = Yup.object().shape({
     name: Yup.string().required('The name is required'),
     description: Yup.string()
@@ -17,7 +20,9 @@ export const CreateTaskDialog = ({ children }) => {
       state_id: 1
     }
 
-    create(newTodo).then((v) => console.log(v))
+    create(newTodo).then(() => {
+      revalidateTaskList(true)
+    })
   }
 
   return (

@@ -6,12 +6,14 @@ import { CreateTaskDialog } from './CreateTaskDialog'
 export const TodoList = ({ todos }: { todos: Todo[] }) => {
   return (
     <div>
-      {todos.map((todo) => (
-        <Box key={todo.id} className="flex flex-col gap-1">
-          <Text weight="bold">{todo.name}</Text>
-          <Text color="gray">{todo.description}</Text>
-        </Box>
-      ))}
+      <div className="flex flex-col gap-4">
+        {todos.map((todo) => (
+          <Box key={todo.id} className="flex flex-col gap-1">
+            <Text weight="bold">{todo.name}</Text>
+            <Text color="gray">{todo.description}</Text>
+          </Box>
+        ))}
+      </div>
 
       <CreateTaskDialog>
         <IconButton type="submit">

@@ -21,7 +21,7 @@ export const NavBar = () => {
         )}
       </Box>
       <Box className="text-center flex justify-between items-center col-start-2 col-end-6 w-[60%]">
-        <Box className="relative w-full py-4 flex items-center justify-center">
+        <Box className="relative w-full py-0 m-0 flex items-center justify-center">
           <Text weight="bold">
             <Em>{dinamicTitle || title}</Em>
           </Text>
