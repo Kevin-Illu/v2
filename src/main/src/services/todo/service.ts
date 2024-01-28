@@ -31,7 +31,7 @@ export class TodoService extends CommunicationService implements ICommunication 
         }
       },
       ['update-todo']: {
-        dispatch: (todo: Todo): Promise<any> => {
+        dispatch: (todo: Todo): Promise<RunResult> => {
           return this.todoRepo.updateTodo(todo)
         }
       }

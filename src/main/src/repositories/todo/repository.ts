@@ -62,10 +62,11 @@ export class TodoRepository implements ITodoRepository {
     const result = await this.db.execute(
       `
         UPDATE todos
-        SET name = ?
+        SET name = ?,
+            archived = ?
         WHERE id = ?
       `,
-      [todo.name, todo.id]
+      [todo.name, todo.archived ? 1 : 0, todo.id]
     )
 
     return result
