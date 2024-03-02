@@ -1,9 +1,9 @@
 import createConfigStore from '@renderer/stores/config.store'
 
-export type suportedThemes = 'dark' | 'light' | 'system'
+export type SuportedThemes = 'dark' | 'light' | 'system'
 
 export interface ConfigProps {
-  theme?: suportedThemes
+  theme?: SuportedThemes
 }
 
 export interface ConfigState extends ConfigProps {
@@ -16,7 +16,7 @@ export interface ConfigState extends ConfigProps {
       revalidateList: boolean
     }
   }
-  setTheme: (theme: suportedThemes) => void
+  setTheme: (theme: SuportedThemes) => void
   setListRevalidation: (revalidate: boolean) => void
   setDinamicTitle: (title: string) => void
 }
