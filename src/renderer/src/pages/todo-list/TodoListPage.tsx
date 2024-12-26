@@ -15,9 +15,11 @@ function getTodosFromService(setter: TaskSetter) {
 
 export function TodoListPage() {
   const [todos, setTodos] = React.useState<Todo[]>([])
-  const setPageTitle = useConfigContext((s) => s.setDinamicTitle)
-  const revalidateTasks = useConfigContext((s) => s.ui.todoList.revalidateList)
-  const turnOnRevalidation = useConfigContext((s) => s.setListRevalidation)
+  const { setPageTitle, revalidateTasks, turnOnRevalidation } = useConfigContext((s) => ({
+    setPageTitle: s.setDinamicTitle,
+    revalidateTasks: s.ui.todoList.revalidateList,
+    turnOnRevalidation: s.setListRevalidation
+  }));
 
   React.useEffect(() => setPageTitle('v2'), [])
 
