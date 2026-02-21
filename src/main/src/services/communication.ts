@@ -6,7 +6,7 @@ interface ICommunicationService {
 
 abstract class CommunicationService implements ICommunicationService {
   public handleAction(chanel: string, callback): void {
-    ipcMain.handle(chanel, async (e, args) => {
+    ipcMain.handle(chanel, async (_event, args) => {
       return await callback(args)
     })
   }

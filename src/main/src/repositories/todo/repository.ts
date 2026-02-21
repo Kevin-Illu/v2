@@ -1,5 +1,6 @@
 import { Todo, RawTodo, State } from '$globalTypes/databaseResponse'
 import { MainDatabaseInstance, RunResult } from '@main/types'
+import { formatRawData } from '@main/utils/formatTodoRawResponse'
 
 // TODO: es necesario mejorar y normalizar el return
 // de cada funcion
@@ -30,7 +31,7 @@ export class TodoRepository implements ITodoRepository {
   public getTodos = async (): Promise<Todo[]> => {
     const ARCHIVED = '1'
     const todos = await this.db.fetch<RawTodo>(`SELECT * FROM Todos WHERE archived != ${ARCHIVED}`)
-    return todos
+    return formatRawData(todos)
   }
 
   public getTodoById = async (id: number): Promise<Todo> => {
