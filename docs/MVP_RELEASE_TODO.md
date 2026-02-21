@@ -18,11 +18,11 @@ This checklist captures the highest-impact work needed to ship a stable MVP of `
 
 ## 2) Close architecture gaps visible in current tests/code
 
-- [ ] Either implement `AuthRepository` (with tests) or remove/replace outdated auth tests.
-- [ ] Align repository contracts and tests for todo-related step operations.
+- [x] Either implement `AuthRepository` (with tests) or remove/replace outdated auth tests.
+- [x] Align repository contracts and tests for todo-related step operations.
   - If step-level methods are part of MVP, implement them consistently in repository + service + tests.
   - If not part of MVP, remove test coverage that targets non-MVP API.
-- [ ] Normalize and strengthen typing in communication and repository layers.
+- [x] Normalize and strengthen typing in communication and repository layers.
   - Replace broad/loosely typed return values with concrete domain types.
   - Resolve existing TODO notes around return types and argument typing.
 

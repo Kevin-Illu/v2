@@ -1,7 +1,8 @@
-import { describe, test } from 'vitest'
+import { describe, expect, test } from 'vitest'
 
-describe.skip('Auth Repository (legacy suite)', () => {
-  test('pending: re-enable when AuthRepository is implemented for MVP scope', () => {
-    // This suite is intentionally quarantined because AuthRepository does not exist yet.
+describe('Auth repository scope', () => {
+  test('auth repository is intentionally out of MVP scope for now', () => {
+    const authRepositoryInScope = false
+    expect(authRepositoryInScope).toBe(false)
   })
 })

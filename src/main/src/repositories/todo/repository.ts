@@ -1,21 +1,21 @@
 import { Todo, RawTodo, State } from '$globalTypes/databaseResponse'
 import { MainDatabaseInstance, RunResult } from '@main/types'
-import { formatRawData } from '@main/utils/formatTodoRawResponse'
+import { formatRawData } from '../../utils/formatTodoRawResponse'
 
-// TODO: es necesario mejorar y normalizar el return
-// de cada funcion
+interface CreateTodoInput {
+  state_id: number
+  name: string
+  description: string | null
+}
+
 interface ITodoRepository {
-  // TODO: mejorar el tipado en los argumentos
-  createTodo(todo: Partial<Todo>): Promise<RunResult>
-
-  // TODO: crear nuevos tipos de dato reales, estos
-  // seran una copia exacta de la respuesta de la BD
+  createTodo(todo: CreateTodoInput): Promise<RunResult>
   getStates(): Promise<State[]>
   getTodos(): Promise<Todo[]>
   getTodoById(id: number): Promise<Todo>
+  updateTodo(todo: Todo): Promise<RunResult>
 }
 
-// TODO: clean the return types of this repository
 export class TodoRepository implements ITodoRepository {
   constructor(private db: MainDatabaseInstance) {}
 
@@ -39,7 +39,7 @@ export class TodoRepository implements ITodoRepository {
     return result[0]
   }
 
-  public createTodo = (todo: Partial<Todo>): Promise<RunResult> => {
+  public createTodo = (todo: CreateTodoInput): Promise<RunResult> => {
     return this.db.execute(
       `
       INSERT INTO todos (

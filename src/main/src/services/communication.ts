@@ -1,12 +1,22 @@
 import { ipcMain } from 'electron'
 
+type HandleCallback<TArgs = unknown, TResult = unknown> = (
+  args: TArgs
+) => Promise<TResult> | TResult
+
 interface ICommunicationService {
-  handleAction?: (channel: string, callback: (args?: any) => void) => void
+  handleAction<TArgs = unknown, TResult = unknown>(
+    channel: string,
+    callback: HandleCallback<TArgs, TResult>
+  ): void
 }
 
 abstract class CommunicationService implements ICommunicationService {
-  public handleAction(chanel: string, callback): void {
-    ipcMain.handle(chanel, async (_event, args) => {
+  public handleAction<TArgs = unknown, TResult = unknown>(
+    channel: string,
+    callback: HandleCallback<TArgs, TResult>
+  ): void {
+    ipcMain.handle(channel, async (_event, args: TArgs) => {
       return await callback(args)
     })
   }

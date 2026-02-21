@@ -5,7 +5,7 @@ import type { Todo } from '$globalTypes/databaseResponse'
 import type { ActionMap, ICommunication, MainDatabaseInstance, RunResult } from '@main/types'
 import type { ClientAction, TodoActions } from '$globalTypes/index'
 
-export class TodoService extends CommunicationService implements ICommunication {
+export class TodoService extends CommunicationService implements ICommunication<TodoActions> {
   public name = 'Todo'
   public actions: ActionMap<TodoActions>
   private todoRepo: TodoRepository
@@ -38,7 +38,7 @@ export class TodoService extends CommunicationService implements ICommunication 
     }
   }
 
-  public _dispatcher = (action: ClientAction<TodoActions>): Promise<void> => {
+  public _dispatcher = (action: ClientAction<TodoActions>): Promise<unknown> => {
     const type = action.type as string
 
     if (action.payload) {
