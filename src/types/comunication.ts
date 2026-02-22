@@ -1,17 +1,21 @@
 import { State, Todo, User } from './databaseResponse'
 
-export type ClientAction<T> = {
-  type: keyof T
+export type ActionResult = {
+  lastID: number
+  changes: number
+}
+
+export type ClientAction<TActionMap, TType extends keyof TActionMap = keyof TActionMap> = {
+  type: TType
   payload?: unknown
 }
 
-// TODO: mejorar el type de los returns
 export type TodoActions = {
   ['get-states']: () => Promise<State[]>
   ['get-todos']: () => Promise<Todo[]>
   ['get-task-by-id']: (id: number) => Promise<Todo>
-  ['create-new-todo']: (todo: Todo) => Promise<any>
-  ['update-todo']: (todo: Todo) => Promise<any>
+  ['create-new-todo']: (todo: Todo) => Promise<ActionResult>
+  ['update-todo']: (todo: Todo) => Promise<ActionResult>
 }
 
 export type SettingsActions = {

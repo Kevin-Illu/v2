@@ -17,5 +17,5 @@ export function setDefaultTheme(theme: suportedThemes) {
 
 export function getStorageTheme(): suportedThemes {
   const theme = (JSON.parse(localStorage.getItem('config')!) as { state: ConfigState }).state.theme
-  return theme
+  return theme ?? 'system'
 }

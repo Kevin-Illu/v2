@@ -1,25 +1,33 @@
+import { describe, expect, test, vi } from 'vitest'
+
 import { DatabaseRepository } from '../../../src/repositories/database'
-import { DataBase } from '../../globalConfig'
-import { describe, expect, test } from 'vitest'
+import type { MainDatabaseInstance } from '../../../src/types'
 
-describe.skip('database repository', () => {
-  const repo = new DatabaseRepository(DataBase)
+function createDbMock() {
+  return {
+    fetch: vi.fn(),
+    runSerialQueries: vi.fn()
+  } as unknown as MainDatabaseInstance
+}
 
-  describe('test launch app', () => {
-    test('should return true when is the first launch otherwise skip it', async (context) => {
-      const firstLaunch = await repo.checkFirstLaunch()
+describe('DatabaseRepository', () => {
+  test('checkFirstLaunch returns false when initialized=true', async () => {
+    const db = createDbMock()
+    ;(db.fetch as any).mockResolvedValue([{ value: 'true' }])
 
-      if (!firstLaunch) {
-        console.log('skipping because already launched')
-        context.skip()
-      }
+    const repo = new DatabaseRepository(db)
+    const result = await repo.checkFirstLaunch()
 
-      expect(firstLaunch).toBe(true)
-    })
+    expect(result).toBe(false)
+  })
 
-    test('should return false when not is the first launch', async () => {
-      const firstLaunch = await repo.checkFirstLaunch()
-      expect(firstLaunch).toBe(false)
-    })
+  test('checkFirstLaunch returns true when config table is missing', async () => {
+    const db = createDbMock()
+    ;(db.fetch as any).mockRejectedValue(new Error('no such table'))
+
+    const repo = new DatabaseRepository(db)
+    const result = await repo.checkFirstLaunch()
+
+    expect(result).toBe(true)
   })
 })

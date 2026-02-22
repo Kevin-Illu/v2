@@ -1,7 +1,7 @@
-import { useContext } from 'react'
-import { ThemeProviderContext, ThemeProviderContextProps } from '../theme/ThemeProvider'
+import useConfigContext from './consumers/useConfigContext'
+import { suportedThemes } from '@renderer/types/stores/configStore'
 
-export const useTheme = (): ThemeProviderContextProps => {
-  const context = useContext(ThemeProviderContext)
-  return context
+export const useTheme = (): suportedThemes => {
+  const theme = useConfigContext((store) => store.theme)
+  return theme ?? 'system'
 }
