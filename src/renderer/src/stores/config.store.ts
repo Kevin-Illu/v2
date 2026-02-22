@@ -1,6 +1,6 @@
 import { createStore } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
-import { ConfigProps, ConfigState, suportedThemes } from '../types/stores/configStore'
+import { ConfigProps, ConfigState, SuportedThemes } from '../types/stores/configStore'
 
 type setStore = (
   partial:
@@ -24,7 +24,7 @@ const createConfigStore = (initialProps: Partial<ConfigProps>) => {
             revalidateList: false
           }
         },
-        setTheme: (theme: suportedThemes) => set(() => ({ theme })),
+        setTheme: (theme: SuportedThemes) => set(() => ({ theme })),
         setListRevalidation: (revalidate: boolean) =>
           set((state) => ({
             ui: {

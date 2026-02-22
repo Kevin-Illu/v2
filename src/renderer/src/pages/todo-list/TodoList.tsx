@@ -12,13 +12,14 @@ export const TodoList = ({ todos }: { todos: Todo[] }) => {
           Your work
         </Heading>
       </div>
+
       <div className="flex flex-col gap-6 min-w-full">
         {todos.map((todo) => (
           <div
             role="button"
             tabIndex={0}
             key={todo.id}
-            className="min-w-full focus:outline-none focus:outline-2 focus:outline-[var(--accent-8)] flex items-center gap-8 hover:bg-black/10 py-4 px-6 rounded-md"
+            className="w-80 min-w-full focus:outline-none focus:outline-2 focus:outline-[var(--accent-8)] flex items-center gap-8 hover:bg-black/10 py-4 px-6 rounded-md"
           >
             <ArchiveTodoButton todo={todo} />
             <Box className="flex flex-col gap-1 w-full overflow-hidden">

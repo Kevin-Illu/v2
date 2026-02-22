@@ -4,6 +4,7 @@ import { EmptyView } from './EmptyView'
 import { TodoList } from './TodoList'
 import * as React from 'react'
 import { getTodos } from '@renderer/services/todos'
+import { usePageSettings } from '@renderer/hooks/usePageSettings'
 
 type TaskSetter = (value: React.SetStateAction<Todo[]>) => void
 
@@ -19,9 +20,11 @@ export function TodoListPage() {
     setPageTitle: s.setDinamicTitle,
     revalidateTasks: s.ui.todoList.revalidateList,
     turnOnRevalidation: s.setListRevalidation
-  }));
+  }))
 
-  React.useEffect(() => setPageTitle('v2'), [])
+  usePageSettings({
+    title: 'v2'
+  })
 
   React.useEffect(() => {
     getTodosFromService(setTodos)
@@ -31,7 +34,7 @@ export function TodoListPage() {
     if (revalidateTasks) {
       getTodosFromService(setTodos)
 
-      // if revalidate then turn off
+      // if revalidate is on then turn off
       turnOnRevalidation(false)
     }
   }, [revalidateTasks])
