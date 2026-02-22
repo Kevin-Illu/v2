@@ -1,12 +1,12 @@
 import { State, Todo, User } from './databaseResponse'
 
-type ActionResult = {
+export type ActionResult = {
   lastID: number
   changes: number
 }
 
-export type ClientAction<T> = {
-  type: keyof T
+export type ClientAction<TActionMap, TType extends keyof TActionMap = keyof TActionMap> = {
+  type: TType
   payload?: unknown
 }
 

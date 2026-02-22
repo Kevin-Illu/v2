@@ -71,3 +71,21 @@ The legacy repository integration suites are currently quarantined until:
 - tests are aligned with the current repository contracts.
 
 Renderer tests remain active and should stay green while repository suites are being modernized.
+
+## Contributor release checklist
+
+Before opening a release PR, run:
+
+```bash
+$ npm run typecheck
+$ npm test -- --run
+$ npm run lint
+```
+
+For release operations and rollback steps, follow `docs/RELEASE_RUNBOOK.md`.
+
+For manual end-to-end verification, follow `docs/MVP_QA_CHECKLIST.md`.
+
+## Updater strategy for MVP
+
+Auto-update is disabled for MVP. Release artifacts are currently distributed manually.

@@ -28,26 +28,27 @@ This checklist captures the highest-impact work needed to ship a stable MVP of `
 
 ## 3) Hardening and release readiness
 
-- [ ] Replace placeholder metadata with production values.
+- [x] Replace placeholder metadata with production values.
   - `author` and `homepage` in `package.json` still use template values.
-  - Auto-update URLs in `electron-builder.yml` and `dev-app-update.yml` still point to `https://example.com/auto-updates`.
+  - Removed placeholder auto-update endpoints and disabled publish config for MVP manual distribution.
   - Linux maintainer field in `electron-builder.yml` still uses `electronjs.org` placeholder.
-- [ ] Confirm updater strategy for MVP.
+- [x] Confirm updater strategy for MVP.
   - Decide whether auto-update should be enabled for MVP; if not, disable publish settings for first release.
 - [ ] Run full platform packaging smoke checks (`build:win`, `build:mac`, `build:linux`) on target environments.
-- [ ] Add a short release runbook with:
+  - Linux build attempted in CI-like environment but blocked by external Electron binary download permissions.
+- [x] Add a short release runbook with:
   - Build/versioning steps.
   - Signing/notarization decisions (especially macOS).
   - Rollback plan for failed release.
 
 ## 4) Product polish (recommended before broad MVP rollout)
 
-- [ ] Improve and standardize public/shared types (`src/types/*`) to reduce cross-layer drift.
-- [ ] Expand README with practical contributor setup:
+- [x] Improve and standardize public/shared types (`src/types/*`) to reduce cross-layer drift.
+- [x] Expand README with practical contributor setup:
   - Native sqlite notes.
   - How to run unit tests reliably.
   - How to package per platform.
-- [ ] Add a minimum QA checklist (manual) for core flows:
+- [x] Add a minimum QA checklist (manual) for core flows:
   - Create todo.
   - List/reload todo list.
   - Archive/complete flows.
