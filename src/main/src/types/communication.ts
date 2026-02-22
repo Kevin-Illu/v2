@@ -7,7 +7,9 @@ export type ActionMap<T> = {
   }
 }
 
-export interface ICommunication extends Service {
-  actions: ActionMap<any>
-  _dispatcher: (action: ClientAction<any>) => Promise<void>
+export interface ICommunication<
+  TActions = Record<string, (...args: any[]) => Promise<unknown>>
+> extends Service {
+  actions: ActionMap<TActions>
+  _dispatcher: (action: ClientAction<TActions>) => Promise<unknown>
 }

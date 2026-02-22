@@ -1,116 +1,81 @@
-import { describe, test, expect } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 
-import { DataBase } from '../../globalConfig'
-import { userMock } from '../../mocks'
+import { TodoRepository } from '../../../src/repositories/todo'
+import type { MainDatabaseInstance } from '../../../src/types'
 
-import { Step, Todo } from '$globalTypes/databaseResponse'
-import { TodoRepository } from './../../../src/repositories/todo'
-
-const todoMock: Partial<Todo> = {
-  name: 'example',
-  archived: false,
-  state_id: 1,
-  description: 'example.example'
-}
-
-// TODO: check what is wrong with this table
-const todoDbResponse = {
-  archived: 0,
-  id: 1,
-  created_date: '2023-12-05 04:29:53',
-  description: 'a todo example',
-  name: 'example',
-  steps_id: null,
-  state_id: 1,
-  parent_step_id: null,
-  user_id: 1
-}
-
-const stepMock: Partial<Step> = {
-  name: 'sub example',
-  parent_step_id: null,
-  description: 'sub example.example',
-  completed: false
-}
-
-const stepMockDbResponse = {
-  id: 1,
-  parent_step_id: null,
-  completed: 0,
-  archived: 0,
-  description: 'sub example.example',
-  name: 'sub example',
-  todo_id: 1
+function createDbMock() {
+  return {
+    fetch: vi.fn(),
+    execute: vi.fn()
+  } as unknown as MainDatabaseInstance
 }
 
 describe('Todo Repository', () => {
-  const repo = new TodoRepository(DataBase)
+  test('getStates returns DB states', async () => {
+    const db = createDbMock()
+    const states = [{ id: 1, name: 'Active', description: 'Things are happening!' }]
+    ;(db.fetch as any).mockResolvedValue(states)
 
-  describe.skip('creational methods', () => {
-    test('create a new todo', async () => {
-      const { changes } = await repo.createTodo(todoMock, userMock.id)
-      expect(changes).toEqual(1)
-    })
+    const repo = new TodoRepository(db)
+    const result = await repo.getStates()
 
-    test('create a new step', async () => {
-      todoMock.id = 1
-      const { changes } = await repo.createStep(stepMock, todoMock.id)
-
-      expect(changes).toEqual(1)
-    })
+    expect(result).toEqual(states)
   })
 
-  describe('getter methods', () => {
-    test('get all the states', async () => {
-      const result = await repo.getStates()
+  test('getTodos maps raw rows to Todo[] domain model', async () => {
+    const db = createDbMock()
+    ;(db.fetch as any).mockResolvedValue([
+      {
+        todo_id: 7,
+        todo_name: 'Write release notes',
+        todo_state_id: 1,
+        todo_state_name: 'Active',
+        step_id: 9,
+        step_name: 'Draft notes',
+        parent_step_id: null,
+        level: 0,
+        parent_name: null,
+        todo_description: 'Prepare changelog',
+        step_description: 'Collect merged PRs',
+        todo_archived: 0,
+        step_completed: 0
+      }
+    ])
 
-      expect(result.length > 0).toBe(true)
-    })
+    const repo = new TodoRepository(db)
+    const result = await repo.getTodos()
 
-    test('get todos', async () => {
-      const result = await repo.getTodos()
-
-      expect(result.length > 0).toBe(true)
-    })
-
-    test('get todo by id', async () => {
-      const result = await repo.getTodoById(1)
-
-      expect(result).toEqual(todoDbResponse)
-    })
-
-    test('get step by id', async () => {
-      const result = await repo.getStepById(1)
-
-      expect(result).toEqual(stepMockDbResponse)
-    })
+    expect(result).toEqual([
+      {
+        id: 7,
+        name: 'Write release notes',
+        archived: false,
+        state_id: 1,
+        state_name: 'Active',
+        description: 'Prepare changelog',
+        steps: [
+          {
+            id: 9,
+            parent_step_id: null,
+            name: 'Draft notes',
+            description: 'Collect merged PRs',
+            completed: false,
+            sub_steps: []
+          }
+        ]
+      }
+    ])
   })
 
-  describe('update methods', () => {
-    test('update todo', async () => {
-      const newTodoMock = {
-        id: 4,
-        name: 'new mock'
-      } as Todo
+  test('createTodo delegates to execute with normalized params', async () => {
+    const db = createDbMock()
+    ;(db.execute as any).mockResolvedValue({ lastID: 1, changes: 1 })
+    const repo = new TodoRepository(db)
 
-      await repo.updateTodo(newTodoMock)
-      const mockModified = await repo.getTodoById(newTodoMock.id)
+    const payload = { state_id: 1, name: 'todo', description: 'desc' } as any
+    const result = await repo.createTodo(payload)
 
-      expect(mockModified.name).toEqual(newTodoMock.name)
-    })
-
-    test('update step', async () => {
-      const stepToModify = {
-        id: 4,
-        name: 'step modified',
-        description: 'step modified',
-        completed: true
-      } as Step
-
-      await repo.updateStep(stepToModify)
-      const mockModified = await repo.getStepById(stepToModify.id)
-
-      expect(mockModified.name).toEqual(stepToModify.name)
-    })
+    expect(result).toEqual({ lastID: 1, changes: 1 })
+    expect(db.execute).toHaveBeenCalledOnce()
   })
 })

@@ -65,7 +65,7 @@ export class DatabaseRepository implements IRepository {
   public checkFirstLaunch = (): Promise<boolean> =>
     this.db
       .fetch<{ value: string }>("SELECT value FROM global_config WHERE key = 'initialized'")
-      .then((result: { value: string }) => {
+      .then((result: { value: string }[]) => {
         const { value } = result[0]
         return value !== 'true'
       })
